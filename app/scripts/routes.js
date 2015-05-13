@@ -43,6 +43,7 @@ angular.module('cliquePlayApp')
     // the .config calls resolve, so they can't be used during route configuration, so we have
     // to hack it directly onto the $routeProvider object
     $routeProvider.whenAuthenticated = function(path, route) {
+      var currentUser;
       route.resolve = route.resolve || {};
       route.resolve.user = ['Auth', function(Auth) {
         return Auth.$requireAuth();

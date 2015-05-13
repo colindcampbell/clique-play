@@ -11,7 +11,7 @@ angular.module('cliquePlayApp')
     $scope.user = user;
     // console.log(user);
     // synchronize a read-only, synchronized array of messages, limit to most recent 10
-    $scope.messages = $firebaseArray(Ref.child('messages').limitToLast(10));
+    $scope.messages = $firebaseArray(Ref.child('messages').limitToLast(30));
 
     // display any errors
     $scope.messages.$loaded().catch(alert);
@@ -22,7 +22,8 @@ angular.module('cliquePlayApp')
         // push a message to the end of the array
         $scope.messages.$add({
           text: newMessage,
-          userName:$scope.user.facebook.cachedUserProfile.first_name
+          userName:$scope.user.facebook.cachedUserProfile.first_name,
+          avatarURL:$scope.user.facebook.cachedUserProfile.picture.data.url
         })
           // display any errors
           .catch(alert);

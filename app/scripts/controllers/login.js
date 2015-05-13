@@ -45,6 +45,7 @@ angular.module('cliquePlayApp')
 
       function createProfile(user) {
         var ref = Ref.child('users', user.uid), def = $q.defer();
+        console.log(user, ref);
         ref.set({email: email, name: firstPartOfEmail(email)}, function(err) {
           $timeout(function() {
             if( err ) {

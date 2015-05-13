@@ -1,3 +1,17 @@
+<style>
+	.chat li{
+			list-style:none;
+	}	
+	.avatar{
+		width:50px;
+		-webkit-border-radius: 10px;
+		        border-radius: 10px;
+	}
+	.righttext{
+		text-align: right;
+	}
+
+</style>
 
 <h2>Chat</h2>
 
@@ -6,8 +20,15 @@
   <button type="submit" ng-click="addMessage(newMessage);newMessage = null;">send</button>
 </form>
 
-<ul id="messages" ng-show="messages.length">
-  <li ng-repeat="message in messages | reverse">{{message.userName}}: {{message.text}}</li>
+<ul id="messages" ng-show="messages.length" class="chat">
+  <li ng-repeat="message in messages | reverse" 
+  ng-class="{righttext:(message.userName != user.facebook.cachedUserProfile.first_name)}">
+	  <img src="{{message.avatarURL}}" class="avatar" 
+	  ng-if="message.userName == user.facebook.cachedUserProfile.first_name"/>
+	  {{message.text}}
+	  <img src="{{message.avatarURL}}" class="avatar" 
+	  ng-if="message.userName != user.facebook.cachedUserProfile.first_name"/>
+  </li>
 </ul>
 
 <p class="alert alert-danger" ng-show="err">{{err}}</p>
