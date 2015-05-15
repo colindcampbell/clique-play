@@ -14,6 +14,11 @@ angular.module('cliquePlayApp')
     var profile = $firebaseObject(Ref.child('users/'+user.uid));
     profile.$bindTo($scope, 'profile');
 
+    $scope.userInfo = function(){
+      console.log(profile);
+    }
+    $scope.userInfo();
+
     $scope.changePassword = function(oldPass, newPass, confirm) {
       $scope.err = null;
       if( !oldPass || !newPass ) {

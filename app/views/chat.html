@@ -36,7 +36,7 @@
 			</div>
 		</div>
 	</form>
- </div>
+</div>
 
 <div class="panel-left">
 	<div ng-repeat="chat in chats | reverse">
@@ -49,38 +49,28 @@
 </div>
 
 <div class="panel-right">
-
-	<div ng-repeat="chat in chats | reverse">
-<!-- 		<div class="chat-control" >
-			<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
-			<span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="{{chat.description}}" aria-hidden="true"></span>
-			<p>{{chat.name}}</p>
-		</div> -->
-		<div class="chat-control chat-{{$index}}" ng-class="{'chat-control-open':chatOpen,'chat-control-closed':!chatOpen}" ng-click="toggleChat($index)">
+	<div ng-repeat="chat in chats">
+		<div class="chat-control chat-{{$index}}" 
+		ng-click="toggleChat();">
 			<span class="glyphicon pull-right" aria-hidden="true"
 			ng-class="{'glyphicon-menu-up':!chatOpen,'glyphicon-minus':chatOpen}"
 			></span>
 			<p>{{chat.name}}</p>
 		</div>
-
-		<div class="chat-body" ng-class="{'chat-closed':!chatOpen}">
+		<div class="chat-body" ng-if="chatOpen">
 			<div id="chat-box">	
 				<ul id="messages" class="chat">
 				  <li ng-repeat="messageBlock in chat.messageBlocks" 
-				  ng-class="{righttext:(messageBlock.fullName != userFullName)}">
-						<div class="user-image" ng-if="messageBlock.fullName == userFullName">
+				  ng-class="{righttext:(messageBlock.userID != user.uid)}">
+						<div class="user-image" ng-if="messageBlock.userID == user.uid">
 					  	<img src="{{messageBlock.avatarURL}}" class="avatar" />
 						</div>
-						
 						<div class="message-block">
 					  	<span ng-repeat="message in messageBlock.messages">{{message.text}}<br/></span>
 						</div>
-
-						<div class="user-image" ng-if="messageBlock.fullName != userFullName">
+						<div class="user-image" ng-if="messageBlock.userID != user.uid">
 					  	<img src="{{messageBlock.avatarURL}}" class="avatar" />
 						</div>
-
-
 				  </li>
 				</ul>
 			</div>
@@ -90,7 +80,6 @@
 			</form>
 		</div>
 	</div>
-
 </div>
 
 <p class="alert alert-danger" ng-show="err">{{err}}</p>

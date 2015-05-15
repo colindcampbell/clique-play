@@ -49,42 +49,48 @@ angular.module('cliquePlayApp')
           description:$scope.description,
           creator:$scope.user.uid,
           pwProtected:$scope.pwProtected,
-          lastUser:'',
+          lastUserID:'',
           lastMessageBlockKey:'',
           password:pass
         })
-        .then(function(ref){
+        .then(function(){
           $scope.chatName = '';
           $scope.pass = '';
           $scope.confirm = '';
-        })
+        });
         // $scope.chats.userIDs.$add({id:$scope.user.uid})
       }
-    }
+    };
 
     // provide a method for adding a message
     $scope.addMessage = function(newMessage,chat,index) {
       var messageBlocksRef = $firebaseArray(Ref.child('chats/'+chat.$id+'/messageBlocks')),
           currentMessageRef = $firebaseArray(Ref.child('chats/'+chat.$id+'/messageBlocks/'+chat.lastMessageBlockKey+'/messages')),
-          firstName = $scope.user.facebook.cachedUserProfile.first_name;
+          firstName = $scope.user.userName?
+            $scope.user.userName:$scope.user.facebook.cachedUserProfile.first_name;
 
-      // console.log(chat);
       if( newMessage ) {
-        if( (chat.lastUser) == ($scope.userFullName) ){
+        if( (chat.lastUserID) == ($scope.user.uid) ){
           // If the same user enters more text, it will be added to the current block
           currentMessageRef.$add({
             text:newMessage
           })
+          .then(function(){
+            $scope.scrollBot();
+          })
+          // display any errors
+          .catch(alert);
         }else{
           // push a message to the end of the array
           messageBlocksRef.$add({
             firstName:firstName,
             fullName:$scope.userFullName,
+            userID:$scope.user.uid,
             avatarURL:$scope.user.facebook.cachedUserProfile.picture.data.url,
             messages:{'-JpO':{text:newMessage}}
           })
           .then(function(ref){
-            $scope.chats[index].lastUser = $scope.userFullName;
+            $scope.chats[index].lastUserID = $scope.user.uid;
             $scope.chats[index].lastMessageBlockKey = ref.key();
             $scope.chats.$save(index);
             $scope.scrollBot();
@@ -98,11 +104,14 @@ angular.module('cliquePlayApp')
     $scope.scrollBot = function(){
       var elem = document.getElementById('chat-box');
       elem.scrollTop = elem.scrollHeight;
-    }
+    };
 
     $scope.toggleChat = function(){
-      $scope.chatOpen = !$scope.chatOpen;
-    }
+      $scope.chatOpen = !$scope.chatOpen
+      // angular.forEach($scope.chats,function(value,key){
+      //   $scope.chats[key].open = false;
+      // });
+    };
 
     function alert(msg) {
       $scope.err = msg;
