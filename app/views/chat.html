@@ -1,34 +1,78 @@
-<style>
-	.chat li{
-			list-style:none;
-	}	
-	.avatar{
-		width:50px;
-		-webkit-border-radius: 10px;
-		        border-radius: 10px;
-	}
-	.righttext{
-		text-align: right;
-	}
+<div class="middle-panel">
 
-</style>
+	<form class="form-horizontal">
+	  <div class="form-group">
+	    <label for="chatName" class="col-sm-3 control-label">Chat Room Name</label>
+	    <div class="col-sm-9">
+	    	<input id="chatName" required name="chatName" ng-model="chatName" class="form-control" />
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="description" class="col-sm-3 control-label">Description</label>
+	    <div class="col-sm-9">
+	    	<input id="description" required name="description" ng-model="description" class="form-control" />
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="pwProtected" class="col-sm-3 control-label">Password Protected?</label>
+	    <div class="col-sm-1">
+	    	<input id="pwProtected" name="pwProtected" type="checkbox" ng-model="pwProtected" class="form-control" />
+	  	</div>
+	  </div>
+	  <div class="form-group" ng-if="pwProtected">
+	    <label for="loginPass" class="col-sm-3 control-label">password</label>
+	    <div class="col-sm-9">
+	    	<input id="loginPass" name="password" type="password" ng-model="pass" class="form-control" />
+	  	</div>
+	  </div>
+	  <div class="form-group" ng-if="pwProtected">
+	    <label for="loginConfirm" class="col-sm-3 control-label">confirm pass</label>
+	    <div class="col-sm-9">
+	    	<input id="loginConfirm" name="confirm" type="password" ng-model="confirm" class="form-control" />
+			</div>
+	  </div>
+	  <div class="form-group">
+			<div class="col-sm-offset-3 col-sm-9">
+				<button class="btn btn-primary" ng-click="createChat(pass, confirm)" ng-hide="createMode">Create</button>
+			</div>
+		</div>
+	</form>
 
-<h2>Chat</h2>
+ </div>
 
-<form>
-  <input placeholder="Message..." ng-model="newMessage">
-  <button type="submit" ng-click="addMessage(newMessage);newMessage = null;">send</button>
-</form>
+<div class="panel-left">
+	<div ng-repeat="chat in chats | reverse">
+		<div class="chat-control" >
+			<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="{{chat.description}}" aria-hidden="true"></span>
+			<p>{{chat.name}}</p>
+		</div>
+	</div>
+</div>
 
-<ul id="messages" ng-show="messages.length" class="chat">
-  <li ng-repeat="message in messages | reverse" 
-  ng-class="{righttext:(message.userName != user.facebook.cachedUserProfile.first_name)}">
-	  <img src="{{message.avatarURL}}" class="avatar" 
-	  ng-if="message.userName == user.facebook.cachedUserProfile.first_name"/>
-	  {{message.text}}
-	  <img src="{{message.avatarURL}}" class="avatar" 
-	  ng-if="message.userName != user.facebook.cachedUserProfile.first_name"/>
-  </li>
-</ul>
-
+<div class="panel-right">
+	<div class="chat-control" ng-class="{'chat-control-open':chatOpen,'chat-control-closed':!chatOpen}" ng-click="toggleChat()">
+		<span class="glyphicon pull-right" aria-hidden="true"
+		ng-class="{'glyphicon-menu-up':!chatOpen,'glyphicon-minus':chatOpen}"
+		></span>
+	</div>
+	<div class="chat-body" ng-class="{'chat-closed':!chatOpen}">
+		<div id="chat-box">	
+			<ul id="messages" ng-show="messages.length" class="chat">
+			  <li ng-repeat="message in messages" 
+			  ng-class="{righttext:(message.userName != user.facebook.cachedUserProfile.first_name)}">
+				  <img src="{{message.avatarURL}}" class="avatar" 
+				  ng-if="message.userName == user.facebook.cachedUserProfile.first_name"/>
+				  {{message.text}}
+				  <img src="{{message.avatarURL}}" class="avatar" 
+				  ng-if="message.userName != user.facebook.cachedUserProfile.first_name"/>
+			  </li>
+			</ul>
+		</div>
+		<form id="chat-form">
+		  <input id="chat-input" placeholder="Message..." ng-model="newMessage">
+		  <button type="submit" ng-click="addMessage(newMessage);newMessage = null;" style="display:none"></button>
+		</form>
+	</div>
+</div>
 <p class="alert alert-danger" ng-show="err">{{err}}</p>

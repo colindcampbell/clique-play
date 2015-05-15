@@ -1,0 +1,101 @@
+// Variables
+$panel-control-bg-color:#ccc;
+$panel-bg-color:#536896;
+
+$panel-width:20%;
+$chat-width:25%;
+
+$chat-input-height:38px;
+$chat-box-height:500px;
+
+$chat-control-offset: $chat-box-height + $chat-input-height;
+
+.panel-left{
+	position: absolute;
+	width:$panel-width;
+	left:0;
+	bottom:0;
+}
+
+.middle-panel{
+	width:53%;
+	margin-left: 20%;
+	padding:0 1%;
+}
+
+.panel-right{
+	position: absolute;
+	width:$chat-width;
+	right:0;
+	bottom:0;	
+}
+
+.chat li{
+		list-style:none;
+}	
+.avatar{
+	width:50px;
+	-webkit-border-radius: 10px;
+	        border-radius: 10px;
+}
+.righttext{
+	text-align: right;
+}
+
+.chat-control{
+	border-top: 1px solid #999;
+	width:100%;
+	background-color:$panel-control-bg-color;
+	height:35px;
+	cursor:pointer;
+	position: relative;
+	color:#333;
+	span{
+		padding:5px;
+		font-size: 20px;
+	}
+	p{
+		padding-left: 10px;
+		margin: 0;
+		font-size: 20px;
+		line-height: 30px;
+	}
+}
+
+.chat-control-open{
+	bottom: $chat-control-offset;
+}
+.chat-control-closed{
+	bottom: 0;
+}
+
+.chat-closed{
+	display: none;
+}
+
+#chat-box{
+	padding: 10px 15px;
+	width:100%;
+	height:$chat-box-height;
+	background-color:$panel-bg-color;
+	position: absolute;
+	bottom:$chat-input-height;
+	right:0px;
+	overflow-y: scroll;
+	#messages{
+		padding:0;
+		margin: 0;
+	}
+}
+
+#chat-form{
+	position: absolute;
+	bottom:0px;
+	right:0px;
+	width:100%;
+	#chat-input{
+		width:100%;
+		color:#777;
+		padding:5px 10px;
+	}
+}

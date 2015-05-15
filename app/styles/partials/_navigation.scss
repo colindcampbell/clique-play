@@ -1,0 +1,33 @@
+
+
+/* Custom page header */
+.header {
+  margin-bottom: 10px;
+
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
+}
+
+.navbar{
+	min-height: 70px;
+}
+
+.navbar-brand{
+	font-size: 30px;
+	line-height: 35px;
+}
+
+.navbar-nav{
+	margin-right: -15px;
+}
+
+.nav li a{
+	font-size: 24px;
+	line-height: 38px;
+	padding: 15px 0 15px 20px;
+}
