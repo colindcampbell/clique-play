@@ -19,6 +19,9 @@ angular.module('cliquePlayApp')
     // $scope.allChats = $firebaseArray(Ref.child('chats'));
     $scope.messages = $firebaseArray(Ref.child('messages').limitToLast(30));
     $scope.chats = $firebaseArray(Ref.child('chats'));
+    $scope.userFullName = 
+      $scope.user.facebook.cachedUserProfile.first_name+' '+
+      $scope.user.facebook.cachedUserProfile.last_name;
     // $scope.chats.userIDs = $firebaseArray($scope.chats.child('userIDs'));
     // $scope.messages.$loaded().then(function(){
     //   $scope.scrollBot();
@@ -46,9 +49,11 @@ angular.module('cliquePlayApp')
           description:$scope.description,
           creator:$scope.user.uid,
           pwProtected:$scope.pwProtected,
+          lastUser:'',
+          lastMessageBlockKey:'',
           password:pass
         })
-        .then(function(){
+        .then(function(ref){
           $scope.chatName = '';
           $scope.pass = '';
           $scope.confirm = '';
@@ -58,17 +63,35 @@ angular.module('cliquePlayApp')
     }
 
     // provide a method for adding a message
-    $scope.addMessage = function(newMessage) {
+    $scope.addMessage = function(newMessage,chat,index) {
+      var messageBlocksRef = $firebaseArray(Ref.child('chats/'+chat.$id+'/messageBlocks')),
+          currentMessageRef = $firebaseArray(Ref.child('chats/'+chat.$id+'/messageBlocks/'+chat.lastMessageBlockKey+'/messages')),
+          firstName = $scope.user.facebook.cachedUserProfile.first_name;
+
+      // console.log(chat);
       if( newMessage ) {
-        // push a message to the end of the array
-        $scope.messages.$add({
-          text: newMessage,
-          userName:$scope.user.facebook.cachedUserProfile.first_name,
-          avatarURL:$scope.user.facebook.cachedUserProfile.picture.data.url
-        })
-        .then($scope.scrollBot())
-        // display any errors
-        .catch(alert);
+        if( (chat.lastUser) == ($scope.userFullName) ){
+          // If the same user enters more text, it will be added to the current block
+          currentMessageRef.$add({
+            text:newMessage
+          })
+        }else{
+          // push a message to the end of the array
+          messageBlocksRef.$add({
+            firstName:firstName,
+            fullName:$scope.userFullName,
+            avatarURL:$scope.user.facebook.cachedUserProfile.picture.data.url,
+            messages:{'-JpO':{text:newMessage}}
+          })
+          .then(function(ref){
+            $scope.chats[index].lastUser = $scope.userFullName;
+            $scope.chats[index].lastMessageBlockKey = ref.key();
+            $scope.chats.$save(index);
+            $scope.scrollBot();
+          })
+          // display any errors
+          .catch(alert);
+        }
       }
     };
 

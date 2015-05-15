@@ -1,5 +1,4 @@
 <div class="middle-panel">
-
 	<form class="form-horizontal">
 	  <div class="form-group">
 	    <label for="chatName" class="col-sm-3 control-label">Chat Room Name</label>
@@ -37,7 +36,6 @@
 			</div>
 		</div>
 	</form>
-
  </div>
 
 <div class="panel-left">
@@ -51,28 +49,48 @@
 </div>
 
 <div class="panel-right">
-	<div class="chat-control" ng-class="{'chat-control-open':chatOpen,'chat-control-closed':!chatOpen}" ng-click="toggleChat()">
-		<span class="glyphicon pull-right" aria-hidden="true"
-		ng-class="{'glyphicon-menu-up':!chatOpen,'glyphicon-minus':chatOpen}"
-		></span>
-	</div>
-	<div class="chat-body" ng-class="{'chat-closed':!chatOpen}">
-		<div id="chat-box">	
-			<ul id="messages" ng-show="messages.length" class="chat">
-			  <li ng-repeat="message in messages" 
-			  ng-class="{righttext:(message.userName != user.facebook.cachedUserProfile.first_name)}">
-				  <img src="{{message.avatarURL}}" class="avatar" 
-				  ng-if="message.userName == user.facebook.cachedUserProfile.first_name"/>
-				  {{message.text}}
-				  <img src="{{message.avatarURL}}" class="avatar" 
-				  ng-if="message.userName != user.facebook.cachedUserProfile.first_name"/>
-			  </li>
-			</ul>
+
+	<div ng-repeat="chat in chats | reverse">
+<!-- 		<div class="chat-control" >
+			<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="{{chat.description}}" aria-hidden="true"></span>
+			<p>{{chat.name}}</p>
+		</div> -->
+		<div class="chat-control chat-{{$index}}" ng-class="{'chat-control-open':chatOpen,'chat-control-closed':!chatOpen}" ng-click="toggleChat($index)">
+			<span class="glyphicon pull-right" aria-hidden="true"
+			ng-class="{'glyphicon-menu-up':!chatOpen,'glyphicon-minus':chatOpen}"
+			></span>
+			<p>{{chat.name}}</p>
 		</div>
-		<form id="chat-form">
-		  <input id="chat-input" placeholder="Message..." ng-model="newMessage">
-		  <button type="submit" ng-click="addMessage(newMessage);newMessage = null;" style="display:none"></button>
-		</form>
+
+		<div class="chat-body" ng-class="{'chat-closed':!chatOpen}">
+			<div id="chat-box">	
+				<ul id="messages" class="chat">
+				  <li ng-repeat="messageBlock in chat.messageBlocks" 
+				  ng-class="{righttext:(messageBlock.fullName != userFullName)}">
+						<div class="user-image" ng-if="messageBlock.fullName == userFullName">
+					  	<img src="{{messageBlock.avatarURL}}" class="avatar" />
+						</div>
+						
+						<div class="message-block">
+					  	<span ng-repeat="message in messageBlock.messages">{{message.text}}<br/></span>
+						</div>
+
+						<div class="user-image" ng-if="messageBlock.fullName != userFullName">
+					  	<img src="{{messageBlock.avatarURL}}" class="avatar" />
+						</div>
+
+
+				  </li>
+				</ul>
+			</div>
+			<form id="chat-form">
+			  <input id="chat-input" placeholder="Message..." ng-model="newMessage">
+			  <button type="submit" ng-click="addMessage(newMessage,chat,$index);newMessage = null;" style="display:none"></button>
+			</form>
+		</div>
 	</div>
+
 </div>
+
 <p class="alert alert-danger" ng-show="err">{{err}}</p>
