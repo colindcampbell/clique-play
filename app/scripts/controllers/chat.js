@@ -11,7 +11,7 @@ angular.module('cliquePlayApp')
     $scope.user = user;
     $scope.chatOpen = false;
     $scope.pwProtected = false;
-    $scope.openChats = []
+    $scope.openChats = [];
     // $scope.pass = '';
     // $scope.password = '';
     // console.log(user);
@@ -24,15 +24,13 @@ angular.module('cliquePlayApp')
       .then(function(ref){
         angular.forEach($scope.chats, function(key,value){
           $scope.openChats.push({open:false});
-        })
+        });
+        $scope.chats.$watch(function(){
+          if($scope.chats.length > $scope.openChats.length){
+            $scope.openChats.push({open:false});
+          }
+        });
       });
-    $scope.chats.$watch(function(){
-      if($scope.chats.length > $scope.openChats.length){
-        $scope.openChats.push({open:false});
-        console.log($scope.openChats);
-      }
-    })
-
 
     $scope.userFullName = 
       $scope.user.facebook.cachedUserProfile.first_name+' '+
