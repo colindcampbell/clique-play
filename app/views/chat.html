@@ -51,13 +51,13 @@
 <div class="panel-right">
 	<div ng-repeat="chat in chats">
 		<div class="chat-control chat-{{$index}}" 
-		ng-click="toggleChat();">
+		ng-click="toggleChat($index);">
 			<span class="glyphicon pull-right" aria-hidden="true"
-			ng-class="{'glyphicon-menu-up':!chatOpen,'glyphicon-minus':chatOpen}"
+			ng-class="{'glyphicon-menu-up':!openChats[$index].open,'glyphicon-minus':openChats[$index].open}"
 			></span>
 			<p>{{chat.name}}</p>
 		</div>
-		<div class="chat-body" ng-if="chatOpen">
+		<div class="chat-body" ng-if="openChats[$index].open">
 			<div id="chat-box">	
 				<ul id="messages" class="chat">
 				  <li ng-repeat="messageBlock in chat.messageBlocks" 

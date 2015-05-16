@@ -11,6 +11,7 @@ angular.module('cliquePlayApp')
     $scope.user = user;
     $scope.chatOpen = false;
     $scope.pwProtected = false;
+    $scope.openChats = []
     // $scope.pass = '';
     // $scope.password = '';
     // console.log(user);
@@ -19,6 +20,20 @@ angular.module('cliquePlayApp')
     // $scope.allChats = $firebaseArray(Ref.child('chats'));
     $scope.messages = $firebaseArray(Ref.child('messages').limitToLast(30));
     $scope.chats = $firebaseArray(Ref.child('chats'));
+    $scope.chats.$loaded()
+      .then(function(ref){
+        angular.forEach($scope.chats, function(key,value){
+          $scope.openChats.push({open:false});
+        })
+      });
+    $scope.chats.$watch(function(){
+      if($scope.chats.length > $scope.openChats.length){
+        $scope.openChats.push({open:false});
+        console.log($scope.openChats);
+      }
+    })
+
+
     $scope.userFullName = 
       $scope.user.facebook.cachedUserProfile.first_name+' '+
       $scope.user.facebook.cachedUserProfile.last_name;
@@ -106,11 +121,8 @@ angular.module('cliquePlayApp')
       elem.scrollTop = elem.scrollHeight;
     };
 
-    $scope.toggleChat = function(){
-      $scope.chatOpen = !$scope.chatOpen
-      // angular.forEach($scope.chats,function(value,key){
-      //   $scope.chats[key].open = false;
-      // });
+    $scope.toggleChat = function(index){
+      $scope.openChats[index].open = !$scope.openChats[index].open;
     };
 
     function alert(msg) {
