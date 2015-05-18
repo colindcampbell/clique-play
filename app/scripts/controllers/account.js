@@ -7,28 +7,60 @@
  * Provides rudimentary account management functions.
  */
 angular.module('cliquePlayApp')
-  .controller('AccountCtrl', function ($scope, user, Auth, Ref, $firebaseObject, $timeout) {
+  .controller('AccountCtrl', function($scope, user, Auth, Ref, $firebaseObject, $timeout) {
     $scope.user = user;
-    $scope.logout = function() { Auth.$unauth(); };
+    $scope.logout = function() {
+      Auth.$unauth();
+    };
     $scope.messages = [];
-    var profile = $firebaseObject(Ref.child('users/'+user.uid));
+    var profile = $firebaseObject(Ref.child('users/' + user.uid));
     profile.$bindTo($scope, 'profile');
+    profile.$loaded()
+      .then(function(data) {
+        switch ($scope.user.provider) {
+          case "facebook":
+            $scope.profile.avatarURL = $scope.user.facebook.cachedUserProfile.picture.data.url;
+            $scope.profile.name = $scope.user.facebook.cachedUserProfile.name;
+            $scope.profile.firstName = $scope.user.facebook.cachedUserProfile.first_name;
+            $scope.profile.lastName = $scope.user.facebook.cachedUserProfile.last_name;
+            $scope.profile.userName = $scope.user.facebook.displayName;
+            break;
+          case "google":
+            $scope.profile.avatarURL = $scope.user.google.cachedUserProfile.picture;
+            $scope.profile.name = $scope.user.google.cachedUserProfile.name;
+            $scope.profile.firstName = $scope.user.google.cachedUserProfile.given_name;
+            $scope.profile.lastName = $scope.user.google.cachedUserProfile.family_name;
+            $scope.profile.userName = $scope.user.google.displayName;
+            break;
+          case "password":
+            $scope.profile.userName = $scope.user.password.email;
+            $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
+            $scope.profile.email = $scope.user.password.email;
+            break;
+          case "anonymous":
+            $scope.profile.userName = 'anonymous';
+            $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
+            break;
+        }
+      }).catch(alert);
 
-    $scope.userInfo = function(){
-      console.log(profile);
-    }
-    $scope.userInfo();
+    // $scope.userInfo = function(){
+    //   console.log(profile);
+    // }
+    // $scope.userInfo();
 
     $scope.changePassword = function(oldPass, newPass, confirm) {
       $scope.err = null;
-      if( !oldPass || !newPass ) {
+      if (!oldPass || !newPass) {
         error('Please enter all fields');
-      }
-      else if( newPass !== confirm ) {
+      } else if (newPass !== confirm) {
         error('Passwords do not match');
-      }
-      else {
-        Auth.$changePassword({email: profile.email, oldPassword: oldPass, newPassword: newPass})
+      } else {
+        Auth.$changePassword({
+            email: profile.email,
+            oldPassword: oldPass,
+            newPassword: newPass
+          })
           .then(function() {
             success('Password changed');
           }, error);
@@ -37,7 +69,11 @@ angular.module('cliquePlayApp')
 
     $scope.changeEmail = function(pass, newEmail) {
       $scope.err = null;
-      Auth.$changeEmail({password: pass, newEmail: newEmail, oldEmail: profile.email})
+      Auth.$changeEmail({
+          password: pass,
+          newEmail: newEmail,
+          oldEmail: profile.email
+        })
         .then(function() {
           profile.email = newEmail;
           profile.$save();
@@ -55,7 +91,10 @@ angular.module('cliquePlayApp')
     }
 
     function alert(msg, type) {
-      var obj = {text: msg+'', type: type};
+      var obj = {
+        text: msg + '',
+        type: type
+      };
       $scope.messages.unshift(obj);
       $timeout(function() {
         $scope.messages.splice($scope.messages.indexOf(obj), 1);

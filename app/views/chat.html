@@ -63,13 +63,13 @@
 				  <li ng-repeat="messageBlock in chat.messageBlocks" 
 				  ng-class="{righttext:(messageBlock.userID != user.uid)}">
 						<div class="user-image" ng-if="messageBlock.userID == user.uid">
-					  	<img src="{{messageBlock.avatarURL}}" class="avatar" />
+					  	<img src="{{messageBlock.avatarURL}}" alt="{{messageBlock.userName}}" class="avatar" />
 						</div>
 						<div class="message-block">
 					  	<span ng-repeat="message in messageBlock.messages">{{message.text}}<br/></span>
 						</div>
 						<div class="user-image" ng-if="messageBlock.userID != user.uid">
-					  	<img src="{{messageBlock.avatarURL}}" class="avatar" />
+					  	<img src="{{messageBlock.avatarURL}}" alt="{{messageBlock.userName}}" class="avatar" />
 						</div>
 				  </li>
 				</ul>

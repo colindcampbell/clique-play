@@ -7,8 +7,18 @@
  * A demo of using AngularFire to manage a synchronized list.
  */
 angular.module('cliquePlayApp')
-  .controller('ChatCtrl', function ($scope, user, Ref, $firebaseArray, $timeout) {
+  .controller('ChatCtrl', function ($scope, user, Ref, $firebaseArray, $firebaseObject, $timeout) {
     $scope.user = user;
+    var profile = $firebaseObject(Ref.child('users/'+user.uid));
+    profile.$bindTo($scope, 'profile');
+    profile.$loaded()
+      .then(function(data){
+        $scope.userFullName = (data.firstName && data.lastName)?
+        data.firstName+' '+
+        data.lastName:
+        data.userName;
+      }).catch(alert);
+
     $scope.chatOpen = false;
     $scope.pwProtected = false;
     $scope.openChats = [];
@@ -22,7 +32,7 @@ angular.module('cliquePlayApp')
     $scope.chats = $firebaseArray(Ref.child('chats'));
     $scope.chats.$loaded()
       .then(function(ref){
-        angular.forEach($scope.chats, function(key,value){
+        angular.forEach($scope.chats, function(element,index){
           $scope.openChats.push({open:false});
         });
         $scope.chats.$watch(function(){
@@ -32,9 +42,6 @@ angular.module('cliquePlayApp')
         });
       });
 
-    $scope.userFullName = 
-      $scope.user.facebook.cachedUserProfile.first_name+' '+
-      $scope.user.facebook.cachedUserProfile.last_name;
     // $scope.chats.userIDs = $firebaseArray($scope.chats.child('userIDs'));
     // $scope.messages.$loaded().then(function(){
     //   $scope.scrollBot();
@@ -79,8 +86,7 @@ angular.module('cliquePlayApp')
     $scope.addMessage = function(newMessage,chat,index) {
       var messageBlocksRef = $firebaseArray(Ref.child('chats/'+chat.$id+'/messageBlocks')),
           currentMessageRef = $firebaseArray(Ref.child('chats/'+chat.$id+'/messageBlocks/'+chat.lastMessageBlockKey+'/messages')),
-          firstName = $scope.user.userName?
-            $scope.user.userName:$scope.user.facebook.cachedUserProfile.first_name;
+          firstName = $scope.profile.userName;
 
       if( newMessage ) {
         if( (chat.lastUserID) == ($scope.user.uid) ){
@@ -99,7 +105,7 @@ angular.module('cliquePlayApp')
             firstName:firstName,
             fullName:$scope.userFullName,
             userID:$scope.user.uid,
-            avatarURL:$scope.user.facebook.cachedUserProfile.picture.data.url,
+            avatarURL:$scope.profile.avatarURL,
             messages:{'-JpO':{text:newMessage}}
           })
           .then(function(ref){
@@ -120,7 +126,15 @@ angular.module('cliquePlayApp')
     };
 
     $scope.toggleChat = function(index){
-      $scope.openChats[index].open = !$scope.openChats[index].open;
+      if (!$scope.openChats[index].open) {
+        angular.forEach($scope.openChats, function(element, index){
+          element.open=false;
+        });
+        $scope.openChats[index].open = true;
+      }else{
+        $scope.openChats[index].open = false;
+      };
+      // $scope.scrollBot();
     };
 
     function alert(msg) {
