@@ -17,5 +17,6 @@ angular.module('cliquePlayApp', [
     'ngTouch',
     'firebase',
     'firebase.ref',
-    'firebase.auth'
+    'firebase.auth',
+    'mgcrea.ngStrap'
   ]);

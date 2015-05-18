@@ -16,38 +16,48 @@ angular.module('cliquePlayApp')
     var profile = $firebaseObject(Ref.child('users/' + user.uid));
     profile.$bindTo($scope, 'profile');
     profile.$loaded()
-      .then(function(data) {
+      .then(function() {
         switch ($scope.user.provider) {
-          case "facebook":
-            $scope.profile.avatarURL = $scope.user.facebook.cachedUserProfile.picture.data.url;
-            $scope.profile.name = $scope.user.facebook.cachedUserProfile.name;
+          case 'facebook':
             $scope.profile.firstName = $scope.user.facebook.cachedUserProfile.first_name;
             $scope.profile.lastName = $scope.user.facebook.cachedUserProfile.last_name;
-            $scope.profile.userName = $scope.user.facebook.displayName;
+            if (!$scope.profile.userName) {
+              $scope.profile.userName = $scope.user.facebook.displayName;
+            }
+            if (!$scope.profile.avatarURL) {
+              $scope.profile.avatarURL = $scope.user.facebook.cachedUserProfile.picture.data.url;
+            }
             break;
-          case "google":
-            $scope.profile.avatarURL = $scope.user.google.cachedUserProfile.picture;
+          case 'google':
             $scope.profile.name = $scope.user.google.cachedUserProfile.name;
             $scope.profile.firstName = $scope.user.google.cachedUserProfile.given_name;
             $scope.profile.lastName = $scope.user.google.cachedUserProfile.family_name;
-            $scope.profile.userName = $scope.user.google.displayName;
+            if (!$scope.profile.userName) {
+              $scope.profile.userName = $scope.user.google.displayName;
+            }
+            if (!$scope.profile.avatarURL) {
+              $scope.profile.avatarURL = $scope.user.google.cachedUserProfile.picture;
+            }
             break;
-          case "password":
-            $scope.profile.userName = $scope.user.password.email;
-            $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
+          case 'password':
             $scope.profile.email = $scope.user.password.email;
+            if (!$scope.profile.userName) {
+              $scope.profile.userName = $scope.user.password.email;
+            };
+            if (!$scope.profile.avatarURL) {
+              $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
+            };
             break;
-          case "anonymous":
-            $scope.profile.userName = 'anonymous';
-            $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
+          case 'anonymous':
+            if (!$scope.profile.userName) {
+              $scope.profile.userName = 'anonymous';
+            };
+            if (!$scope.profile.avatarURL) {
+              $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
+            };
             break;
         }
       }).catch(alert);
-
-    // $scope.userInfo = function(){
-    //   console.log(profile);
-    // }
-    // $scope.userInfo();
 
     $scope.changePassword = function(oldPass, newPass, confirm) {
       $scope.err = null;

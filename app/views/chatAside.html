@@ -1,0 +1,33 @@
+<div class="panel-right">
+	<div ng-repeat="chat in chats">
+		<div class="chat-control chat-{{$index}}" 
+		ng-click="toggleChat($index);">
+			<span class="glyphicon pull-right" aria-hidden="true"
+			ng-class="{'glyphicon-menu-down':!openChats[$index].open,'glyphicon-minus':openChats[$index].open}"
+			></span>
+			<p>{{chat.name}}</p>
+		</div>
+		<div class="chat-body" ng-if="openChats[$index].open" data-animation="am-fade">
+			<div id="chat-box">	
+				<ul id="messages" class="chat">
+				  <li ng-repeat="messageBlock in chat.messageBlocks" 
+				  ng-class="{righttext:(messageBlock.userID != user.uid)}">
+						<div class="user-image" ng-if="messageBlock.userID == user.uid">
+					  	<img src="{{messageBlock.avatarURL}}" alt="{{messageBlock.userName}}" class="avatar" />
+						</div>
+						<div class="message-block">
+					  	<span ng-repeat="message in messageBlock.messages">{{message.text}}<br/></span>
+						</div>
+						<div class="user-image" ng-if="messageBlock.userID != user.uid">
+					  	<img src="{{messageBlock.avatarURL}}" alt="{{messageBlock.userName}}" class="avatar" />
+						</div>
+				  </li>
+				</ul>
+			</div>
+			<form id="chat-form">
+			  <input id="chat-input" placeholder="Message..." ng-model="newMessage">
+			  <button type="submit" ng-click="addMessage(newMessage,chat,$index);newMessage = null;" style="display:none"></button>
+			</form>
+		</div>
+	</div>
+</div>

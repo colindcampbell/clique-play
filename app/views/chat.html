@@ -38,22 +38,12 @@
 	</form>
 </div>
 
-<div class="panel-left">
-	<div ng-repeat="chat in chats | reverse">
-		<div class="chat-control" >
-			<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
-			<span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="{{chat.description}}" aria-hidden="true"></span>
-			<p>{{chat.name}}</p>
-		</div>
-	</div>
-</div>
-
 <div class="panel-right">
-	<div ng-repeat="chat in chats">
-		<div class="chat-control chat-{{$index}}" 
+	<div ng-repeat="chat in chats" ng-class="{'chat-open':openChats[$index].open,'new-message':openChats[$index].newMessage}">
+		<div class="chat-control" 
 		ng-click="toggleChat($index);">
-			<span class="glyphicon pull-right" aria-hidden="true"
-			ng-class="{'glyphicon-menu-up':!openChats[$index].open,'glyphicon-minus':openChats[$index].open}"
+			<span class="glyphicon pull-left" aria-hidden="true"
+			ng-class="{'glyphicon-menu-left':!openChats[$index].open,'glyphicon-menu-right':openChats[$index].open}"
 			></span>
 			<p>{{chat.name}}</p>
 		</div>
@@ -75,11 +65,29 @@
 				</ul>
 			</div>
 			<form id="chat-form">
-			  <input id="chat-input" placeholder="Message..." ng-model="newMessage">
+			  <input class="chat-input" id="input{{$index}}" placeholder="Message..." ng-model="newMessage" ng-click="openChats[$index].newMessage=false;">
 			  <button type="submit" ng-click="addMessage(newMessage,chat,$index);newMessage = null;" style="display:none"></button>
 			</form>
 		</div>
 	</div>
 </div>
+
+<!-- <div class="panel-left">
+	<div ng-repeat="chat in chats | reverse">
+		<div class="chat-control" >
+			<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="{{chat.description}}" aria-hidden="true"></span>
+			<p>{{chat.name}}</p>
+		</div>
+	</div>
+</div> -->
+
+
+
+<!-- <button type="button" class="btn btn-lg btn-danger" ng-if="chatAsideReady" ng-click="chatAside.show()" >Custom aside
+  <br>
+  <small>(using data-template)</small>
+</button> -->
+
 
 <p class="alert alert-danger" ng-show="err">{{err}}</p>

@@ -7,7 +7,7 @@
  * A demo of using AngularFire to manage a synchronized list.
  */
 angular.module('cliquePlayApp')
-  .controller('ChatCtrl', function ($scope, user, Ref, $firebaseArray, $firebaseObject, $timeout) {
+  .controller('ChatCtrl', function ($scope, user, Ref, $aside, $firebaseArray, $firebaseObject, $timeout) {
     $scope.user = user;
     var profile = $firebaseObject(Ref.child('users/'+user.uid));
     profile.$bindTo($scope, 'profile');
@@ -22,31 +22,24 @@ angular.module('cliquePlayApp')
     $scope.chatOpen = false;
     $scope.pwProtected = false;
     $scope.openChats = [];
-    // $scope.pass = '';
-    // $scope.password = '';
-    // console.log(user);
-    // synchronize a read-only, synchronized array of messages, limit to most recent 10
-    // $scope.myChats = $firebaseArray(Ref.child('chats').orderByChild('users/uid').equalTo(user.uid));
-    // $scope.allChats = $firebaseArray(Ref.child('chats'));
     $scope.messages = $firebaseArray(Ref.child('messages').limitToLast(30));
+
     $scope.chats = $firebaseArray(Ref.child('chats'));
     $scope.chats.$loaded()
-      .then(function(ref){
-        angular.forEach($scope.chats, function(element,index){
-          $scope.openChats.push({open:false});
+      .then(function(){
+        angular.forEach($scope.chats, function(){
+          $scope.openChats.push({open:false,newMessage:false});
         });
-        $scope.chats.$watch(function(){
+        $scope.chats.$watch(function(event){
+          var chatIndex = $scope.chats.$indexFor(event.key);
           if($scope.chats.length > $scope.openChats.length){
             $scope.openChats.push({open:false});
-          }
+          };
+          if ( event.event=='child_changed' ) {
+            $scope.openChats[chatIndex].newMessage = true;
+          };
         });
       });
-
-    // $scope.chats.userIDs = $firebaseArray($scope.chats.child('userIDs'));
-    // $scope.messages.$loaded().then(function(){
-    //   $scope.scrollBot();
-    // })
-
 
     // display any errors
     $scope.messages.$loaded().catch(alert);
@@ -89,7 +82,7 @@ angular.module('cliquePlayApp')
           firstName = $scope.profile.userName;
 
       if( newMessage ) {
-        if( (chat.lastUserID) == ($scope.user.uid) ){
+        if( (chat.lastUserID) === ($scope.user.uid) ){
           // If the same user enters more text, it will be added to the current block
           currentMessageRef.$add({
             text:newMessage
@@ -126,16 +119,29 @@ angular.module('cliquePlayApp')
     };
 
     $scope.toggleChat = function(index){
+      $scope.openChats[index].newMessage = false;
       if (!$scope.openChats[index].open) {
-        angular.forEach($scope.openChats, function(element, index){
+        angular.forEach($scope.openChats, function(element){
           element.open=false;
         });
         $scope.openChats[index].open = true;
       }else{
         $scope.openChats[index].open = false;
-      };
+      }
       // $scope.scrollBot();
     };
+
+    // $scope.chatAside = $aside({
+    //   "title": 'My Chats',
+    //   scope: $scope, 
+    //   template: 'views/chatAside.html',
+    //   show: false
+    // });
+
+    // $scope.chatAside.$promise.then(function() {
+    //   // $scope.chatAside.show();
+    //   $scope.chatAsideReady = true;
+    // });
 
     function alert(msg) {
       $scope.err = msg;
