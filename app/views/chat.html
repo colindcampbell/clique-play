@@ -39,18 +39,18 @@
 </div>
 
 <div class="panel-right">
-	<div ng-repeat="chat in chats" ng-class="{'chat-open':openChats[$index].open,'new-message':openChats[$index].newMessage}">
-		<div class="chat-control" 
+	<div ng-repeat="chat in chats" ng-class="{'chat-open':openChats[$index].open}">
+		<div class="chat-control" ng-class="{'new-message animated-slow flash infinite':openChats[$index].newMessage}"
 		ng-click="toggleChat($index);">
-			<span class="glyphicon pull-left" aria-hidden="true"
-			ng-class="{'glyphicon-menu-left':!openChats[$index].open,'glyphicon-menu-right':openChats[$index].open}"
+			<span class="fa" aria-hidden="true"
+			ng-class="{'fa-angle-left pull-left':!openChats[$index].open,'fa-angle-right pull-right':openChats[$index].open}"
 			></span>
 			<p>{{chat.name}}</p>
 		</div>
 		<div class="chat-body" ng-if="openChats[$index].open">
-			<div id="chat-box">	
+			<div class="chat-box">	
 				<ul id="messages" class="chat">
-				  <li ng-repeat="messageBlock in chat.messageBlocks" 
+				  <li ng-repeat="messageBlock in chat.messageBlocks | filter:reverse" 
 				  ng-class="{righttext:(messageBlock.userID != user.uid)}">
 						<div class="user-image" ng-if="messageBlock.userID == user.uid">
 					  	<img src="{{messageBlock.avatarURL}}" alt="{{messageBlock.userName}}" class="avatar" />
@@ -88,6 +88,5 @@
   <br>
   <small>(using data-template)</small>
 </button> -->
-
 
 <p class="alert alert-danger" ng-show="err">{{err}}</p>

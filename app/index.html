@@ -9,9 +9,10 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" />
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -43,7 +44,7 @@
 
             <ul class="nav navbar-nav pull-right">
               <!-- //angularfire -->
-              <li><a ng-href="#/chat">chat</a></li>
+              <li><a ng-href="#/gamedash">Game Dash</a></li>
               <li>
               <a ng-hide-auth="" href="#/login">log in</a>
               <a ng-show-auth="" href="#/account">account</a>
@@ -58,6 +59,96 @@
     <div id="content">
       <div ng-view=""></div>
     </div>
+
+    
+  <div class="chat" ng-controller="ChatCtrl">
+    <div ng-if="user">
+      <div class="panel-left">
+        <div ng-repeat="chat in chatRooms">
+          <div class="chat-control" ng-click="joinChat(chat)">
+            <span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="{{chat.description}}" aria-hidden="true"></span>
+            <p>{{chat.name}}</p>
+          </div>
+        </div>
+      </div>      
+      <div class="middle-panel">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="chatName" class="col-sm-3 control-label">Chat Room Name</label>
+            <div class="col-sm-9">
+              <input id="chatName" required name="chatName" ng-model="chatName" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description" class="col-sm-3 control-label">Description</label>
+            <div class="col-sm-9">
+              <input id="description" required name="description" ng-model="description" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="pwProtected" class="col-sm-3 control-label">Password Protected?</label>
+            <div class="col-sm-1">
+              <input id="pwProtected" name="pwProtected" type="checkbox" ng-model="pwProtected" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group" ng-if="pwProtected">
+            <label for="loginPass" class="col-sm-3 control-label">password</label>
+            <div class="col-sm-9">
+              <input id="loginPass" name="password" type="password" ng-model="pass" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group" ng-if="pwProtected">
+            <label for="loginConfirm" class="col-sm-3 control-label">confirm pass</label>
+            <div class="col-sm-9">
+              <input id="loginConfirm" name="confirm" type="password" ng-model="confirm" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+              <button class="btn btn-primary" ng-click="createChat(pass, confirm, chatName, description)" ng-hide="createMode">Create</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="panel-right">
+        <div ng-repeat="chat in userChats" ng-class="{'chat-open':openChats[$index].open}">
+          <div class="chat-control" ng-class="{'new-message animated-slow flash infinite':openChats[$index].newMessage}"
+          ng-click="toggleChat($index)">
+            <span class="fa" aria-hidden="true"
+            ng-class="{'fa-angle-left pull-left':!openChats[$index].open,'fa-angle-right pull-right':openChats[$index].open}"
+            ></span>
+            <p>{{chat.name}}</p>
+          </div>
+          <div class="chat-body" ng-if="openChats[$index].open">
+            <div class="chat-box">  
+              
+              <ul id="messages" class="chat" >
+                <li ng-repeat="messageBlock in userMessageBlocks[$parent.$index]" 
+                ng-class="{righttext:(messageBlock.userName != user.uid)}"
+                ng-click="log()">
+                  <div class="user-image" ng-if="messageBlock.userName == user.uid">
+                    <img src="{{messageBlock.avatarURL}}" alt="{{messageBlock.userName}}" class="avatar" />
+                  </div>
+                  <div class="message-block">
+                    <span ng-repeat="message in messageBlock.messages">{{message.message}}<br/></span>
+                  </div>
+                  <div class="user-image" ng-if="messageBlock.userName != user.uid">
+                    <img src="{{messageBlock.avatarURL}}" alt="{{messageBlock.userName}}" class="avatar" />
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+            <form id="chat-form">
+              <input class="chat-input" id="input{{$index}}" placeholder="Message..." ng-model="newMessage" ng-click="openChats[$index].newMessage=false;">
+              <button type="submit" ng-click="addMessage(newMessage,chat,$index);newMessage = null;" style="display:none"></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!--     <div class="footer">
       <div class="container">
@@ -90,7 +181,6 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->grunt
 
@@ -104,9 +194,11 @@
         <script src="scripts/angularfire/auth.js"></script>
         <script src="scripts\controllers\login.js"></script>
         <script src="scripts\controllers\account.js"></script>
+        <script src="scripts\controllers\gamedash.js"></script>
         <script src="scripts/directives/ngShowAuth.js"></script>
         <script src="scripts/directives/ngHideAuth.js"></script>
         <script src="scripts\routes.js"></script>
+        <script src="scripts/filters/messagerange.js"></script>
         <!-- endbuild -->
 </body>
 </html>

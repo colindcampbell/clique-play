@@ -2,7 +2,7 @@
 $panel-control-bg-color:#ccc;
 $panel-bg-color:#536896;
 
-$panel-width:20%;
+$panel-width:120px;
 $chat-width:360px;
 $chat-closed-width:90px;
 
@@ -14,18 +14,29 @@ $chat-box-height:320px;
 	width:$panel-width;
 	left:0;
 	bottom:0;
+	background: #eee;
+	p{
+		margin:0;
+	}
+	.chat-control{
+		width:100%;
+		padding:5px 10px;
+		cursor: pointer;
+	}
 }
 
 .middle-panel{
 	width:53%;
 	margin-left: 20%;
 	padding:0 1%;
+	color:white;
 }
 
 .panel-right{
 	position: absolute;
 	right:0;
 	bottom:0;
+	width:90px;
 	.chat-open{
 		position: absolute;
 		width:$chat-width;
@@ -33,15 +44,15 @@ $chat-box-height:320px;
 		bottom:0;
 		.chat-control{
 			width:100%;
-		}
-	}
-	.new-message{
-		.chat-control{
-			background-color: #00A6A0;
+			border:none;
+			-webkit-border-radius: 5px 5px 0 0;
+			        border-radius: 5px 5px 0 0;
 		}
 	}
 	// Chat Control Closed
 	.chat-control{
+		-webkit-border-radius: 5px 0 0 5px;
+		        border-radius: 5px 0 0 5px;
 		overflow: hidden;
 		width:$chat-closed-width;
 		border-top: 1px solid #999;
@@ -50,6 +61,7 @@ $chat-box-height:320px;
 		cursor:pointer;
 		position: relative;
 		color:#444;
+		border-left: 1px solid #444;
 		span{
 			padding:5px;
 			font-size: 20px;
@@ -61,11 +73,14 @@ $chat-box-height:320px;
 			line-height: 30px;
 		}
 	}
+	.new-message{
+		background-color: #00A6A0;
+	}
 }
 
 .chat li{
 	list-style:none;
-	margin-top: 5px;
+	margin-top: 6px;
 }
 
 .message-block{
@@ -135,7 +150,7 @@ $chat-box-height:320px;
 	display: none;
 }
 
-#chat-box{
+.chat-box{
 	padding: 10px 2%;
 	max-height:$chat-box-height;
 	background-color:$panel-bg-color;
@@ -143,7 +158,7 @@ $chat-box-height:320px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	#messages{
-		width:96%;
+		width:100%;
 		position: relative;
 		padding:0;
 		margin: 0;

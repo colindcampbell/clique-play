@@ -58,13 +58,9 @@ angular.module('cliquePlayApp')
   // before trying to access that route
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider
-      .whenAuthenticated('/', {
+      .when('/welcome', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
-      })
-      .whenAuthenticated('/chat', {
-        templateUrl: 'views/chat.html',
-        controller: 'ChatCtrl'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
@@ -74,7 +70,11 @@ angular.module('cliquePlayApp')
         templateUrl: 'views/account.html',
         controller: 'AccountCtrl'
       })
-      .otherwise({redirectTo: '/'});
+      .whenAuthenticated('/gamedash', {
+        templateUrl: 'views/gamedash.html',
+        controller: 'GameDashCtrl'
+      })
+      .otherwise({redirectTo: '/welcome'});
   }])
 
   /**
@@ -83,8 +83,8 @@ angular.module('cliquePlayApp')
    * for changes in auth status which might require us to navigate away from a path
    * that we can no longer view.
    */
-  .run(['$rootScope', '$location', 'Auth', 'SECURED_ROUTES', 'loginRedirectPath',
-    function($rootScope, $location, Auth, SECURED_ROUTES, loginRedirectPath) {
+  .run(['$rootScope', '$location', 'Auth', 'SECURED_ROUTES', 'loginRedirectPath', '$timeout',
+    function($rootScope, $location, Auth, SECURED_ROUTES, loginRedirectPath, $timeout) {
       // watch for login status changes and redirect if appropriate
       Auth.$onAuth(check);
 
@@ -93,6 +93,7 @@ angular.module('cliquePlayApp')
       $rootScope.$on('$routeChangeError', function(e, next, prev, err) {
         if( err === 'AUTH_REQUIRED' ) {
           $location.path(loginRedirectPath);
+          alert("Please login to visit "+next.$$route.originalPath);
         }
       });
 
@@ -104,6 +105,13 @@ angular.module('cliquePlayApp')
 
       function authRequired(path) {
         return SECURED_ROUTES.hasOwnProperty(path);
+      }
+
+      function alert(msg) {
+        $rootScope.err = msg;
+        $timeout(function() {
+          $rootScope.err = null;
+        }, 5000);
       }
     }
   ])

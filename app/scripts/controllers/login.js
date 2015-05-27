@@ -73,7 +73,7 @@ angular.module('cliquePlayApp')
   
 
     function redirect() {
-      $location.path('/account');
+      $location.path('/gamedash');
     }
 
     function showError(err) {

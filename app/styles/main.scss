@@ -1,5 +1,6 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
 // Partial Imports
@@ -16,6 +17,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 }
 
 body{
+  -ms-overflow: hidden;
+      overflow: hidden;
   background-color:#29304A;
 }
 
@@ -40,6 +43,15 @@ body {
 .footer {
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.btn{
+  font-size: 20px;
+}
+
+.btn-facebook{
+  background-color:#3B5998;
+  border:1px solid #3B5998;
 }
 
 /* Custom page footer */

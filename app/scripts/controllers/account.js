@@ -7,11 +7,15 @@
  * Provides rudimentary account management functions.
  */
 angular.module('cliquePlayApp')
-  .controller('AccountCtrl', function($scope, user, Auth, Ref, $firebaseObject, $timeout) {
+  .controller('AccountCtrl', function($scope, user, Auth, Ref, $firebaseObject, $timeout, $location) {
+
     $scope.user = user;
+    
     $scope.logout = function() {
       Auth.$unauth();
+      $location.path('/home');
     };
+
     $scope.messages = [];
     var profile = $firebaseObject(Ref.child('users/' + user.uid));
     profile.$bindTo($scope, 'profile');

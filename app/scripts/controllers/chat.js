@@ -7,46 +7,89 @@
  * A demo of using AngularFire to manage a synchronized list.
  */
 angular.module('cliquePlayApp')
-  .controller('ChatCtrl', function ($scope, user, Ref, $aside, $firebaseArray, $firebaseObject, $timeout) {
-    $scope.user = user;
-    var profile = $firebaseObject(Ref.child('users/'+user.uid));
-    profile.$bindTo($scope, 'profile');
-    profile.$loaded()
-      .then(function(data){
-        $scope.userFullName = (data.firstName && data.lastName)?
-        data.firstName+' '+
-        data.lastName:
-        data.userName;
-      }).catch(alert);
+  .controller('ChatCtrl', function ($scope, Ref, $firebaseArray, $firebaseObject, $timeout, $interval,Auth) {
 
     $scope.chatOpen = false;
     $scope.pwProtected = false;
     $scope.openChats = [];
-    $scope.messages = $firebaseArray(Ref.child('messages').limitToLast(30));
+    $scope.userChats = [];
+    $scope.userMessageBlocks = [];
+    $scope.userLoaded = false;
+    $scope.chatRooms = $firebaseArray(Ref.child('chatRooms'));
 
-    $scope.chats = $firebaseArray(Ref.child('chats'));
-    $scope.chats.$loaded()
-      .then(function(){
-        angular.forEach($scope.chats, function(){
-          $scope.openChats.push({open:false,newMessage:false});
-        });
-        $scope.chats.$watch(function(event){
-          var chatIndex = $scope.chats.$indexFor(event.key);
-          if($scope.chats.length > $scope.openChats.length){
-            $scope.openChats.push({open:false});
+    // $interval(function(){
+    //   console.log($scope.userChats)
+    // }, 10000);
+
+    $scope.loadProfile = function(){
+      var profile = $firebaseObject(Ref.child('users/'+$scope.user.uid));
+      profile.$bindTo($scope, 'profile').then(function(unbind){$scope.unbindProfile = unbind;});
+      profile.$loaded()
+        .then(function(){
+          $scope.userFullName = ($scope.profile.firstName && $scope.profile.lastName)?
+          $scope.profile.firstName+' '+$scope.profile.lastName:$scope.profile.userName;
+        }).catch(alert);
+      $scope.userLoaded = true;
+    }
+
+    $scope.getChats = function(currentChatKey,key){
+      var userChatTextMessages = $firebaseArray(Ref.child('chatTexts').child(currentChatKey).child('messageBlocks').limitToLast(20)),
+          userChatText = $firebaseObject(Ref.child('chatRooms').child(currentChatKey));
+      userChatText.$loaded().then(function(ref){
+        $scope.userChats[key] = ref;
+        $scope.openChats[key] = ({open:false,newMessage:false});
+        userChatTextMessages.$loaded().then(function(ref){
+          $scope.userMessageBlocks[key] = ref;
+          console.log($scope.userMessageBlocks);
+        })
+      })
+    }
+    
+    $scope.loadChats = function(){
+      // Eventually load only chats for current user as well using fullChats
+      $scope.userChatKeys = $firebaseArray(Ref.child('users/'+$scope.user.uid+'/chatRooms'));
+      $scope.userChatKeys.$loaded().then(function(chatKeys){
+        angular.forEach(chatKeys, function(val,key){
+          $scope.getChats(val.chatKey,key);
+        })
+        $scope.userChatKeys.$watch(function(event){
+          if ( event.event==='child_added' ) {
+            var key = $scope.userChats.length,
+                chatKey = $firebaseObject(Ref.child('users/'+$scope.user.uid+'/chatRooms/'+event.key));
+            chatKey.$loaded().then(function(ref){
+              $scope.getChats(ref.chatKey,key);
+            })
+          }else{
+            console.log('child removed');
           };
-          if ( event.event=='child_changed' ) {
-            $scope.openChats[chatIndex].newMessage = true;
-          };
-        });
-      });
+        })
+      })
+    }
 
-    // display any errors
-    $scope.messages.$loaded().catch(alert);
-    // $scope.chats.$loaded().catch(alert);
+    $scope.user = Auth.$getAuth()?Auth.$getAuth():null;
+    if ($scope.user && !$scope.userLoaded) {
+      $scope.loadProfile();
+      $scope.loadChats();
+      $scope.userLoaded = true;
+    };
 
-    $scope.createChat = function(pass, confirm){
-      if( $scope.chatName ) {
+    Auth.$onAuth(function(authData){
+      if(!authData && $scope.user){
+        $scope.userLoaded=false;
+        $scope.userChats=[];
+        $scope.unbindProfile();
+        $scope.profile=null;
+        $scope.user=null;
+      }
+      if(authData && !$scope.userLoaded){
+        $scope.user = authData;
+        $scope.loadProfile();
+        $scope.loadChats();
+      }
+    })
+
+    $scope.createChat = function(pass, confirm, chatName, description){
+      if( chatName ) {
         if( $scope.pwProtected && !pass ) {
           $scope.err = 'Please enter a password';
         }
@@ -57,17 +100,26 @@ angular.module('cliquePlayApp')
           pass = null;
         }
         // pass = $scope.pwProtected?pass:null;
-        $scope.chats.$add({
-          name:$scope.chatName,
-          description:$scope.description,
+        $scope.chatRooms.$add({
+          name:chatName,
+          description:description,
           creator:$scope.user.uid,
-          pwProtected:$scope.pwProtected,
           lastUserID:'',
-          lastMessageBlockKey:'',
+          pwProtected:$scope.pwProtected,
           password:pass
         })
-        .then(function(){
+        .then(function(ref){
+          var chatKey = ref.key(),
+              newChatMember = $firebaseArray(Ref.child('chatMembers/'+chatKey)),
+              newChatTexts = $firebaseObject(Ref.child('chatTexts/'+chatKey));
+          newChatTexts.name = chatName;
+          newChatTexts.description = description;
+          newChatTexts.creator = $scope.user.uid;
+          newChatTexts.$save();
+          newChatMember.$add({userID:$scope.user.uid});
+          $scope.userChatKeys.$add({chatKey:chatKey});
           $scope.chatName = '';
+          $scope.description = '';
           $scope.pass = '';
           $scope.confirm = '';
         });
@@ -77,59 +129,73 @@ angular.module('cliquePlayApp')
 
     // provide a method for adding a message
     $scope.addMessage = function(newMessage,chat,index) {
-      var messageBlocksRef = $firebaseArray(Ref.child('chats/'+chat.$id+'/messageBlocks')),
-          currentMessageRef = $firebaseArray(Ref.child('chats/'+chat.$id+'/messageBlocks/'+chat.lastMessageBlockKey+'/messages')),
-          firstName = $scope.profile.userName;
-
+      var chatRoomsRef = $firebaseObject(Ref.child('chatRooms/'+chat.$id)),
+          chatTextsMessageRef = $firebaseArray(Ref.child('chatTexts/'+chat.$id+'/messageBlocks')),
+          userName = $scope.profile.userName;
       if( newMessage ) {
-        if( (chat.lastUserID) === ($scope.user.uid) ){
-          // If the same user enters more text, it will be added to the current block
-          currentMessageRef.$add({
-            text:newMessage
+        if ( chat.lastUserID === $scope.user.uid ) {
+          var currentMessageRef = $firebaseArray(Ref.child('chatTexts/'+chat.$id+'/messageBlocks/'+chat.lastMessageBlockID+'/messages'))
+          currentMessageRef.$loaded().then(function(){
+            currentMessageRef.$add({message:newMessage})
           })
-          .then(function(){
-            $scope.scrollBot();
-          })
-          // display any errors
-          .catch(alert);
         }else{
-          // push a message to the end of the array
-          messageBlocksRef.$add({
-            firstName:firstName,
-            fullName:$scope.userFullName,
-            userID:$scope.user.uid,
+          chatTextsMessageRef.$add({
+            messages:{'-JpO':{message:newMessage}},
             avatarURL:$scope.profile.avatarURL,
-            messages:{'-JpO':{text:newMessage}}
+            userName:$scope.user.uid
           })
           .then(function(ref){
-            $scope.chats[index].lastUserID = $scope.user.uid;
-            $scope.chats[index].lastMessageBlockKey = ref.key();
-            $scope.chats.$save(index);
-            $scope.scrollBot();
-          })
-          // display any errors
-          .catch(alert);
-        }
+            chatRoomsRef.lastUserID = $scope.user.uid;
+            chatRoomsRef.lastMessageBlockID = ref.key();
+            chatRoomsRef.$save();
+          }).catch(alert);
+        };
       }
     };
 
+    $scope.joinChat = function(chat){
+      $scope.userChatKeys.$add({chatKey:chat.$id});
+    }
+
     $scope.scrollBot = function(){
-      var elem = document.getElementById('chat-box');
-      elem.scrollTop = elem.scrollHeight;
+      var boxes = document.getElementsByClassName('chat-box');
+      angular.forEach(boxes, function(el){
+        if(el.scrollHeight){
+          el.scrollTop = el.scrollHeight;
+        }
+      });
     };
 
     $scope.toggleChat = function(index){
       $scope.openChats[index].newMessage = false;
       if (!$scope.openChats[index].open) {
-        angular.forEach($scope.openChats, function(element){
-          element.open=false;
+        angular.forEach($scope.openChats, function(el){
+          el.open=false;
         });
         $scope.openChats[index].open = true;
+        $scope.scrollBot();
       }else{
         $scope.openChats[index].open = false;
       }
-      // $scope.scrollBot();
     };
+
+    $scope.getMessageRange = function(index, messages){
+      var newUser = false, i=index+1, range = [];
+      range.push(messages[index]);
+      while(newUser==false && i<messages.length){
+        if (messages[i].userName == messages[i-1].userName) {
+          range.push(messages[i]);
+          i++;
+        }else{
+          newUser = true;
+        };
+      }
+      return range
+    }
+
+    $scope.log = function(item){
+      console.log(item);
+    }
 
     // $scope.chatAside = $aside({
     //   "title": 'My Chats',
