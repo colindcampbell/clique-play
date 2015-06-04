@@ -14,16 +14,79 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   }
   font-family: 'Dosis',sans-serif;
   font-size: 18px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body{
   -ms-overflow: hidden;
       overflow: hidden;
-  background-color:#29304A;
+      background-color: #ccc;
+  // background: url('../images/cliqueplayBG.jpg') no-repeat center center fixed;
+  // -webkit-background-size: cover;
+  //      -o-background-size: cover;
+  //         background-size: cover;
+  a:hover, a:focus{
+    text-decoration: none;
+    outline:none;
+  }
+}
+
+#fore{
+  z-index:20;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 #content{
   color:white;
+  position: absolute;
+  top: 5px;
+  left: 210px;
+  right: 310px;
+  bottom:5px;
+  overflow:hidden;
+}
+
+.main-content{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: -20px; /* Decrease this value for cross-browser compatibility */
+  overflow-y: scroll;
+}
+
+.cp-background{
+  opacity:.80;
+  background-color: rgba(100,100,100,.7);
+  -webkit-border-radius: 3px;
+          border-radius: 3px;
+  -webkit-transition: background-color .3s, opacity .3s;
+     -moz-transition: background-color .3s, opacity .3s;
+      -ms-transition: background-color .3s, opacity .3s;
+       -o-transition: background-color .3s, opacity .3s;
+          transition: background-color .3s, opacity .3s;
+}
+
+.cp-background:hover{
+  opacity:1;
+  background-color: rgba(100,100,100,.85);
+}
+
+.cp-background-dark{
+  opacity:1;
+  background-color: rgba(100,100,100,.85);
+}
+
+.content-container{
+  width:100%;
+  max-width:960px;
+  margin: 0 auto;
 }
 
 .browsehappy {
@@ -38,12 +101,6 @@ body {
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
-}
 
 .btn{
   font-size: 20px;
@@ -105,5 +162,334 @@ body {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+}
+
+.main-content.ng-enter, .main-content.ng-leave {
+  -webkit-transition:0.3s ease all;
+  transition:0.3s ease all;
+  position:absolute;
+  left:0;
+  right:-20px;
+}
+
+.main-content.ng-enter {
+  z-index:100;
+  opacity:0;
+}
+.main-content.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.main-content.ng-leave {
+  z-index:101;
+  opacity:1;
+}
+.main-content.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+
+$delay:10s;
+$anim-length:80s;
+#scene{
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  padding: 0;
+  max-resolution: 0;
+}
+
+#scene .layer{
+  list-style:none;
+  width:100%;
+  height:100%;
+}
+.layer div{
+  opacity:0;
+  height:1500px;
+  width:750px;
+  position: absolute;
+  z-index:12;
+}
+.layer-1{
+  background-color: #3F51B5;
+  top:90%;
+  left:-10%;
+  animation:fade-left-top $anim-length ease-out infinite;
+}
+.layer-2{
+  background-color: #2196F3;
+  top:90%;
+  right:-10%;
+  animation:fade-right-top $anim-length ease-out infinite;
+  animation-delay: $delay;
+}
+.layer-3{
+  background-color: #03A9F4;
+  bottom:90%;
+  right:-10%;
+  animation:fade-right-bot $anim-length ease-out infinite;
+  animation-delay: $delay*2;
+}
+.layer-4{
+  background-color: #00BCD4;
+  bottom:90%;
+  left:-10%;
+  animation:fade-left-bot $anim-length ease-out infinite;
+  animation-delay: $delay*3;
+}
+.layer-5{
+  background-color: #009688;
+  top:90%;
+  left:-10%;
+  animation:fade-left-top $anim-length ease-out infinite;
+  animation-delay: $delay*4;
+}
+.layer-6{
+  background-color: #00C853;
+  top:90%;
+  right:-10%;
+  animation:fade-right-top $anim-length ease-out infinite;
+  animation-delay: $delay*5;
+}
+.layer-7{
+  background-color: #303F9F;
+  bottom:90%;
+  right:-10%;
+  animation:fade-right-bot $anim-length ease-out infinite;
+  animation-delay: $delay*6;
+}
+.layer-8{
+  background-color: #1976D2;
+  bottom:90%;
+  left:-10%;
+  animation:fade-left-bot $anim-length ease-out infinite;
+  animation-delay: $delay*7;
+}
+// .layer-9{
+//   background-color: #0288D1;
+//   top:90%;
+//   left:-10%;
+//   animation:fade-left-top $anim-length ease-out infinite;
+//   animation-delay: $delay*8;
+// }
+// .layer-10{
+//   background-color: #0097A7;
+//   top:90%;
+//   right:-10%;
+//   animation:fade-right-top $anim-length ease-out infinite;
+//   animation-delay: $delay*9;
+// }
+// .layer-11{
+//   background-color: #00796B;
+//   bottom:90%;
+//   right:-10%;
+//   animation:fade-right-bot $anim-length ease-out infinite;
+//   animation-delay: $delay*10;
+// }
+// .layer-12{
+//   background-color: #00E676;
+//   bottom:90%;
+//   left:-10%;
+//   animation:fade-left-bot $anim-length ease-out infinite;
+//   animation-delay: $delay*11;
+// }
+@keyframes fade-left-top{
+  0%{
+    z-index: 12;
+  }
+  10%{
+    opacity:.6;
+    z-index: 11;
+  }
+  20%{
+    height:600px;
+    width:1200px;
+    z-index: 10;
+  }
+  30%{
+    z-index: 9;
+  }
+  40%{
+    height:900px;
+    width:450px;
+    z-index: 8;
+  }
+  50%{
+    z-index: 7;
+  }
+  60%{
+    height:300px;
+    width:600px;
+    z-index: 6;
+  }
+  70%{
+    z-index: 5;
+  }
+  80%{
+    height:300px;
+    width:150px;
+    z-index: 4;
+  }
+  90%{
+    z-index: 3;
+  }
+  100%{
+    z-index: 2;
+    width:0;
+    height:0;
+    opacity:.2;
+    left:100%;
+    top:-10%;
+  }
+}
+@keyframes fade-left-bot{
+  0%{
+    z-index: 12;
+  }
+  10%{
+    opacity:.6;
+    z-index: 11;
+  }
+  20%{
+    height:600px;
+    width:1200px;
+    z-index: 10;
+  }
+  30%{
+    z-index: 9;
+  }
+  40%{
+    height:900px;
+    width:450px;
+    z-index: 8;
+  }
+  50%{
+    z-index: 7;
+  }
+  60%{
+    height:300px;
+    width:600px;
+    z-index: 6;
+  }
+  70%{
+    z-index: 5;
+  }
+  80%{
+    height:300px;
+    width:150px;
+    z-index: 4;
+  }
+  90%{
+    z-index: 3;
+  }
+  100%{
+    z-index: 2;
+    width:0;
+    height:0;
+    opacity:.2;
+    left:100%;
+    bottom:-10%;
+  }
+}
+@keyframes fade-right-top{
+  0%{
+    z-index: 12;
+  }
+  10%{
+    opacity:.6;
+    z-index: 11;
+  }
+  20%{
+    height:600px;
+    width:1200px;
+    z-index: 10;
+  }
+  30%{
+    z-index: 9;
+  }
+  40%{
+    height:900px;
+    width:450px;
+    z-index: 8;
+  }
+  50%{
+    z-index: 7;
+  }
+  60%{
+    height:300px;
+    width:600px;
+    z-index: 6;
+  }
+  70%{
+    z-index: 5;
+  }
+  80%{
+    height:300px;
+    width:150px;
+    z-index: 4;
+  }
+  90%{
+    z-index: 3;
+  }
+  100%{
+    z-index: 2;
+    width:0;
+    height:0;
+    opacity:0;
+    right:100%;
+    top:-10%;
+  }
+}
+@keyframes fade-right-bot{
+  0%{
+    z-index: 12;
+  }
+  10%{
+    opacity:.6;
+    z-index: 11;
+  }
+  20%{
+    height:600px;
+    width:1200px;
+    z-index: 10;
+  }
+  30%{
+    z-index: 9;
+  }
+  40%{
+    height:900px;
+    width:450px;
+    z-index: 8;
+  }
+  50%{
+    z-index: 7;
+  }
+  60%{
+    height:300px;
+    width:600px;
+    z-index: 6;
+  }
+  70%{
+    z-index: 5;
+  }
+  80%{
+    height:300px;
+    width:150px;
+    z-index: 4;
+  }
+  90%{
+    z-index: 3;
+  }
+  100%{
+    z-index: 2;
+    width:0;
+    height:0;
+    opacity:0;
+    right:100%;
+    bottom:-10%;
   }
 }

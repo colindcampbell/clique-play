@@ -2,26 +2,27 @@
 $panel-control-bg-color:#ccc;
 $panel-bg-color:#536896;
 
-$panel-width:120px;
-$chat-width:360px;
-$chat-closed-width:90px;
+$panel-left-width:200px;
+$chat-width:300px;
+$chat-closed-width:300px;
 
 $chat-input-height:38px;
 $chat-box-height:320px;
 
 .panel-left{
 	position: absolute;
-	width:$panel-width;
-	left:0;
-	bottom:0;
-	background: #eee;
+	width:$panel-left-width;
+	left:5px;
+	top:111px;
 	p{
 		margin:0;
+		color:white;
 	}
 	.chat-control{
 		width:100%;
 		padding:5px 10px;
 		cursor: pointer;
+		margin-bottom: 5px;
 	}
 }
 
@@ -32,36 +33,61 @@ $chat-box-height:320px;
 	color:white;
 }
 
-.panel-right{
+.panel-right-outer{
 	position: absolute;
-	right:0;
-	bottom:0;
-	width:90px;
+	right:5px;
+	top:82px;
+	width:300px;
+	bottom:5px;
+	overflow: hidden;
+}
+
+#panel-right{
+	position: absolute;
+	right:-17px;
+	padding-top: 403px;
+	top:0;
+	bottom: 0;
+	left: 0;
+	-ms-overflow-y: scroll;
+	    overflow-y: scroll;
 	.chat-open{
-		position: absolute;
-		width:$chat-width;
-		right:$chat-closed-width;
-		bottom:0;
+		top:0px;
+		position:absolute;
 		.chat-control{
-			width:100%;
+			opacity:1;
+  		background-color: rgba(100,100,100,.85);
+			margin-bottom: 0;
 			border:none;
-			-webkit-border-radius: 5px 5px 0 0;
-			        border-radius: 5px 5px 0 0;
+			-webkit-border-radius: 2px 2px 0 0;
+			        border-radius: 2px 2px 0 0;
+			border-bottom: 2px solid rgba(70,70,70,.30);
 		}
+		.fa-angle-up{
+		  -webkit-transition: .3s ease all;
+		     -moz-transition: .3s ease all;
+		      -ms-transition: .3s ease all;
+		       -o-transition: .3s ease all;
+		          transition: .3s ease all;
+			-webkit-transform: rotate(180deg);
+			   -moz-transform: rotate(180deg);
+			    -ms-transform: rotate(180deg);
+			     -o-transform: rotate(180deg);
+			        transform: rotate(180deg);
+		}
+	
 	}
 	// Chat Control Closed
 	.chat-control{
-		-webkit-border-radius: 5px 0 0 5px;
-		        border-radius: 5px 0 0 5px;
+		-webkit-border-radius: 2px;
+		        border-radius: 2px;
 		overflow: hidden;
 		width:$chat-closed-width;
-		border-top: 1px solid #999;
-		background-color:$panel-control-bg-color;
 		height:35px;
 		cursor:pointer;
 		position: relative;
-		color:#444;
-		border-left: 1px solid #444;
+		color:white;
+		margin-bottom: 5px;
 		span{
 			padding:5px;
 			font-size: 20px;
@@ -87,7 +113,7 @@ $chat-box-height:320px;
 	max-width:84%;
 	display: inline-block;
 	padding: 10px 15px;
-  background: rgba(68, 68, 68, .9);
+  background-color: rgba(5,10,50,.4);
   border-radius: 4px;
   position: relative;
   margin-left: 2%;
@@ -100,6 +126,7 @@ $chat-box-height:320px;
 }
 
 .righttext .message-block{
+  background-color: rgba(0,40,50,.4);
 	border-right:none;
 	border-left: 2px solid #bbb;
   margin-left: 0;
@@ -146,32 +173,73 @@ $chat-box-height:320px;
    
 }
 
-.chat-closed{
-	display: none;
+// .chat-closed{
+// 	display: none;
+// }
+
+.chat-box-outer{
+	position: relative;
+	height:$chat-box-height;
+	overflow: hidden;
 }
 
 .chat-box{
-	padding: 10px 2%;
-	max-height:$chat-box-height;
-	background-color:$panel-bg-color;
-	position: relative;
+	padding: 10px 0px;
+	position: absolute;
+	left:0;
+	top: 0;
+	bottom: 0;
+	right:-17px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	// overflow: hidden;
 	#messages{
 		width:100%;
 		position: relative;
-		padding:0;
+		// right:-20px;
+		padding:0 10px;
 		margin: 0;
+		// overflow-y:scroll;
 	}
+}
+
+.chat-body.ng-enter, .chat-body.ng-leave {
+  -webkit-transition:0.3s ease all;
+  transition:0.3s ease all;
+  position:absolute;
+  top:35px;
+  left:0;
+  right:0;
+}
+
+.chat-body.ng-enter {
+  z-index:100;
+  opacity:0;
+}
+.chat-body.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.chat-body.ng-leave {
+  z-index:101;
+  opacity:1;
+}
+.chat-body.ng-leave.ng-leave-active {
+  opacity:0;
 }
 
 #chat-form{
 	position: relative;
+	margin-bottom: 5px;
 	.chat-input{
 		width:100%;
 		color:#777;
 		padding:5px 10px;
 		font-size: 22px;
+		border:none;
+		opacity: .85;
+		-webkit-border-radius: 0 0 3px 3px;
+		        border-radius: 0 0 3px 3px;
 	}
 }
 

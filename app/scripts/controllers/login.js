@@ -7,7 +7,7 @@
  * Manages authentication to any active providers.
  */
 angular.module('cliquePlayApp')
-  .controller('LoginCtrl', function ($scope, Auth, $location, $q, Ref, $timeout) {
+  .controller('LoginCtrl', function ($scope, Auth, $location, $q, RootRef, $timeout) {
     $scope.oauthLogin = function(provider) {
       $scope.err = null;
       Auth.$authWithOAuthPopup(provider, {rememberMe: true}).then(redirect, showError);
@@ -44,7 +44,7 @@ angular.module('cliquePlayApp')
       }
 
       function createProfile(user) {
-        var ref = Ref.child('users', user.uid), def = $q.defer();
+        var ref = RootRef.child('users', user.uid), def = $q.defer();
         ref.set({email: email, name: firstPartOfEmail(email)}, function(err) {
           $timeout(function() {
             if( err ) {

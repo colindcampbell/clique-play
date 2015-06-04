@@ -7,17 +7,12 @@
  * Provides rudimentary account management functions.
  */
 angular.module('cliquePlayApp')
-  .controller('AccountCtrl', function($scope, user, Auth, Ref, $firebaseObject, $timeout, $location) {
+  .controller('AccountCtrl', function($scope, user, Auth, RootRef, $firebaseObject, $timeout, $location) {
 
     $scope.user = user;
-    
-    $scope.logout = function() {
-      Auth.$unauth();
-      $location.path('/home');
-    };
 
     $scope.messages = [];
-    var profile = $firebaseObject(Ref.child('users/' + user.uid));
+    var profile = $firebaseObject(RootRef.child('users/' + user.uid));
     profile.$bindTo($scope, 'profile');
     profile.$loaded()
       .then(function() {
@@ -47,18 +42,18 @@ angular.module('cliquePlayApp')
             $scope.profile.email = $scope.user.password.email;
             if (!$scope.profile.userName) {
               $scope.profile.userName = $scope.user.password.email;
-            };
+            }
             if (!$scope.profile.avatarURL) {
               $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
-            };
+            }
             break;
           case 'anonymous':
             if (!$scope.profile.userName) {
               $scope.profile.userName = 'anonymous';
-            };
+            }
             if (!$scope.profile.avatarURL) {
               $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
-            };
+            }
             break;
         }
       }).catch(alert);

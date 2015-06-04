@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: GameDashCtrl', function () {
+describe('Controller: YahtzeeCtrl', function () {
 
   // load the controller's module
   beforeEach(module('cliquePlayApp'));
 
-  var GamedashCtrl,
+  var YahtzeeCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    GameDashCtrl = $controller('GameDashCtrl', {
+    YahtzeeCtrl = $controller('YahtzeeCtrl', {
       $scope: scope
     });
   }));

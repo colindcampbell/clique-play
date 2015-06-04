@@ -1,5 +1,29 @@
 angular.module('firebase.ref', ['firebase', 'firebase.config'])
-  .factory('Ref', ['$window', 'FBURL', function($window, FBURL) {
+  .factory('RootRef', ['$window', 'FBURL', function($window, FBURL) {
     'use strict';
     return new $window.Firebase(FBURL);
+  }])
+  .factory('ChatRoomsRef', ['$window', 'FBURL', function($window, FBURL) {
+    'use strict';
+    return new $window.Firebase(FBURL+'/chatRooms');
+  }])
+  .factory('ChatTextsRef', ['$window', 'FBURL', function($window, FBURL) {
+    'use strict';
+    return new $window.Firebase(FBURL+'/chatTexts');
+  }])
+  .factory('YahtzeeGamesRef', ['$window', 'FBURL', function($window, FBURL) {
+    'use strict';
+    return new $window.Firebase(FBURL+'/yahtzeeGames');
+  }])
+  .factory('YahtzeeRoomsRef', ['$window', 'FBURL', function($window, FBURL) {
+    'use strict';
+    return new $window.Firebase(FBURL+'/yahtzeeRooms');
+  }])
+  .factory('PresenceRef', ['$window', 'FBURL', function($window, FBURL) {
+    'use strict';
+    return new $window.Firebase(FBURL+'/presence');
+  }])
+  .factory('ConnectionRef', ['$window', 'FBURL', function($window, FBURL) {
+    'use strict';
+    return new $window.Firebase(FBURL+'/.info/connected');
   }]);

@@ -37,7 +37,7 @@ angular.module('cliquePlayApp')
  * dependency injection (see AccountCtrl), or rejects the promise if user is not logged in,
  * forcing a redirect to the /login page
  */
-  .config(['$routeProvider', 'SECURED_ROUTES', function($routeProvider, SECURED_ROUTES) {
+  .config(['$routeProvider', 'SECURED_ROUTES', function($routeProvider, SECURED_ROUTES, $locationProvider) {
     // credits for this idea: https://groups.google.com/forum/#!msg/angular/dPr9BpIZID0/MgWVluo_Tg8J
     // unfortunately, a decorator cannot be use here because they are not applied until after
     // the .config calls resolve, so they can't be used during route configuration, so we have
@@ -52,8 +52,10 @@ angular.module('cliquePlayApp')
       SECURED_ROUTES[path] = true;
       return $routeProvider;
     };
-  }])
 
+    // $locationProvider.html5Mode(true);
+
+  }])
   // configure views; whenAuthenticated adds a resolve method to ensure users authenticate
   // before trying to access that route
   .config(['$routeProvider', function($routeProvider) {
@@ -74,6 +76,10 @@ angular.module('cliquePlayApp')
         templateUrl: 'views/gamedash.html',
         controller: 'GameDashCtrl'
       })
+      .whenAuthenticated('/yahtzee/:id', {
+        templateUrl: 'views/yahtzee.html',
+        controller: 'YahtzeeCtrl'
+      })
       .otherwise({redirectTo: '/welcome'});
   }])
 
@@ -93,7 +99,7 @@ angular.module('cliquePlayApp')
       $rootScope.$on('$routeChangeError', function(e, next, prev, err) {
         if( err === 'AUTH_REQUIRED' ) {
           $location.path(loginRedirectPath);
-          alert("Please login to visit "+next.$$route.originalPath);
+          alert('Please login to visit '+next.$$route.originalPath);
         }
       });
 

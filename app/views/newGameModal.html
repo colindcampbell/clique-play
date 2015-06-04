@@ -1,0 +1,62 @@
+
+
+
+
+
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header" ng-show="title">
+	      <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+	      <h3 class="modal-title" ng-bind="title"></h3>
+	    </div>
+	    <div class="modal-body">
+			  <form class="form-horizontal">
+			    <div class="form-group">
+			      <label for="gameType" class="col-sm-3 control-label">Select a Game</label>
+			      <div class="col-sm-9">
+			        <select ng-model="gameType" name="gameType" ng-options="game.name for game in games" class="form-control">
+			        </select>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label for="gameName" class="col-sm-3 control-label">Name your Game</label>
+			      <div class="col-sm-9">
+			        <input id="gameName" required name="gameName" ng-model="gameName" class="form-control" />
+			      </div>
+			    </div>
+			    <div class="form-group">
+			      <label for="description" class="col-sm-3 control-label">Describe your Game</label>
+			      <div class="col-sm-9">
+			        <input id="description" required name="description" ng-model="description" class="form-control" />
+			      </div>
+			    </div>
+<!-- 			    <div class="form-group">
+			      <label for="pwProtected" class="col-sm-3 control-label">Password Protected?</label>
+			      <div class="col-sm-1">
+			        <input id="pwProtected" name="pwProtected" type="checkbox" ng-model="pwProtected" class="form-control" />
+			      </div>
+			    </div>
+			    <div class="form-group" ng-if="pwProtected">
+			      <label for="loginPass" class="col-sm-3 control-label">password</label>
+			      <div class="col-sm-9">
+			        <input id="loginPass" name="password" type="password" ng-model="pass" class="form-control" />
+			      </div>
+			    </div>
+			    <div class="form-group" ng-if="pwProtected">
+			      <label for="loginConfirm" class="col-sm-3 control-label">confirm pass</label>
+			      <div class="col-sm-9">
+			        <input id="loginConfirm" name="confirm" type="password" ng-model="confirm" class="form-control" />
+			      </div>
+			    </div> -->
+			    <div class="form-group">
+			      <div class="col-sm-offset-3 col-sm-9">
+			        <button class="btn btn-primary" ng-click="createGame(gameType.name, gameName, description);$hide()" ng-hide="createMode">Create</button>
+			        <button type="button" class="btn btn-warning" ng-click="$hide()">Close</button>
+			      </div>
+			    </div>
+		  	</form>
+		  </div>
+		</div>
+	</div>
+</div>

@@ -1,33 +1,60 @@
-
+#brand{
+  width:300px;
+  position: absolute;
+  right:5px;
+  top:5px;
+  color:white;
+  text-align: center;
+  font-size: 40px;
+  padding:5px 0 10px;
+  -webkit-transition: color .3s;
+     -moz-transition: color .3s;
+      -ms-transition: color .3s;
+       -o-transition: color .3s;
+          transition: color .3s;
+}
+#brand:hover{
+  color:#333;
+}
 
 /* Custom page header */
-.header {
-  margin-bottom: 10px;
-
+#header {
   /* Make the masthead heading the same height as the navigation */
+  li {
+    text-align: center;
+    list-style:none;
+  }
+
+  li a{
+    cursor:pointer;
+    position: absolute;
+    left: 5px;
+    width:200px;
+    height:60px;
+    padding-top: 11px;
+  }
   h3 {
     margin-top: 0;
     margin-bottom: 0;
     line-height: 40px;
     padding-bottom: 19px;
   }
-}
-
-.navbar{
-	min-height: 70px;
-}
-
-.navbar-brand{
-	font-size: 30px;
-	line-height: 35px;
-}
-
-.navbar-nav{
-	margin-right: -15px;
-}
-
-.nav li a{
-	font-size: 24px;
-	line-height: 38px;
-	padding: 15px 0 15px 20px;
+  a{
+    color:white;
+  	font-size: 24px;
+    -webkit-transition: color .3s;
+       -moz-transition: color .3s;
+        -ms-transition: color .3s;
+         -o-transition: color .3s;
+            transition: color .3s;
+  }
+  a:hover{
+    color:#000;
+  }
+  .cp-small-link{
+    padding-top: 5px;
+    width:98px;
+    font-size: 15px;
+    height:36px;
+  }
 }
