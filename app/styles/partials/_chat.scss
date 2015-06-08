@@ -9,11 +9,12 @@ $chat-closed-width:300px;
 $chat-input-height:38px;
 $chat-box-height:320px;
 
-.panel-left{
+.panel-left-chats{
 	position: absolute;
 	width:$panel-left-width;
 	left:5px;
-	top:111px;
+	bottom:5px;
+	height:290px;
 	p{
 		margin:0;
 		color:white;
@@ -23,6 +24,34 @@ $chat-box-height:320px;
 		padding:5px 10px;
 		cursor: pointer;
 		margin-bottom: 5px;
+	}
+}
+
+.panel-left-users-outer{	
+	position: absolute;
+	width:$panel-left-width;
+	left:5px;
+	top:111px;
+	bottom:300px;
+	overflow: hidden;
+}
+
+.panel-left-users{
+	position: absolute;
+	top: 5px;
+	bottom: 5px;
+	left: 5px;
+	right: -17px;
+	-ms-overflow-y: scroll;
+	    overflow-y: scroll;
+	.user-image{
+		width:36px;
+	}
+	.users{
+		margin-bottom: 3px;
+	}
+	.users.online{
+		color:white;
 	}
 }
 
@@ -77,11 +106,16 @@ $chat-box-height:320px;
 		}
 	
 	}
+	.new-message{
+		.chat-control{
+			background-color: #00A6A0;		
+		}
+	}
 	// Chat Control Closed
 	.chat-control{
 		-webkit-border-radius: 2px;
 		        border-radius: 2px;
-		overflow: hidden;
+		overflow: visible;
 		width:$chat-closed-width;
 		height:35px;
 		cursor:pointer;
@@ -91,26 +125,32 @@ $chat-box-height:320px;
 		span{
 			padding:5px;
 			font-size: 20px;
+			vertical-align: middle;
+			padding-right: 10px;
 		}
-		p{
+		.chat-control-text{
 			padding-left: 10px;
+			padding-right: 4px;
 			margin: 0;
 			font-size: 20px;
-			line-height: 30px;
+			line-height: 33px;
 		}
-	}
-	.new-message{
-		background-color: #00A6A0;
+		img.chat-icon{
+			width:24px;
+			height:24px;
+			margin-right: 3px;
+		}
 	}
 }
 
 .chat li{
 	list-style:none;
 	margin-top: 6px;
+	margin-bottom: 32px;
 }
 
 .message-block{
-	max-width:84%;
+	max-width:81%;
 	display: inline-block;
 	padding: 10px 15px;
   background-color: rgba(5,10,50,.4);
@@ -134,12 +174,26 @@ $chat-box-height:320px;
 }
 
 .user-image{
-	width:12%;
+	width:15%;
 	display: inline-block;
+	position: relative;
 	.avatar{
+		width:100%;
+		-webkit-border-radius: 4px 4px 0 0;
+		        border-radius: 4px 4px 0 0;
+	}
+	.current-user-avatar{
 		width:100%;
 		-webkit-border-radius: 4px;
 		        border-radius: 4px;
+	}
+	.user-name{
+		position: absolute;
+		bottom: -26px;
+		color: black;
+		font-size: 15px;
+		width:200px;
+		margin: 0;
 	}
 }
 
@@ -155,7 +209,7 @@ $chat-box-height:320px;
    width: 0;
    height: 0;
    border-top: 4px solid transparent;
-   border-right: 8px solid #444;
+   border-right: 8px solid rgba(5,10,50,.4);
    border-bottom: 4px solid transparent;
 }
 
@@ -167,7 +221,7 @@ $chat-box-height:320px;
    width: 0;
    height: 0;
    border-top: 4px solid transparent;
-   border-left: 8px solid #444;
+   border-left: 8px solid rgba(0,40,50,.4);
    border-bottom: 4px solid transparent;
    border-right: none;
    

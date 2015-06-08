@@ -89,6 +89,34 @@ body{
   margin: 0 auto;
 }
 
+div.online{
+  border-bottom:4px solid #43A047;
+  -webkit-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
+}
+div.idle{
+  border-bottom:4px solid #FFCA28;
+  -webkit-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
+}
+div.offline{
+  border-bottom:4px solid #B71C1C;
+  -webkit-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
+}
+img.idle{
+  -webkit-filter: grayscale(50%);
+  filter: gray;
+  filter: grayscale(50%);
+  // filter: url(../style/desaturate.svg#grayscale);
+}
+img.offline{
+  -webkit-filter: grayscale(100%);
+  filter: gray;
+  filter: grayscale(100%);
+  // filter: url(../style/desaturate.svg#grayscale);
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -165,7 +193,7 @@ body {
   }
 }
 
-.main-content.ng-enter, .main-content.ng-leave {
+.content-block.ng-enter, .content-block.ng-leave {
   -webkit-transition:0.3s ease all;
   transition:0.3s ease all;
   position:absolute;
@@ -173,25 +201,25 @@ body {
   right:-20px;
 }
 
-.main-content.ng-enter {
+.content-block.ng-enter {
   z-index:100;
   opacity:0;
 }
-.main-content.ng-enter.ng-enter-active {
+.content-block.ng-enter.ng-enter-active {
   opacity:1;
 }
 
-.main-content.ng-leave {
+.content-block.ng-leave {
   z-index:101;
   opacity:1;
 }
-.main-content.ng-leave.ng-leave-active {
+.content-block.ng-leave.ng-leave-active {
   opacity:0;
 }
 
 
-$delay:10s;
-$anim-length:80s;
+$delay:15s;
+$anim-length:60s;
 #scene{
   position: absolute;
   top:0;
@@ -232,42 +260,41 @@ $anim-length:80s;
   bottom:90%;
   right:-10%;
   animation:fade-right-bot $anim-length ease-out infinite;
-  animation-delay: $delay*2;
 }
 .layer-4{
   background-color: #00BCD4;
   bottom:90%;
   left:-10%;
   animation:fade-left-bot $anim-length ease-out infinite;
-  animation-delay: $delay*3;
+  animation-delay: $delay;
 }
 .layer-5{
   background-color: #009688;
   top:90%;
   left:-10%;
   animation:fade-left-top $anim-length ease-out infinite;
-  animation-delay: $delay*4;
+  animation-delay: $delay*2;
 }
 .layer-6{
   background-color: #00C853;
   top:90%;
   right:-10%;
   animation:fade-right-top $anim-length ease-out infinite;
-  animation-delay: $delay*5;
+  animation-delay: $delay*3;
 }
 .layer-7{
   background-color: #303F9F;
   bottom:90%;
   right:-10%;
   animation:fade-right-bot $anim-length ease-out infinite;
-  animation-delay: $delay*6;
+  animation-delay: $delay*2;
 }
 .layer-8{
   background-color: #1976D2;
   bottom:90%;
   left:-10%;
   animation:fade-left-bot $anim-length ease-out infinite;
-  animation-delay: $delay*7;
+  animation-delay: $delay*3;
 }
 // .layer-9{
 //   background-color: #0288D1;

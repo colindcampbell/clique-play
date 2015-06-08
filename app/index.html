@@ -38,66 +38,82 @@
     </div>
 
     <div id="content" class="cp-background">
-      <div ng-view="" class="main-content"></div>
+      <div ng-view="" class="main-content content-block"></div>
     </div>
 
-    <div class="chat" ng-controller="ChatCtrl">
-      <div id="header" ng-show-auth="">
+    <div ng-show-auth="" class="chat" ng-controller="ChatCtrl">
+      <div id="header" >
         <ul>
           <li>
             <a class="cp-background cp-small-link" style="top:70px;left:108px;margin-top:0;width:97px" ng-click="logout()">Logout</a>
           </li>
         </ul>
       </div>
-      <div ng-if="user">
-        <div class="panel-left">
+      <div class="content-block">
+
+        <div class="panel-left-chats">
           <div ng-repeat="chat in chatRooms" class="chat-control cp-background" ng-click="joinChat(chat)">
             <span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="{{chat.description}}" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-info-sign pull-right" bs-tooltip data-placement="top" data-title="{{chat.description}}" aria-hidden="true"></span>
             <p>{{chat.name}}</p>
           </div>
           <div class="chat-control" ng-click="newChatModal.show()">
             <p>New Chatroom</p>
           </div>
         </div>
-      <div class="panel-right-outer">
-        <div id="panel-right">
-          <div ng-repeat="chat in userChats" class="user-chat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open}">
-            <div class="chat-control cp-background" ng-class="{'new-message animated-slow flash-half infinite':chat._newMessage}"
-            ng-click="toggleChat($index)">
-              <span class="fa fa-angle-up pull-right" aria-hidden="true"></span>
-              <p>{{chat.name}}</p>
-            </div>
-            <div class="chat-body" ng-if="chat._open">
 
-              <div class="chat-box-outer cp-background-dark">
-                <div class="chat-box">  
-                  <ul id="messages" class="chat" >
-                    <li ng-repeat="messageBlock in userMessageBlocks[$parent.$index]" 
-                    ng-class="{righttext:(messageBlock.userName != user.uid)}"
-                    ng-click="log()">
-                      <div class="user-image" ng-if="messageBlock.userName == user.uid">
-                        <img src="{{messageBlock.avatarURL}}" alt="{{messageBlock.userName}}" class="avatar" />
-                      </div>
-                      <div class="message-block">
-                        <span ng-repeat="message in messageBlock.messages">{{message.message}}<br/></span>
-                      </div>
-                      <div class="user-image" ng-if="messageBlock.userName != user.uid">
-                        <img src="{{messageBlock.avatarURL}}" alt="{{messageBlock.userName}}" class="avatar" />
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+        <div class="panel-left-users-outer cp-background">
+          <div class="panel-left-users">
+            <div ng-repeat="u in usersArray" ng-if="profile.avatarURL != u.avatarURL" class="users">
+              <div class="user-image {{u.status}}">
+                <img src="{{u.avatarURL}}" alt="" class="avatar {{u.status}}">
               </div>
-
-              <form id="chat-form">
-                <input class="chat-input" id="input{{$index}}" placeholder="Message..." ng-model="message" ng-click="userChats[$index]._newMessage=false;">
-                <button type="submit" ng-click="addMessage(message,chat,$index);message = null;" style="display:none"></button>
-              </form>
+              <span class="{{u.status}}" >{{u.userName}}</span>
             </div>
           </div>
         </div>
-      </div>
+
+        <div class="panel-right-outer">
+          <div id="panel-right">
+            <div ng-repeat="chat in userChats" class="user-chat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
+              <div class="chat-control cp-background" ng-class="{'animated-slow flash-half infinite':chat._newMessage}"
+              ng-click="toggleChat($index)">
+                <span class="fa fa-angle-up pull-right" aria-hidden="true"></span>
+                <span class="chat-control-text">{{chat.name}}</span>
+                <img ng-repeat="(id,value) in chat._members" ng-if="user.uid != id" class="img-circle chat-icon chat-control-left" src="{{users[id].avatarURL}}" alt="" bs-tooltip data-placement="bottom" data-title="{{users[id].userName}} ({{users[id].status}})" data-delay="150" aria-hidden="true">
+              </div>
+              <div class="chat-body" ng-if="chat._open">
+
+                <div class="chat-box-outer cp-background-dark">
+                  <div class="chat-box">  
+                    <ul id="messages" class="chat" >
+                      <li ng-repeat="messageBlock in userMessageBlocks[$parent.$index]" 
+                      ng-class="{righttext:(messageBlock.userName != user.uid)}"
+                      ng-click="log()">
+                        <div class="user-image" ng-if="messageBlock.userName == user.uid">
+                          <img src="{{profile.avatarURL}}" alt="{{profile.userName}}" class="current-user-avatar" />
+                          <p class="user-name" style="left:0px">{{profile.userName}}</p>
+                        </div>
+                        <div class="message-block">
+                          <span ng-repeat="message in messageBlock.messages">{{message.message}}<br/></span>
+                        </div>
+                        <div class="user-image {{users[messageBlock.userName].status}}" ng-if="messageBlock.userName != user.uid">
+                          <img src="{{users[messageBlock.userName].avatarURL}}" alt="{{users[messageBlock.userName].userName}}" class="avatar {{users[messageBlock.userName].status}}" />
+                          <p class="user-name" style="right:0px">{{users[messageBlock.userName].userName}}</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <form id="chat-form">
+                  <input class="chat-input" id="input{{$index}}" placeholder="Message..." ng-model="message" ng-click="chat._newMessage=false;">
+                  <button type="submit" ng-click="addMessage(message,chat,$index);message = null;chat._newMessage=false;" style="display:none"></button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 
     </div>

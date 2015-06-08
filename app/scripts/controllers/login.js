@@ -7,22 +7,27 @@
  * Manages authentication to any active providers.
  */
 angular.module('cliquePlayApp')
-  .controller('LoginCtrl', function ($scope, Auth, $location, $q, RootRef, $timeout) {
+  .controller('LoginCtrl', function($scope, Auth, $location, $q, RootRef, PresenceRef, $timeout, $firebaseObject) {
+
     $scope.oauthLogin = function(provider) {
       $scope.err = null;
-      Auth.$authWithOAuthPopup(provider, {rememberMe: true}).then(redirect, showError);
+      Auth.$authWithOAuthPopup(provider, {rememberMe: true}).then(function(auth){
+        redirect(auth);
+      }, showError);
     };
 
     $scope.anonymousLogin = function() {
       $scope.err = null;
-      Auth.$authAnonymously({rememberMe: true}).then(redirect, showError);
+      Auth.$authAnonymously({rememberMe: true}).then(function(auth){
+        redirect(auth);
+      }, showError);
     };
 
     $scope.passwordLogin = function(email, pass) {
       $scope.err = null;
-      Auth.$authWithPassword({email: email, password: pass}, {rememberMe: true}).then(
-        redirect, showError
-      );
+      Auth.$authWithPassword({email: email, password: pass}, {rememberMe: true}).then(function(auth){
+        redirect(auth);
+      }, showError);
     };
 
     $scope.createAccount = function(email, pass, confirm) {
@@ -70,10 +75,12 @@ angular.module('cliquePlayApp')
       return f + str.substr(1);
     }
 
-  
-
-    function redirect() {
-      $location.path('/gamedash');
+    function redirect(user) {
+      $scope.user = user;
+      var userPresence = $firebaseObject(PresenceRef.child($scope.user.uid));
+      userPresence.$loaded().then(function(){
+        userPresence.status?$location.path('/gamedash'):$location.path('/account');
+      })
     }
 
     function showError(err) {

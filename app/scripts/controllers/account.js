@@ -7,11 +7,16 @@
  * Provides rudimentary account management functions.
  */
 angular.module('cliquePlayApp')
-  .controller('AccountCtrl', function($scope, user, Auth, RootRef, $firebaseObject, $timeout, $location) {
+  .controller('AccountCtrl', function($scope, user, Auth, RootRef, PresenceRef, $firebaseObject, $timeout, $location) {
 
     $scope.user = user;
-
     $scope.messages = [];
+    var userPresence = PresenceRef.child($scope.user.uid);
+    // userPresence.on('value',function(){
+    //   var userPres = $firebaseObject(userPresence);
+    //   console.log(userPres);
+    // })
+
     var profile = $firebaseObject(RootRef.child('users/' + user.uid));
     profile.$bindTo($scope, 'profile');
     profile.$loaded()
@@ -56,6 +61,11 @@ angular.module('cliquePlayApp')
             }
             break;
         }
+        userPresence.update({
+          status:'online',
+          avatarURL:$scope.profile.avatarURL,
+          userName:$scope.profile.userName
+        })
       }).catch(alert);
 
     $scope.changePassword = function(oldPass, newPass, confirm) {
