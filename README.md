@@ -1,6 +1,6 @@
 # Clique-Play
 
-This is a social gaming application that is built with AngularJS and data persistence using Firebase. It is built up the AngularFire Yeoman scaffold.
+This is a social gaming application that is built with AngularJS and data persistence using Firebase. It is built upon the AngularFire Yeoman scaffold.
 
 Users can create an account and login with their Facebook or Google, or by providing an email and password. You may also sign in as a guest.
 
