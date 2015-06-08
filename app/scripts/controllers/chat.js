@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cliquePlayApp')
-.controller('ChatCtrl', function ($scope, RootRef, ChatRoomsRef, ChatTextsRef, PresenceRef, ConnectionRef, Idle, $firebaseArray, $firebaseObject, $timeout, $interval, Auth, $modal, $location) {
+.controller('ChatCtrl', function ($scope, RootRef, ChatRoomsRef, ChatTextsRef, PresenceRef, ConnectionRef, Idle, $firebaseArray, $firebaseObject, $timeout, $interval, Auth, $modal, $alert, $location) {
 
   $scope.pwProtected = false;
   $scope.userChats = [];
@@ -207,9 +207,17 @@ angular.module('cliquePlayApp')
       chatMembers.update({member:true});
     })
     memberChats.on('value',function(snapshot){
-      memberChats.update({member:true});
+      memberChats.update({member:true},chatSuccessAlert);
     })
   };
+
+  var chatSuccessAlert = function(error){
+    if (error) {
+      $alert({title:'Failed',placement:'bottom-right',content:error.message,type:'danger',duration:3,show:true});
+    } else {
+      $alert({title:'Successfully Joined',placement:'bottom-right',type:'success',duration:3,dissmissable:false,show:true});
+    }
+  }
 
   $scope.scrollBot = function(){
     var boxes = document.getElementsByClassName('chat-box');

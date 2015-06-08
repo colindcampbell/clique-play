@@ -218,8 +218,8 @@ body {
 }
 
 
-$delay:15s;
-$anim-length:60s;
+$delay:10s;
+$anim-length:70s;
 #scene{
   position: absolute;
   top:0;
@@ -260,41 +260,42 @@ $anim-length:60s;
   bottom:90%;
   right:-10%;
   animation:fade-right-bot $anim-length ease-out infinite;
+  animation-delay: $delay;
 }
 .layer-4{
   background-color: #00BCD4;
   bottom:90%;
   left:-10%;
   animation:fade-left-bot $anim-length ease-out infinite;
-  animation-delay: $delay;
+  animation-delay: $delay*2;
 }
 .layer-5{
   background-color: #009688;
   top:90%;
   left:-10%;
   animation:fade-left-top $anim-length ease-out infinite;
-  animation-delay: $delay*2;
+  animation-delay: $delay*3;
 }
 .layer-6{
   background-color: #00C853;
   top:90%;
   right:-10%;
   animation:fade-right-top $anim-length ease-out infinite;
-  animation-delay: $delay*3;
+  animation-delay: $delay*4;
 }
 .layer-7{
   background-color: #303F9F;
   bottom:90%;
   right:-10%;
   animation:fade-right-bot $anim-length ease-out infinite;
-  animation-delay: $delay*2;
+  animation-delay: $delay*5;
 }
 .layer-8{
   background-color: #1976D2;
   bottom:90%;
   left:-10%;
   animation:fade-left-bot $anim-length ease-out infinite;
-  animation-delay: $delay*3;
+  animation-delay: $delay*6;
 }
 // .layer-9{
 //   background-color: #0288D1;
