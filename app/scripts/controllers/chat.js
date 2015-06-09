@@ -47,7 +47,7 @@ angular.module('cliquePlayApp')
     amOnline.on('value', function(snapshot) {
       if (snapshot.val()) {
         $scope.$apply(function(){
-          userPresence.onDisconnect().update({status:'offline'});
+          userPresence.onDisconnect().setPriority(3).update({status:'offline'});
           userPresence.update({status:'online'});
           userPresence.setPriority(1)
         })

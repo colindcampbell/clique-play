@@ -1,11 +1,5 @@
 'use strict';
-/**
- * @ngdoc function
- * @name cliquePlayApp.controller:LoginCtrl
- * @description
- * # LoginCtrl
- * Manages authentication to any active providers.
- */
+
 angular.module('cliquePlayApp')
   .controller('LoginCtrl', function($scope, Auth, $location, $q, RootRef, PresenceRef, $timeout, $firebaseObject) {
 
@@ -69,7 +63,6 @@ angular.module('cliquePlayApp')
     }
 
     function ucfirst (str) {
-      // inspired by: http://kevin.vanzonneveld.net
       str += '';
       var f = str.charAt(0).toUpperCase();
       return f + str.substr(1);

@@ -1,11 +1,4 @@
-/**
- * @ngdoc function
- * @name cliquePlayApp.directive:ngShowAuth
- * @description
- * # ngShowAuthDirective
- * A directive that shows elements only when user is logged in. It also waits for Auth
- * to be initialized so there is no initial flashing of incorrect state.
- */
+
 angular.module('cliquePlayApp')
   .directive('ngShowAuth', ['Auth', '$timeout', function (Auth, $timeout) {
     'use strict';

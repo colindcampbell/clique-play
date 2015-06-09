@@ -51,7 +51,7 @@
       </div>
       <div class="content-block">
 
-        <div class="panel-left-chats">
+        <div class="panel-left-chats" ng-cloak="">
           <div ng-repeat="chat in chatRooms" class="chat-control cp-background" ng-click="joinChat(chat)">
             <span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-info-sign pull-right" bs-tooltip data-placement="top" data-title="{{chat.description}}" aria-hidden="true"></span>
@@ -62,7 +62,7 @@
           </div>
         </div>
 
-        <div class="panel-left-users-outer cp-background">
+        <div class="panel-left-users-outer cp-background" ng-cloak="">
           <div class="panel-left-users">
             <div ng-repeat="u in usersArray" ng-if="profile.avatarURL != u.avatarURL" class="users">
               <div class="user-image {{u.status}}">
@@ -73,7 +73,7 @@
           </div>
         </div>
 
-        <div class="panel-right-outer">
+        <div class="panel-right-outer" ng-cloak="">
           <div id="panel-right">
             <div ng-repeat="chat in userChats" class="user-chat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
               <div class="chat-control cp-background" ng-class="{'animated-slow flash-half infinite':chat._newMessage}"
