@@ -22,7 +22,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 body{
   -ms-overflow: hidden;
       overflow: hidden;
-      background-color: #ccc;
+      background-color: #ddd;
   a:hover, a:focus{
     text-decoration: none;
     outline:none;
@@ -218,8 +218,8 @@ body {
 }
 
 
-$delay:10s;
-$anim-length:70s;
+$delay:15s;
+$anim-length:105s;
 #scene{
   position: absolute;
   top:0;
@@ -243,7 +243,7 @@ $anim-length:70s;
   z-index:12;
 }
 .layer-1{
-  background-color: #3F51B5;
+  background-color: #0288D1;
   top:90%;
   left:-10%;
   animation:fade-left-top $anim-length ease-out infinite;
@@ -297,7 +297,7 @@ $anim-length:70s;
   animation-delay: $delay*6;
 }
 // .layer-9{
-//   background-color: #0288D1;
+//   background-color: #3F51B5;
 //   top:90%;
 //   left:-10%;
 //   animation:fade-left-top $anim-length ease-out infinite;
@@ -329,7 +329,7 @@ $anim-length:70s;
     z-index: 12;
   }
   10%{
-    opacity:.5;
+    opacity:.15;
     z-index: 11;
   }
   20%{
@@ -368,7 +368,7 @@ $anim-length:70s;
     z-index: 2;
     width:0;
     height:0;
-    opacity:.2;
+    opacity:0;
     left:100%;
     top:-10%;
   }
@@ -378,7 +378,7 @@ $anim-length:70s;
     z-index: 12;
   }
   10%{
-    opacity:.5;
+    opacity:.15;
     z-index: 11;
   }
   20%{
@@ -417,7 +417,7 @@ $anim-length:70s;
     z-index: 2;
     width:0;
     height:0;
-    opacity:.2;
+    opacity:0;
     left:100%;
     bottom:-10%;
   }
@@ -427,7 +427,7 @@ $anim-length:70s;
     z-index: 12;
   }
   10%{
-    opacity:.5;
+    opacity:.15;
     z-index: 11;
   }
   20%{
@@ -476,7 +476,7 @@ $anim-length:70s;
     z-index: 12;
   }
   10%{
-    opacity:.5;
+    opacity:.15;
     z-index: 11;
   }
   20%{

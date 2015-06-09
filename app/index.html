@@ -53,7 +53,7 @@
 
         <div class="panel-left-users-outer cp-background" ng-cloak="">
           <div class="panel-left-users">
-            <div ng-repeat="u in usersArray" ng-if="profile.avatarURL != u.avatarURL" class="users user-{{u.status}}">
+            <div ng-repeat="u in usersArray | filter:userSearch" ng-if="profile.avatarURL != u.avatarURL" class="users user-{{u.status}} content-block">
               <div class="user-image {{u.status}}">
                 <img ng-src="{{u.avatarURL}}" alt="" class="avatar {{u.status}}">
               </div>
@@ -63,6 +63,12 @@
               </div>
               <div class="clearfix"></div>
             </div>
+          </div>
+          <div class="search-form" ng-if="showUserSearch">
+            <input type="text" placeholder="Search Users..." ng-model="userSearch" class="user-search">
+          </div>
+          <div class="search-icon" ng-click="showUserSearch = !showUserSearch">
+            <span class="fa" ng-class="{'fa-search-plus':!showUserSearch,'fa-search-minus':showUserSearch}"></span>
           </div>
         </div>
 
@@ -93,7 +99,7 @@
                       ng-click="log()">
                         <div class="user-image" ng-if="messageBlock.userName == user.uid">
                           <img ng-src="{{profile.avatarURL}}" alt="{{profile.userName}}" class="current-user-avatar" />
-                          <p class="user-name" style="left:0px">{{profile.userName}} -
+                          <p class="user-name" style="left:0px">{{profile.userName}} &bull;
                            <span am-time-ago="messageBlock.lastUpdated"></span>
                           </p>
                         </div>
@@ -102,7 +108,7 @@
                         </div>
                         <div class="user-image {{users[messageBlock.userName].status}}" ng-if="messageBlock.userName != user.uid">
                           <img ng-src="{{users[messageBlock.userName].avatarURL}}" alt="{{users[messageBlock.userName].userName}}" class="avatar {{users[messageBlock.userName].status}}" />
-                          <p class="user-name" style="right:0px">{{users[messageBlock.userName].userName}} - 
+                          <p class="user-name" style="right:0px">{{users[messageBlock.userName].userName}} &bull; 
                            <span am-time-ago="messageBlock.lastUpdated"></span>
                           </p>
                         </div>

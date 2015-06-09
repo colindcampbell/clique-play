@@ -14,7 +14,7 @@ $chat-box-height:320px;
 	width:$panel-left-width;
 	left:5px;
 	bottom:5px;
-	height:290px;
+	height:250px;
 	p{
 		margin:0;
 		color:white;
@@ -23,12 +23,16 @@ $chat-box-height:320px;
 		width:100%;
 		cursor: pointer;
 		margin-bottom: 5px;
+		height:35px;
+		padding-left: 5px;
+		line-height: 31px;
 		span{
 			padding: 5px;
 		  font-size: 20px;
 		  vertical-align: middle;
 		  color:white;
 		  margin-left: 0;
+		  margin-top: 2px;
 		}
 	}
 }
@@ -38,7 +42,7 @@ $chat-box-height:320px;
 	width:$panel-left-width;
 	left:5px;
 	top:111px;
-	bottom:300px;
+	bottom:260px;
 	overflow: hidden;
 }
 
@@ -50,6 +54,8 @@ $chat-box-height:320px;
 	right: -17px;
 	-ms-overflow-y: scroll;
 	    overflow-y: scroll;
+	-ms-overflow-x: hidden;
+	    overflow-x: hidden;
 	.user-image{
 		width:40px;
 		float:left;
@@ -57,6 +63,7 @@ $chat-box-height:320px;
 	.user-info{
 		float:left;
 		margin-left: 5px;
+		height:40px;
 	}
 	.users{
 		margin-bottom: 5px;
@@ -77,6 +84,28 @@ $chat-box-height:320px;
 		vertical-align: top;
 		color:black;
 	}
+}
+
+.search-form .user-search{
+	position: absolute;
+	bottom:0;
+	width:100%;
+	color:#777;
+	padding:5px 10px;
+	font-size: 18px;
+	border:none;
+	opacity: .85;
+	-webkit-border-radius: 0 0 3px 3px;
+	        border-radius: 0 0 3px 3px;
+}
+
+.search-icon{
+	cursor:pointer;
+	position: absolute;
+	bottom: 4px;
+	right: 5px;
+	font-size: 22px;
+	color:#444;
 }
 
 .middle-panel{

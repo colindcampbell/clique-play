@@ -4,6 +4,7 @@ angular.module('cliquePlayApp')
 .controller('ChatCtrl', function ($scope, RootRef, ChatRoomsRef, ChatTextsRef, PresenceRef, ConnectionRef, Idle, $firebaseArray, $firebaseObject, $timeout, $interval, Auth, $modal, $alert, $location) {
 
   $scope.pwProtected = false;
+  $scope.showUserSearch = false;
   $scope.userChats = [];
   $scope.userMessageBlocks = [];
   $scope.userLoaded = false;
@@ -105,7 +106,7 @@ angular.module('cliquePlayApp')
           $scope.scrollBot();
           // Watch for added or changed children to notify the current user of a new message
           if( event.event==='child_added' ){
-            var block = $firebaseObject(ChatRoomsRef.child($scope.userChats[index].$id));
+            var block = $firebaseObject(ChatRoomsRef.child(currentChatKey));
             block.$loaded().then(function(ref){
               if (ref.lastUserID !== $scope.user.uid) {
                 $scope.userChats[index]._newMessage = true;
