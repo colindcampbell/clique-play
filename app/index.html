@@ -51,25 +51,26 @@
       </div>
       <div class="content-block">
 
-        <div class="panel-left-chats" ng-cloak="">
-          <div ng-repeat="chat in chatRooms" class="chat-control cp-background" ng-click="joinChat(chat)">
-            <span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-info-sign pull-right" bs-tooltip data-placement="top" data-title="{{chat.description}}" aria-hidden="true"></span>
-            <p>{{chat.name}}</p>
-          </div>
-          <div class="chat-control" ng-click="newChatModal.show()">
-            <p>New Chatroom</p>
-          </div>
-        </div>
-
         <div class="panel-left-users-outer cp-background" ng-cloak="">
           <div class="panel-left-users">
-            <div ng-repeat="u in usersArray" ng-if="profile.avatarURL != u.avatarURL" class="users">
+            <div ng-repeat="u in usersArray" ng-if="profile.avatarURL != u.avatarURL" class="users user-{{u.status}}">
               <div class="user-image {{u.status}}">
                 <img ng-src="{{u.avatarURL}}" alt="" class="avatar {{u.status}}">
               </div>
-              <span class="{{u.status}}" >{{u.userName}}</span>
+              <div class="user-info">
+                <span class="name" >{{u.userName}}</span><br>
+                <span class="timestamp" ng-if="u.status != 'online'" am-time-ago="u.lastOnline"></span>
+              </div>
+              <div class="clearfix"></div>
             </div>
+          </div>
+        </div>
+
+        <div class="panel-left-chats" ng-cloak="">
+          <div ng-repeat="chat in chatRooms" class="chat-control cp-background" ng-click="joinChat(chat)">
+            <span>{{chat.name}}</span>
+            <span class="fa fa-angle-right pull-right" aria-hidden="true"></span>
+            <span class="fa fa-info-circle pull-right" bs-tooltip data-placement="top" data-title="{{chat.description}}" aria-hidden="true"></span>
           </div>
         </div>
 
@@ -92,14 +93,18 @@
                       ng-click="log()">
                         <div class="user-image" ng-if="messageBlock.userName == user.uid">
                           <img ng-src="{{profile.avatarURL}}" alt="{{profile.userName}}" class="current-user-avatar" />
-                          <p class="user-name" style="left:0px">{{profile.userName}}</p>
+                          <p class="user-name" style="left:0px">{{profile.userName}} -
+                           <span am-time-ago="messageBlock.lastUpdated"></span>
+                          </p>
                         </div>
                         <div class="message-block">
                           <span ng-repeat="message in messageBlock.messages">{{message.message}}<br/></span>
                         </div>
                         <div class="user-image {{users[messageBlock.userName].status}}" ng-if="messageBlock.userName != user.uid">
                           <img ng-src="{{users[messageBlock.userName].avatarURL}}" alt="{{users[messageBlock.userName].userName}}" class="avatar {{users[messageBlock.userName].status}}" />
-                          <p class="user-name" style="right:0px">{{users[messageBlock.userName].userName}}</p>
+                          <p class="user-name" style="right:0px">{{users[messageBlock.userName].userName}} - 
+                           <span am-time-ago="messageBlock.lastUpdated"></span>
+                          </p>
                         </div>
                       </li>
                     </ul>
@@ -114,6 +119,10 @@
             </div>
           </div>
         </div>
+      <div class="new-chat cp-background" ng-click="newChatModal.show()">
+        New Chatroom
+      </div>
+
     </div>
 
     </div>
@@ -169,6 +178,8 @@
     <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
     <script src="bower_components/ng-idle/angular-idle.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- <script src="scripts/parallax.js"></script> -->

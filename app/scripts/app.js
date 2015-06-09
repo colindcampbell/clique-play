@@ -19,5 +19,6 @@ angular.module('cliquePlayApp', [
     'firebase.ref',
     'firebase.auth',
     'mgcrea.ngStrap',
-    'ngIdle'
+    'ngIdle',
+    'angularMoment'
   ]);

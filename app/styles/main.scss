@@ -29,6 +29,10 @@ body{
   }
 }
 
+.clearfix{
+  clear:both;
+}
+
 #fore{
   z-index:20;
   position: absolute;

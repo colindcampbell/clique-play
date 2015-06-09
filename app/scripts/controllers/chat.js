@@ -57,7 +57,8 @@ angular.module('cliquePlayApp')
             userPresence.onDisconnect().setWithPriority({
               status:'offline',
               avatarURL:$scope.profile.avatarURL,
-              userName:$scope.profile.userName},3);
+              userName:$scope.profile.userName,
+              lastOnline:Firebase.ServerValue.TIMESTAMP},3);
             if($scope.profile.avatarURL){userPresence.update({avatarURL:$scope.profile.avatarURL})};
             if($scope.profile.userName){userPresence.update({userName:$scope.profile.userName})};
             userPresence.update({status:'online'});
@@ -184,14 +185,20 @@ angular.module('cliquePlayApp')
         userName = $scope.profile.userName;
     if( message ) {
       if ( chat.lastUserID === $scope.user.uid ) {
-        var currentMessageRef = $firebaseArray(RootRef.child('chatTexts/'+chat.$id+'/messageBlocks/'+chat.lastMessageBlockID+'/messages'));
+        var currentMessageRef = 
+              $firebaseArray(RootRef.child('chatTexts/'+chat.$id+'/messageBlocks/'+chat.lastMessageBlockID+'/messages')),
+            currentMessageBlockRef = RootRef.child('chatTexts/'+chat.$id+'/messageBlocks/'+chat.lastMessageBlockID);
         currentMessageRef.$loaded().then(function(){
           currentMessageRef.$add({message:message});
         });
+        currentMessageBlockRef.once('value',function(){
+          currentMessageBlockRef.update({lastUpdated:Firebase.ServerValue.TIMESTAMP})
+        })
       }else{
         chatTextsMessageRef.$add({
           messages:{'-JpO':{message:message}},
-          userName:$scope.user.uid
+          userName:$scope.user.uid,
+          lastUpdated:Firebase.ServerValue.TIMESTAMP
         })
         .then(function(ref){
           chatRoomsRef.lastUserID = $scope.user.uid;
@@ -272,10 +279,10 @@ angular.module('cliquePlayApp')
   }
 
   $scope.logout = function() {
+    userPresence.update({status:'offline',lastOnline:Firebase.ServerValue.TIMESTAMP});
+    userPresence.setPriority(3);
     Auth.$unauth();
     $location.path('/home');
-    userPresence.update({status:'offline'});
-    userPresence.setPriority(3);
   };
 
   $scope.init();
