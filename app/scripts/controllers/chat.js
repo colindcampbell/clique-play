@@ -42,30 +42,6 @@ angular.module('cliquePlayApp')
   }
 
   $scope.setPresence = function(){
-    Idle.watch();
-    userPresence = PresenceRef.child($scope.user.uid);
-    amOnline.on('value', function(snapshot) {
-      if (snapshot.val()) {
-        $scope.$apply(function(){
-          userPresence.onDisconnect().setPriority(3).update({status:'offline'});
-          userPresence.update({status:'online'});
-          userPresence.setPriority(1)
-        })
-      }
-    });
-    $scope.$on('IdleStart', function () {
-      userPresence.update({status:'idle'});
-      userPresence.setPriority(2);
-    });
-    $scope.$on('IdleTimeout', function () {
-      userPresence.update({status:'offline'});
-      userPresence.setPriority(3);
-      Auth.$unauth();
-    });
-    $scope.$on('IdleEnd', function (isIdle, isAway) {
-      userPresence.update({status:'online'});
-      userPresence.setPriority(1);
-    });
     // Load user profile and update presence
     var profile = $firebaseObject(RootRef.child('users/'+$scope.user.uid));
     profile.$bindTo($scope, 'profile').then(function(unbind){$scope.unbindProfile = unbind;});
@@ -74,9 +50,35 @@ angular.module('cliquePlayApp')
         $scope.userFullName = ($scope.profile.firstName && $scope.profile.lastName)?
         $scope.profile.firstName+' '+$scope.profile.lastName:$scope.profile.userName;
         $scope.userLoaded = true;
-        if($scope.profile.avatarURL){userPresence.update({avatarURL:$scope.profile.avatarURL})};
-        if($scope.profile.userName){userPresence.update({userName:$scope.profile.userName})};
+        Idle.watch();
+        userPresence = PresenceRef.child($scope.user.uid);
+        amOnline.on('value', function(snapshot) {
+          if (snapshot.val()) {
+            userPresence.onDisconnect().setWithPriority({
+              status:'offline',
+              avatarURL:$scope.profile.avatarURL,
+              userName:$scope.profile.userName},3);
+            if($scope.profile.avatarURL){userPresence.update({avatarURL:$scope.profile.avatarURL})};
+            if($scope.profile.userName){userPresence.update({userName:$scope.profile.userName})};
+            userPresence.update({status:'online'});
+            userPresence.setPriority(1)
+          }
+        });
+        $scope.$on('IdleStart', function () {
+          userPresence.update({status:'idle'});
+          userPresence.setPriority(2);
+        });
+        $scope.$on('IdleTimeout', function () {
+          userPresence.update({status:'offline'});
+          userPresence.setPriority(3);
+          Auth.$unauth();
+        });
+        $scope.$on('IdleEnd', function (isIdle, isAway) {
+          userPresence.update({status:'online'});
+          userPresence.setPriority(1);
+        });
       }).catch(alert);
+
     // Will eventually be friends
     var users = PresenceRef;
     users.orderByPriority().on('value', function(){

@@ -256,7 +256,6 @@ $anim-length:70s;
   bottom:90%;
   right:-10%;
   animation:fade-right-bot $anim-length ease-out infinite;
-  animation-delay: $delay;
 }
 .layer-4{
   background-color: #00BCD4;
@@ -326,7 +325,7 @@ $anim-length:70s;
     z-index: 12;
   }
   10%{
-    opacity:.6;
+    opacity:.5;
     z-index: 11;
   }
   20%{
@@ -375,7 +374,7 @@ $anim-length:70s;
     z-index: 12;
   }
   10%{
-    opacity:.6;
+    opacity:.5;
     z-index: 11;
   }
   20%{
@@ -424,7 +423,7 @@ $anim-length:70s;
     z-index: 12;
   }
   10%{
-    opacity:.6;
+    opacity:.5;
     z-index: 11;
   }
   20%{
@@ -473,7 +472,7 @@ $anim-length:70s;
     z-index: 12;
   }
   10%{
-    opacity:.6;
+    opacity:.5;
     z-index: 11;
   }
   20%{

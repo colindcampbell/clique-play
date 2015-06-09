@@ -42,7 +42,7 @@
     </div>
 
     <div ng-show-auth="" class="chat" ng-controller="ChatCtrl">
-      <div id="header" >
+      <div id="header">
         <ul>
           <li>
             <a class="cp-background cp-small-link" style="top:70px;left:108px;margin-top:0;width:97px" ng-click="logout()">Logout</a>
@@ -66,7 +66,7 @@
           <div class="panel-left-users">
             <div ng-repeat="u in usersArray" ng-if="profile.avatarURL != u.avatarURL" class="users">
               <div class="user-image {{u.status}}">
-                <img src="{{u.avatarURL}}" alt="" class="avatar {{u.status}}">
+                <img ng-src="{{u.avatarURL}}" alt="" class="avatar {{u.status}}">
               </div>
               <span class="{{u.status}}" >{{u.userName}}</span>
             </div>
@@ -80,7 +80,7 @@
               ng-click="toggleChat($index)">
                 <span class="fa fa-angle-up pull-right" aria-hidden="true"></span>
                 <span class="chat-control-text">{{chat.name}}</span>
-                <img ng-repeat="(id,value) in chat._members" ng-if="user.uid != id" class="img-circle chat-icon chat-control-left" src="{{users[id].avatarURL}}" alt="" bs-tooltip data-placement="bottom" data-title="{{users[id].userName}} ({{users[id].status}})" data-delay="150" aria-hidden="true">
+                <img ng-repeat="(id,value) in chat._members" ng-if="user.uid != id" class="img-circle chat-icon chat-control-left" ng-src="{{users[id].avatarURL}}" alt="" bs-tooltip data-placement="bottom" data-title="{{users[id].userName}} ({{users[id].status}})" data-delay="150" aria-hidden="true">
               </div>
               <div class="chat-body" ng-if="chat._open">
 
@@ -91,14 +91,14 @@
                       ng-class="{righttext:(messageBlock.userName != user.uid)}"
                       ng-click="log()">
                         <div class="user-image" ng-if="messageBlock.userName == user.uid">
-                          <img src="{{profile.avatarURL}}" alt="{{profile.userName}}" class="current-user-avatar" />
+                          <img ng-src="{{profile.avatarURL}}" alt="{{profile.userName}}" class="current-user-avatar" />
                           <p class="user-name" style="left:0px">{{profile.userName}}</p>
                         </div>
                         <div class="message-block">
                           <span ng-repeat="message in messageBlock.messages">{{message.message}}<br/></span>
                         </div>
                         <div class="user-image {{users[messageBlock.userName].status}}" ng-if="messageBlock.userName != user.uid">
-                          <img src="{{users[messageBlock.userName].avatarURL}}" alt="{{users[messageBlock.userName].userName}}" class="avatar {{users[messageBlock.userName].status}}" />
+                          <img ng-src="{{users[messageBlock.userName].avatarURL}}" alt="{{users[messageBlock.userName].userName}}" class="avatar {{users[messageBlock.userName].status}}" />
                           <p class="user-name" style="right:0px">{{users[messageBlock.userName].userName}}</p>
                         </div>
                       </li>

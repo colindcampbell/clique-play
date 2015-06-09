@@ -1,5 +1,5 @@
-// 'use strict';
+'use strict';
 
-// angular.module('cliquePlayApp')
-//   .controller('MainCtrl', function ($scope) {
-//   });
+angular.module('cliquePlayApp')
+  .controller('MainCtrl', function ($scope) {
+  });
