@@ -55,11 +55,13 @@ angular.module('cliquePlayApp')
             }
             break;
         }
-        userPresence.update({
-          status:'online',
-          avatarURL:$scope.profile.avatarURL,
-          userName:$scope.profile.userName
-        })
+        if($scope.user.provider !== 'anonymous'){
+          userPresence.update({
+            status:'online',
+            avatarURL:$scope.profile.avatarURL,
+            userName:$scope.profile.userName
+          })
+        }
       }).catch(alert);
 
     $scope.changePassword = function(oldPass, newPass, confirm) {

@@ -7,14 +7,24 @@
   text-align: center;
   font-size: 40px;
   padding:5px 0 10px;
-  -webkit-transition: color .3s;
-     -moz-transition: color .3s;
-      -ms-transition: color .3s;
-       -o-transition: color .3s;
-          transition: color .3s;
+  height:72px;
+  -webkit-border-radius: 0 10px 0 0;
+          border-radius: 0 10px 0 0;
+  -webkit-transition: all .3s ease;
+     -moz-transition: all .3s ease;
+      -ms-transition: all .3s ease;
+       -o-transition: all .3s ease;
+          transition: all .3s ease;
 }
 #brand:hover{
   color:#333;
+}
+
+#gamedash{
+  -webkit-border-radius: 10px 0 0 0;
+          border-radius: 10px 0 0 0;
+  height:62px;
+  width:200px;
 }
 
 /* Custom page header */
@@ -30,7 +40,6 @@
     position: absolute;
     left: 5px;
     width:200px;
-    height:60px;
     padding-top: 11px;
   }
   h3 {

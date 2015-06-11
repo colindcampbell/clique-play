@@ -25,11 +25,10 @@
     <![endif]-->
   <div id="fore">
     <!-- Add your site or application content here -->
-    <a id="brand" class="cp-background" href="#/">( CliquePlay )</a>
     <div id="header" ng-cloak="">
       <ul>
         <!-- //angularfire -->
-        <li><a class="cp-background" style="top:5px" ng-href="#/gamedash">Game Dash</a></li>
+        <li><a id="gamedash" class="cp-background" style="top:5px" ng-href="#/gamedash">Game Dash</a></li>
         <li>
           <a class="cp-background" style="top:70px" ng-hide-auth="" href="#/login">Login</a>
           <a class="cp-background cp-small-link" style="top:70px" ng-show-auth="" href="#/account">Account</a>
@@ -42,18 +41,25 @@
     </div>
 
     <div ng-show-auth="" class="chat" ng-controller="ChatCtrl">
+      <div id="greeting" ng-if="user" ng-cloak="" >
+         <span>{{profile.userName}} </span>
+         <img ng-src="{{profile.avatarURL}}" alt="profile image" class="img-rounded">
+      </div>
+      <a id="brand" class="cp-background" href="#/">
+        ( CliquePlay )
+      </a>
       <div id="header">
         <ul>
           <li>
-            <a class="cp-background cp-small-link" style="top:70px;left:108px;margin-top:0;width:97px" ng-click="logout()">Logout</a>
+            <a class="cp-background cp-small-link" style="top:70px;left:106px;margin-top:0;width:99px" ng-click="logout()">Logout</a>
           </li>
         </ul>
       </div>
       <div class="content-block">
 
-        <div class="panel-left-users-outer cp-background" ng-cloak="">
-          <div class="panel-left-users">
-            <div ng-repeat="u in usersArray | filter:userSearch" ng-if="profile.avatarURL != u.avatarURL" class="users user-{{u.status}} content-block">
+        <div id="panel-left-users-outer" class="cp-background" ng-cloak="">
+          <ul class="panel-left-users">
+            <li ng-repeat="u in usersArray | filter:search.userQuery" ng-if="profile.avatarURL != u.avatarURL" class="users user-{{u.status}} animate-repeat">
               <div class="user-image {{u.status}}">
                 <img ng-src="{{u.avatarURL}}" alt="" class="avatar {{u.status}}">
               </div>
@@ -62,27 +68,35 @@
                 <span class="timestamp" ng-if="u.status != 'online'" am-time-ago="u.lastOnline"></span>
               </div>
               <div class="clearfix"></div>
-            </div>
-          </div>
+            </li>
+          </ul>
           <div class="search-form" ng-if="showUserSearch">
-            <input type="text" placeholder="Search Users..." ng-model="userSearch" class="user-search">
+            <input type="text" placeholder="Search Users..." ng-model="search.userQuery" class="user-search" />
           </div>
           <div class="search-icon" ng-click="showUserSearch = !showUserSearch">
             <span class="fa" ng-class="{'fa-search-plus':!showUserSearch,'fa-search-minus':showUserSearch}"></span>
           </div>
         </div>
 
-        <div class="panel-left-chats" ng-cloak="">
-          <div ng-repeat="chat in chatRooms" class="chat-control cp-background" ng-click="joinChat(chat)">
-            <span>{{chat.name}}</span>
-            <span class="fa fa-angle-right pull-right" aria-hidden="true"></span>
-            <span class="fa fa-info-circle pull-right" bs-tooltip data-placement="top" data-title="{{chat.description}}" aria-hidden="true"></span>
+        <div class="panel-left-chats-outer" ng-cloak="">
+          <div class="panel-left-chats">
+            <div ng-repeat="chat in chatRooms | filter:search.chatQuery" class="chat-control cp-background animate-repeat" ng-click="joinChat(chat)">
+              <span>{{chat.name}}</span>
+              <span class="fa fa-angle-right pull-right" aria-hidden="true"></span>
+              <span class="fa fa-info-circle pull-right" bs-tooltip data-placement="bottom" data-title="{{chat.description}}" aria-hidden="true"></span>
+            </div>
           </div>
+        </div>
+        <div class="chat-search-form" >
+          <input type="text" placeholder="Search Public Chats..." ng-model="search.chatQuery" class="chat-search cp-background" />
+<!--           <div class="search-icon" ng-click="showChatSearch = !showChatSearch">
+            <span class="fa" ng-class="{'fa-search-plus':!showChatSearch,'fa-search-minus':showChatSearch}"></span>
+          </div> -->
         </div>
 
         <div class="panel-right-outer" ng-cloak="">
           <div id="panel-right">
-            <div ng-repeat="chat in userChats" class="user-chat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
+            <div ng-repeat="chat in userChats" class="user-chat animate-repeat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
               <div class="chat-control cp-background" ng-class="{'animated-slow flash-half infinite':chat._newMessage}"
               ng-click="toggleChat($index)">
                 <span class="fa fa-angle-up pull-right" aria-hidden="true"></span>
@@ -90,7 +104,6 @@
                 <img ng-repeat="(id,value) in chat._members" ng-if="user.uid != id" class="img-circle chat-icon chat-control-left" ng-src="{{users[id].avatarURL}}" alt="" bs-tooltip data-placement="bottom" data-title="{{users[id].userName}} ({{users[id].status}})" data-delay="150" aria-hidden="true">
               </div>
               <div class="chat-body" ng-if="chat._open">
-
                 <div class="chat-box-outer cp-background-dark">
                   <div class="chat-box">  
                     <ul id="messages" class="chat" >
@@ -116,7 +129,6 @@
                     </ul>
                   </div>
                 </div>
-
                 <form id="chat-form">
                   <input class="chat-input" id="input{{$index}}" placeholder="Message..." ng-model="message" ng-click="chat._newMessage=false;">
                   <button type="submit" ng-click="addMessage(message,chat,$index);message = null;chat._newMessage=false;" style="display:none"></button>
@@ -125,12 +137,12 @@
             </div>
           </div>
         </div>
-      <div class="new-chat cp-background" ng-click="newChatModal.show()">
-        New Chatroom
+        
+        <div class="new-chat cp-background" ng-click="newChatModal.show()">
+          New Chatroom
+        </div>
+
       </div>
-
-    </div>
-
     </div>
   </div>
 
@@ -189,6 +201,7 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- <script src="scripts/parallax.js"></script> -->
+    <script src="scripts/modernizr.custom.68726.js"></script>
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>

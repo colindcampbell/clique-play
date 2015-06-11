@@ -1,0 +1,294 @@
+// Angular Animations
+.search-form.ng-move,
+.search-form.ng-enter,
+.search-form.ng-leave{
+  -webkit-transition:all ease 0.3s;
+  transition:all ease 0.3s;
+}
+
+.search-form.ng-leave.ng-leave-active,
+.search-form.ng-move,
+.search-form.ng-enter {
+  opacity:0;
+}
+
+.search-form.ng-leave,
+.search-form.ng-move.ng-move-active,
+.search-form.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+  -webkit-transition:all ease 0.3s;
+  transition:all ease 0.3s;
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  opacity:0;
+  max-height:0;
+  margin-bottom:0;
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+  opacity:1;
+  max-height:60px;
+  margin-bottom: 3px;
+}
+
+
+.chat-body.ng-enter, .chat-body.ng-leave {
+  -webkit-transition:0.3s ease all;
+  transition:0.3s ease all;
+  position:absolute;
+  top:35px;
+  left:0;
+  right:0;
+}
+
+.chat-body.ng-enter {
+  z-index:100;
+  opacity:0;
+}
+.chat-body.ng-enter.ng-enter-active {
+  opacity:1;
+  top:35px;
+}
+
+.chat-body.ng-leave {
+  z-index:101;
+  opacity:1;
+  -ms-overflow-y: scroll;
+      overflow-y: scroll;
+}
+.chat-body.ng-leave.ng-leave-active {
+  opacity:0;
+  top:35px;
+}
+
+.content-block.ng-enter, .content-block.ng-leave {
+  -webkit-transition:0.3s ease all;
+  transition:0.3s ease all;
+  position:absolute;
+  left:10px;
+  right:-17px;
+}
+
+.content-block.ng-enter {
+  z-index:100;
+  opacity:0;
+}
+.content-block.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.content-block.ng-leave {
+  z-index:101;
+  opacity:1;
+}
+.content-block.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+//Web Animations
+@keyframes fade-left-top{
+  0%{
+    z-index: 12;
+  }
+  10%{
+    opacity:.15;
+    z-index: 11;
+  }
+  20%{
+    height:600px;
+    width:1200px;
+    z-index: 10;
+  }
+  30%{
+    z-index: 9;
+  }
+  40%{
+    height:900px;
+    width:450px;
+    z-index: 8;
+  }
+  50%{
+    z-index: 7;
+  }
+  60%{
+    height:300px;
+    width:600px;
+    z-index: 6;
+  }
+  70%{
+    z-index: 5;
+  }
+  80%{
+    height:300px;
+    width:150px;
+    z-index: 4;
+  }
+  90%{
+    z-index: 3;
+  }
+  100%{
+    z-index: 2;
+    width:0;
+    height:0;
+    opacity:0;
+    left:100%;
+    top:-10%;
+  }
+}
+@keyframes fade-left-bot{
+  0%{
+    z-index: 12;
+  }
+  10%{
+    opacity:.15;
+    z-index: 11;
+  }
+  20%{
+    height:600px;
+    width:1200px;
+    z-index: 10;
+  }
+  30%{
+    z-index: 9;
+  }
+  40%{
+    height:900px;
+    width:450px;
+    z-index: 8;
+  }
+  50%{
+    z-index: 7;
+  }
+  60%{
+    height:300px;
+    width:600px;
+    z-index: 6;
+  }
+  70%{
+    z-index: 5;
+  }
+  80%{
+    height:300px;
+    width:150px;
+    z-index: 4;
+  }
+  90%{
+    z-index: 3;
+  }
+  100%{
+    z-index: 2;
+    width:0;
+    height:0;
+    opacity:0;
+    left:100%;
+    bottom:-10%;
+  }
+}
+@keyframes fade-right-top{
+  0%{
+    z-index: 12;
+  }
+  10%{
+    opacity:.15;
+    z-index: 11;
+  }
+  20%{
+    height:600px;
+    width:1200px;
+    z-index: 10;
+  }
+  30%{
+    z-index: 9;
+  }
+  40%{
+    height:900px;
+    width:450px;
+    z-index: 8;
+  }
+  50%{
+    z-index: 7;
+  }
+  60%{
+    height:300px;
+    width:600px;
+    z-index: 6;
+  }
+  70%{
+    z-index: 5;
+  }
+  80%{
+    height:300px;
+    width:150px;
+    z-index: 4;
+  }
+  90%{
+    z-index: 3;
+  }
+  100%{
+    z-index: 2;
+    width:0;
+    height:0;
+    opacity:0;
+    right:100%;
+    top:-10%;
+  }
+}
+@keyframes fade-right-bot{
+  0%{
+    z-index: 12;
+  }
+  10%{
+    opacity:.15;
+    z-index: 11;
+  }
+  20%{
+    height:600px;
+    width:1200px;
+    z-index: 10;
+  }
+  30%{
+    z-index: 9;
+  }
+  40%{
+    height:900px;
+    width:450px;
+    z-index: 8;
+  }
+  50%{
+    z-index: 7;
+  }
+  60%{
+    height:300px;
+    width:600px;
+    z-index: 6;
+  }
+  70%{
+    z-index: 5;
+  }
+  80%{
+    height:300px;
+    width:150px;
+    z-index: 4;
+  }
+  90%{
+    z-index: 3;
+  }
+  100%{
+    z-index: 2;
+    width:0;
+    height:0;
+    opacity:0;
+    right:100%;
+    bottom:-10%;
+  }
+}
