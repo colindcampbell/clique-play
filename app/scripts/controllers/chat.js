@@ -114,19 +114,13 @@ angular.module('cliquePlayApp')
           })
           $scope.scrollBot();
           var newPos = $scope.userChats.map(function(e) { return e.$id; }).indexOf(event.key);
-              // temp = $scope.userChats[newPos];
           if(chatRoomRef.lastUserID !== $scope.user.uid && !$scope.userChats[newPos]._open){
             $scope.userChats[newPos]._newMessage = true;
             $scope.userChats[newPos].priority = 0 - Date.now();
           }
-          // if(newPos > 0){
-          //   $scope.userChats.move(newPos, 0);
-          // }
         })
       });
-      console.log($scope.userChats);
     });
-      // console.log($scope.userMessageBlocks);
   };
 
   $scope.updateChatPriorities = function(chatID){
@@ -145,7 +139,6 @@ angular.module('cliquePlayApp')
     $scope.setPresence();
     // Get User's Chats
     $scope.userChatKeysArray = $firebaseArray(RootRef.child('users/'+$scope.user.uid+'/chatRooms').orderByPriority());
-    // $scope.userChatKeys = $firebaseObject(RootRef.child('users/'+$scope.user.uid+'/chatRooms').orderByPriority());
     $scope.userChatKeysArray.$loaded().then(function(chatKeys){
       angular.forEach(chatKeys, function(val,key){
         $scope.getChats(val.$id,false);
@@ -237,7 +230,6 @@ angular.module('cliquePlayApp')
               lastMessageBlockID: ref.key(),
               lastMessageTime: Date.now()
             })
-            // chatRoomRef.setPriority(0 - Date.now());
           })
         }).catch(alert);
       }
