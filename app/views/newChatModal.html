@@ -25,26 +25,14 @@
 			      </div>
 			    </div>
 			    <div class="form-group">
-			      <label for="pwProtected" class="col-sm-3 control-label">Password Protected?</label>
+			      <label for="privateChat" class="col-sm-3 control-label">Private Chat?</label>
 			      <div class="col-sm-1">
-			        <input id="pwProtected" name="pwProtected" type="checkbox" ng-model="pwProtected" class="form-control" />
-			      </div>
-			    </div>
-			    <div class="form-group" ng-if="pwProtected">
-			      <label for="loginPass" class="col-sm-3 control-label">password</label>
-			      <div class="col-sm-9">
-			        <input id="loginPass" name="password" type="password" ng-model="pass" class="form-control" />
-			      </div>
-			    </div>
-			    <div class="form-group" ng-if="pwProtected">
-			      <label for="loginConfirm" class="col-sm-3 control-label">confirm pass</label>
-			      <div class="col-sm-9">
-			        <input id="loginConfirm" name="confirm" type="password" ng-model="confirm" class="form-control" />
+			        <input id="privateChat" name="privateChat" type="checkbox" ng-model="privateChat" class="form-control" />
 			      </div>
 			    </div>
 			    <div class="form-group">
 			      <div class="col-sm-offset-3 col-sm-9">
-			        <button class="btn btn-primary" ng-click="createChat(pass, confirm, chatName, description);$hide()" ng-hide="createMode">Create</button>
+			        <button class="btn btn-primary" ng-click="createChat(chatName, description, privateChat,[]);$hide()" ng-hide="createMode">Create</button>
 			        <button type="button" class="btn btn-warning" ng-click="$hide()">Close</button>
 			      </div>
 			    </div>

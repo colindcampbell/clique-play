@@ -76,11 +76,6 @@ $chat-box-height:320px;
 		width:40px;
 		display: inline-block;
 	}
-	.user-info{
-		display: inline-block;
-		margin-left: 5px;
-		vertical-align:middle;
-	}
 	.users{
 		margin: 0;
 		padding: 0;
@@ -88,6 +83,12 @@ $chat-box-height:320px;
 	  list-style:none;
 	  box-sizing:border-box;
 	  margin-bottom: 5px;
+	  position: relative;
+	}
+	.user-info{
+		display: inline-block;
+		margin-left: 5px;
+		vertical-align:middle;
 	}
 	.user-online,.idle{
 		.user-info{
@@ -98,6 +99,17 @@ $chat-box-height:320px;
 		.user-info{
 			color:#ccc;
 		}
+	}
+	.user-hover{
+		cursor:pointer;
+		position: absolute;
+		right:10px;
+		top:50%;
+		-webkit-transform: translateY(-50%);
+		   -moz-transform: translateY(-50%);
+		    -ms-transform: translateY(-50%);
+		     -o-transform: translateY(-50%);
+		        transform: translateY(-50%);
 	}
 	.timestamp{
 		font-size: 13px;
@@ -114,8 +126,6 @@ $chat-box-height:320px;
 	font-size: 18px;
 	border:none;
 	opacity: .85;
-	// -webkit-border-radius: 0 0 3px 3px;
-	//         border-radius: 0 0 3px 3px;
 }
 .user-search{
 	color:#777;
@@ -128,6 +138,8 @@ $chat-box-height:320px;
 	padding:5px 10px;
 	font-size: 18px;
 	border:none;
+	-webkit-border-radius: 0 0 0 10px;
+	        border-radius: 0 0 0 10px;
 }
 .chat-search{
 	color:white;
