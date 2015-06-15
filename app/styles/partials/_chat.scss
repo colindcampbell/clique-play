@@ -213,7 +213,6 @@ $chat-box-height:320px;
 			     -o-transform: rotate(180deg);
 			        transform: rotate(180deg);
 		}
-	
 	}
 	.new-message{
 		.chat-control{
@@ -227,7 +226,6 @@ $chat-box-height:320px;
 		overflow: visible;
 		width:$chat-closed-width;
 		height:35px;
-		cursor:pointer;
 		position: relative;
 		color:white;
 		margin-bottom: 3px;
@@ -236,6 +234,7 @@ $chat-box-height:320px;
 			font-size: 20px;
 			vertical-align: middle;
 			padding-right: 10px;
+			cursor:pointer;
 		}
 		.chat-control-text{
 			padding-left: 10px;
@@ -243,6 +242,10 @@ $chat-box-height:320px;
 			margin: 0;
 			font-size: 20px;
 			line-height: 33px;
+		}
+		.add-user{
+			margin-left: -5px;
+			cursor: pointer;
 		}
 		img.chat-icon{
 			width:24px;
