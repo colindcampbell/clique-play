@@ -9,15 +9,13 @@
 	    <ul>
 	    	<li ng-repeat="(id,member) in focusChat._members">{{id}}: {{users[id].userName}}</li>
 	    </ul>
-
-			    <div class="form-group">
-			      <div class="col-sm-offset-3 col-sm-9">
-			        <button class="btn btn-primary" ng-click="addUsersToChat();$hide();" ng-hide="createMode">Add</button>
-			        <button type="button" class="btn btn-warning" ng-click="$hide();">Close</button>
-			      </div>
-			    </div>
-
 		  </div>
+			<div class="modal-footer">
+				<div class="col-sm-offset-3 col-sm-9">
+	        <button class="btn btn-primary" ng-click="addUsersToChat();$hide();" ng-hide="createMode">Add</button>
+	        <button type="button" class="btn btn-warning" ng-click="$hide();">Close</button>
+	      </div>
+			</div>
 		</div>
 	</div>
 </div>

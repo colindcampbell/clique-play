@@ -7,7 +7,7 @@ $chat-width:300px;
 $chat-closed-width:300px;
 
 $chat-input-height:38px;
-$chat-box-height:320px;
+$chat-box-height:357px;
 
 .panel-left-chats-outer{	
 	position: absolute;
@@ -82,7 +82,7 @@ $chat-box-height:320px;
 		line-height:18px;
 	  list-style:none;
 	  box-sizing:border-box;
-	  margin-bottom: 5px;
+	  margin-bottom: 3px;
 	  position: relative;
 	}
 	.user-info{
@@ -178,6 +178,8 @@ $chat-box-height:320px;
 	top:80px;
 	width:300px;
 	bottom:43px;
+	-ms-overflow-x: hidden;
+	    overflow-x: hidden;
 }
 
 #panel-right{
@@ -187,31 +189,29 @@ $chat-box-height:320px;
 	top:0;
 	bottom: 0;
 	left: 0;
-	-ms-overflow-y: auto;
-	    overflow-y: auto;
+	-ms-overflow-y: scroll;
+	    overflow-y: scroll;
+	-ms-overflow-x: hidden;
+	    overflow-x: hidden;
 	.chat-open{
-		top:0px;
-		position:absolute;
+		.chat-body{
+			top:0px;
+			left:0;
+			right:0;
+			position:absolute;
+		}
 		.chat-control{
 			opacity:1;
   		background-color: rgba(100,100,100,.85);
-			margin-bottom: 0;
-			border:none;
-			// -webkit-border-radius: 2px 2px 0 0;
-			//         border-radius: 2px 2px 0 0;
-			border-bottom: 2px solid rgba(70,70,70,.30);
 		}
 		.fa-angle-up{
-		  -webkit-transition: .3s ease all;
-		     -moz-transition: .3s ease all;
-		      -ms-transition: .3s ease all;
-		       -o-transition: .3s ease all;
-		          transition: .3s ease all;
 			-webkit-transform: rotate(180deg);
 			   -moz-transform: rotate(180deg);
 			    -ms-transform: rotate(180deg);
 			     -o-transform: rotate(180deg);
 			        transform: rotate(180deg);
+		  margin-right: 5px;
+  		margin-left: 0px;
 		}
 	}
 	.new-message{
@@ -221,8 +221,6 @@ $chat-box-height:320px;
 	}
 	// Chat Control Closed
 	.chat-control{
-		// -webkit-border-radius: 2px;
-		//         border-radius: 2px;
 		overflow: visible;
 		width:$chat-closed-width;
 		height:35px;
@@ -244,13 +242,13 @@ $chat-box-height:320px;
 			line-height: 33px;
 		}
 		.add-user{
-			margin-left: -5px;
+			margin: 2px -5px 0 0;
 			cursor: pointer;
 		}
 		img.chat-icon{
 			width:24px;
 			height:24px;
-			margin-right: 3px;
+			margin: 5px 3px 0 0;
 		}
 	}
 }
@@ -387,7 +385,6 @@ $chat-box-height:320px;
 		// overflow-y:scroll;
 	}
 }
-
 
 #chat-form{
 	position: relative;

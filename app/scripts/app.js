@@ -23,14 +23,20 @@ angular.module('cliquePlayApp', [
     'angularMoment'
   ]);
 
+document.addEventListener("DOMContentLoaded", function(event) { 
+  // Create the measurement node
+  var scrollDiv = document.createElement("div");
+  scrollDiv.className = "scrollbar-measure";
+  document.body.appendChild(scrollDiv);
 
-Array.prototype.move = function (old_index, new_index) {
-    if (new_index >= this.length) {
-        var k = new_index - this.length;
-        while ((k--) + 1) {
-            this.push(undefined);
-        }
-    }
-    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
-    return this; // for testing purposes
-};
+  // Get the scrollbar width
+  var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  if(scrollbarWidth !== 17){
+    document.body.className += ' scroll-narrow';
+  }
+  // console.warn(scrollbarWidth); // Mac:  15
+  // window.scrollWidth = scrollbarWidth;
+
+  // Delete the DIV 
+  document.body.removeChild(scrollDiv);
+});

@@ -29,7 +29,7 @@
       <ul>
         <li><a id="gamedash" class="cp-background" style="top:5px" ng-href="#/gamedash">Game Dash</a></li>
         <li>
-          <a class="cp-background" style="top:70px;padding-bottom:10px" ng-hide-auth="" href="#/login">Login</a>
+          <a class="cp-background" style="top:70px;padding-bottom:13px" ng-hide-auth="" href="#/login">Login</a>
           <a class="cp-background cp-small-link" style="top:70px" ng-show-auth="" href="#/account">Account</a>
         </li>
       </ul>
@@ -98,14 +98,7 @@
 
         <div class="panel-right-outer" ng-cloak="">
           <div id="panel-right">
-            <div ng-repeat="chat in userChats | orderBy:'priority' " class="user-chat animate-repeat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
-              <div class="chat-control cp-background" ng-class="{'animated-slow flash-half infinite':chat._newMessage}">
-                <span class="fa fa-angle-up pull-right" aria-hidden="true" 
-              ng-click="toggleChat(chat.$id)"></span>
-                <span class="chat-control-text">{{chat.name}}</span>
-                <img ng-repeat="(id,value) in chat._members" ng-if="user.uid != id" class="img-circle chat-icon chat-control-left" ng-src="{{users[id].avatarURL}}" alt="" bs-tooltip data-placement="bottom" data-title="{{users[id].userName}} ({{users[id].status}})" data-delay="150" aria-hidden="true">
-                <span class="fa fa-plus-circle add-user" ng-click="setFocusChat(chat);newUserModal.show()"></span>
-              </div>
+            <div ng-repeat="chat in userChats | orderBy:'_priority' " class="user-chat animate-repeat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
               <div class="chat-body" ng-if="chat._open">
                 <div class="chat-box-outer cp-background-dark">
                   <div class="chat-box">  
@@ -137,6 +130,14 @@
                   <button type="submit" ng-click="addMessage(message,chat,$index);message = null;chat._newMessage=false;" style="display:none"></button>
                 </form>
               </div>
+              <div class="chat-control cp-background" ng-class="{'animated-slow flash-half infinite':chat._newMessage}">
+                <span class="fa fa-angle-up pull-right" aria-hidden="true" 
+              ng-click="toggleChat(chat.$id)"></span>
+                <span class="chat-control-text">{{chat.name}}</span>
+                <img ng-repeat="(id,value) in chat._members" ng-if="user.uid != id" class="img-circle chat-icon chat-control-left pull-right" ng-src="{{users[id].avatarURL}}" alt="" bs-tooltip data-placement="top" data-title="{{users[id].userName}} ({{users[id].status}})" data-delay="150" aria-hidden="true">
+                <span class="fa fa-plus-circle add-user pull-right" ng-click="setFocusChat(chat);newUserModal.show()"></span>
+              </div>
+            <div class="clearfix"></div>
             </div>
           </div>
         </div>
@@ -191,7 +192,6 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
-    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
     <script src="bower_components/ng-idle/angular-idle.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
