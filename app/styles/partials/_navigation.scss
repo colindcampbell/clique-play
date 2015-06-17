@@ -3,9 +3,8 @@
   position: absolute;
   right:5px;
   top:5px;
-  color:white;
   text-align: center;
-  font-size: 40px;
+  z-index:21;
   padding:5px 0 10px;
   height:72px;
   -webkit-border-radius: 0 10px 0 0;
@@ -15,9 +14,26 @@
       -ms-transition: all .3s ease;
        -o-transition: all .3s ease;
           transition: all .3s ease;
+  a{
+    color:white;
+    font-size: 40px;
+  -webkit-transition: all .3s ease;
+     -moz-transition: all .3s ease;
+      -ms-transition: all .3s ease;
+       -o-transition: all .3s ease;
+          transition: all .3s ease;
+  }
 }
-#brand:hover{
+#brand a:hover{
   color:#333;
+}
+
+#logo-mobile{
+  display: none;
+}
+
+#touch-login{
+  display: none;
 }
 
 #gamedash{
@@ -66,4 +82,12 @@
     font-size: 15px;
     height:36px;
   }
+}
+
+#touch-users-toggle{
+  display: none;  
+}
+
+#touch-chats-toggle{
+  display: none;  
 }

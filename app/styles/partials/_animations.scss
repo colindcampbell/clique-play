@@ -25,6 +25,23 @@
           transition:all ease 0.3s;
 }
 
+.fade-in-out-delay.ng-enter{
+  opacity:0;
+  -webkit-animation: fadeInOutDelay .3s ease;
+     -moz-animation: fadeInOutDelay .3s ease;
+       -o-animation: fadeInOutDelay .3s ease;
+          animation: fadeInOutDelay .3s ease;
+      -webkit-animation-delay: .2s;
+         -moz-animation-delay: .2s;
+           -o-animation-delay: .2s;
+              animation-delay: .2s;
+}
+
+@keyframes fadeInOutDelay{
+  from{opacity:0}
+  to{opacity:1}
+}
+
 .search-form.ng-leave.ng-leave-active,
 .search-form.ng-move,
 .search-form.ng-enter {
@@ -40,8 +57,8 @@
 .animate-repeat.ng-move,
 .animate-repeat.ng-enter,
 .animate-repeat.ng-leave {
-  -webkit-transition:all ease 0.3s;
-          transition:all ease 0.3s;
+  -webkit-transition:all ease .3s;
+          transition:all ease .3s;
 }
 
 .animate-repeat.ng-leave.ng-leave-active,
@@ -49,16 +66,51 @@
 .animate-repeat.ng-enter {
   opacity:0;
   max-height:0;
-  // margin-bottom:3px;
 }
 
 .animate-repeat.ng-leave,
 .animate-repeat.ng-move.ng-move-active,
 .animate-repeat.ng-enter.ng-enter-active {
   opacity:1;
-  max-height:60px;
-  // margin-bottom: 3px;
+  max-height:500px;
 }
+
+.touch{
+  .animate-repeat.ng-enter,
+  .animate-repeat.ng-leave,
+  .animate-repeat.ng-enter.ng-enter-active,
+  .animate-repeat.ng-leave.ng-leave-active{
+    opacity:1;
+    max-height:500px;
+    -webkit-transition: .01s;
+       -moz-transition: .01s;
+        -ms-transition: .01s;
+         -o-transition: .01s;
+            transition: .01s;
+  }
+
+}
+
+.open-users-panel.ng-enter,
+.open-users-panel.ng-leave{
+  -webkit-transition: .5s all ease;
+     -moz-transition: .5s all ease;
+      -ms-transition: .5s all ease;
+       -o-transition: .5s all ease;
+          transition: .5s all ease;
+  position: fixed;  
+}
+
+.open-users-panel.ng-leave.ng-leave-active,
+.open-users-panel.ng-enter{
+  left:-200px
+}
+
+.open-users-panel.ng-enter.ng-enter-active,
+.open-users-panel.ng-leave{
+  left:5px
+}
+
 
 // .chat-open.ng-move,
 // .chat-open.ng-enter,

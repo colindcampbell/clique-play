@@ -4,10 +4,11 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // endbower
 
 // Partial Imports
+@import "partials/touchscreen";
 @import "partials/navigation";
 @import "partials/chat";
 @import "partials/animations";
-@import "partials/main-responsive";
+@import "partials/mobile";
 
 
 *{
@@ -49,7 +50,7 @@ body{
   position: absolute;
   right: 316px;
   top: 11px;
-  color: #eee;
+  z-index: 21;
   span{
     font-size: 20px;
     vertical-align: middle;
@@ -57,6 +58,12 @@ body{
   img{
     width:32px;
     margin-left: 2px;
+  }
+  a{
+    color:#eee;
+  }
+  a:hover,a:active{
+    color:black;
   }
 }
 
@@ -199,7 +206,7 @@ $anim-length:105s;
   right:0;
   bottom:0;
   padding: 0;
-  max-resolution: 0;
+  z-index: -10;
 }
 
 

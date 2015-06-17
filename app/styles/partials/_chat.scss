@@ -9,10 +9,17 @@ $chat-closed-width:300px;
 $chat-input-height:38px;
 $chat-box-height:357px;
 
+.left-panel{
+	left:5px;
+}
+
+.right-panel{
+	right:5px;
+}
+
 .panel-left-chats-outer{	
 	position: absolute;
 	width:$panel-left-width;
-	left:5px;
 	bottom:42px;
 	height:112px;
 	overflow: hidden;
@@ -53,7 +60,6 @@ $chat-box-height:357px;
 #panel-left-users-outer{	
 	position: absolute;
 	width:$panel-left-width;
-	left:5px;
 	top:109px;
 	bottom:157px;
 	overflow: hidden;
@@ -64,8 +70,8 @@ $chat-box-height:357px;
 	position: absolute;
 	top: 5px;
 	bottom: 5px;
-	left: 5px;
 	right: -17px;
+	left: 5px;	
 	margin: 0;
 	padding: 0;
 	-ms-overflow-y: scroll;
@@ -75,6 +81,7 @@ $chat-box-height:357px;
 	.user-image{
 		width:40px;
 		display: inline-block;
+		
 	}
 	.users{
 		margin: 0;
@@ -118,22 +125,31 @@ $chat-box-height:357px;
 	}
 }
 
-.search-form input{
-	position: absolute;
-	bottom:0;
+.search-form{
+	position: absolute;	
+	bottom: 0;	
 	width:100%;
-	padding:5px 10px;
-	font-size: 18px;
+	input{
+		width:100%;
+		padding:5px 10px;
+	  font-size: 18px;
+		border:none;
+	}
+}
+
+.chat-search-form{
+	position: absolute;
+	width:100%;
+	bottom:5px;
 	border:none;
 	opacity: .85;
 }
+
 .user-search{
 	color:#777;
 }
+
 .chat-search-form input{
-	position: absolute;
-	bottom:5px;
-	left: 5px;
 	width:200px;
 	padding:5px 10px;
 	font-size: 18px;
@@ -174,7 +190,6 @@ $chat-box-height:357px;
 
 .panel-right-outer{
 	position: absolute;
-	right:5px;
 	top:80px;
 	width:300px;
 	bottom:43px;
@@ -202,16 +217,7 @@ $chat-box-height:357px;
 		}
 		.chat-control{
 			opacity:1;
-  		background-color: rgba(100,100,100,.85);
-		}
-		.fa-angle-up{
-			-webkit-transform: rotate(180deg);
-			   -moz-transform: rotate(180deg);
-			    -ms-transform: rotate(180deg);
-			     -o-transform: rotate(180deg);
-			        transform: rotate(180deg);
-		  margin-right: 5px;
-  		margin-left: 0px;
+  		background-color: rgba(60, 85, 110, 0.85);
 		}
 	}
 	.new-message{
@@ -240,6 +246,7 @@ $chat-box-height:357px;
 			margin: 0;
 			font-size: 20px;
 			line-height: 33px;
+			cursor: auto;
 		}
 		.add-user{
 			margin: 2px -5px 0 0;
@@ -250,6 +257,11 @@ $chat-box-height:357px;
 			height:24px;
 			margin: 5px 3px 0 0;
 		}
+		.chat-member-container {
+		  position: absolute;
+		  right: 29px;
+		  top: 0;
+		}
 	}
 }
 
@@ -257,7 +269,6 @@ $chat-box-height:357px;
 	position: absolute;
 	text-align: center;
 	bottom: 5px;
-	right: 5px;
 	width: 300px;
 	height: 35px;
 	padding-top: 5px;
@@ -277,13 +288,13 @@ $chat-box-height:357px;
 	max-width:81%;
 	display: inline-block;
 	padding: 10px 15px;
-  background-color: rgba(5,10,50,.4);
+  background-color: rgba(5,10,50,.7);
   -webkit-border-radius: 4px;
           border-radius: 4px;
   position: relative;
   margin-left: 2%;
-  border-right:2px solid #bbb;
-  border-bottom: 2px solid #bbb;
+  border-right:2px solid #999;
+  border-bottom: 2px solid #333;
   text-align: left;
   span{
   	color:white;
@@ -291,9 +302,9 @@ $chat-box-height:357px;
 }
 
 .righttext .message-block{
-  background-color: rgba(0,40,50,.4);
+  background-color: rgba(0,40,50,.7);
 	border-right:none;
-	border-left: 2px solid #bbb;
+	border-left: 2px solid #999;
   margin-left: 0;
 	margin-right: 2%;	
 }
@@ -317,8 +328,9 @@ $chat-box-height:357px;
 		bottom: -26px;
 		color: black;
 		font-size: 15px;
-		width:200px;
+		width:220px;
 		margin: 0;
+		white-space: nowrap;
 		span{
 			color: black;
 			font-size: 15px;
@@ -338,7 +350,7 @@ $chat-box-height:357px;
    width: 0;
    height: 0;
    border-top: 4px solid transparent;
-   border-right: 8px solid rgba(5,10,50,.4);
+   border-right: 8px solid rgba(5,10,50,.8);
    border-bottom: 4px solid transparent;
 }
 
@@ -350,7 +362,7 @@ $chat-box-height:357px;
    width: 0;
    height: 0;
    border-top: 4px solid transparent;
-   border-left: 8px solid rgba(0,40,50,.4);
+   border-left: 8px solid rgba(0,40,50,.8);
    border-bottom: 4px solid transparent;
    border-right: none;
    
@@ -364,6 +376,7 @@ $chat-box-height:357px;
 	position: relative;
 	height:$chat-box-height;
 	overflow: hidden;
+	background: rgba(230,230,230, .85)
 }
 
 .chat-box{

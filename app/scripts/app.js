@@ -20,7 +20,8 @@ angular.module('cliquePlayApp', [
     'firebase.auth',
     'mgcrea.ngStrap',
     'ngIdle',
-    'angularMoment'
+    'angularMoment',
+    'duScroll'
   ]);
 
 document.addEventListener("DOMContentLoaded", function(event) { 

@@ -1,0 +1,123 @@
+
+<div id="touch-users-toggle" class="touch-toggle cp-mobile-nav" 
+	ng-swipe-right="chatScope.openPanel('users','chats')"
+ ng-click="chatScope.openPanel('users','chats')"> 
+  <span class="fa fa-users"></span>
+</div>
+
+<div id="touch-chats-toggle" class="touch-toggle cp-mobile-nav" 
+ ng-click="chatScope.openPanel('chats','users')"
+ ng-swipe-left="chatScope.openPanel('chats','users')"
+ ng-class="{'new-message animated-slow flash-half infinite':chatScope.newMessage}"> 
+  <span class="fa fa-comments"> </span>
+</div>
+
+
+<div id="greeting" ng-if="chatScope.user" ng-cloak="">
+	<a href="#/account">
+   <span>{{profile.userName}} </span>
+   <img ng-src="{{profile.avatarURL}}" alt="profile image" class="img-rounded">
+  </a>
+</div>
+
+<div id="header">
+  <ul>
+    <li>
+      <a class="cp-background cp-small-link" style="top:70px;left:106px;margin-top:0;width:99px" ng-click="chatScope.logout()">Logout</a>
+    </li>
+  </ul>
+</div>
+
+<div class="content-block">
+
+  <div id="panel-left-users-outer" class="cp-background left-panel" ng-cloak="" ng-class="{'open-users-panel':chatScope.touchUsersToggle,'open-chats-panel':chatScope.touchChatsToggle}">
+    <ul class="panel-left-users">
+      <li ng-repeat="u in chatScope.usersArray | filter:chatScope.search.userQuery" ng-if="profile.avatarURL != u.avatarURL" ng-mouseover="u._hover = true" ng-mouseleave="u._hover = false" class="users user-{{u.status}} animate-repeat">
+        <div class="user-image {{u.status}}">
+          <img ng-src="{{u.avatarURL}}" alt="" class="avatar {{u.status}}">
+        </div>
+        <div class="user-info">
+          <span class="name" >{{u.userName}}</span><br>
+          <span class="timestamp" ng-if="u.status != 'online'" am-time-ago="u.lastOnline"></span>
+        </div>
+        <div class="user-hover fade-in-out" ng-if="u._hover" ng-click="chatScope.createChat('', '', true, [u.$id])">
+          <span class="fa fa-comment-o"></span>
+        </div>
+        <div class="clearfix"></div>
+      </li>
+    </ul>
+    <div class="search-form" ng-if="chatScope.showUserSearch">
+      <input type="text" placeholder="Search Users..." ng-model="chatScope.search.userQuery" class="user-search" />
+    </div>
+    <div class="search-icon" ng-click="chatScope.showUserSearch = !chatScope.showUserSearch">
+      <span class="fa" ng-class="{'fa-search-plus':!chatScope.showUserSearch,'fa-search-minus':chatScope.showUserSearch}"></span>
+    </div>
+  </div>
+
+  <div class="panel-left-chats-outer left-panel" ng-cloak="" ng-class="{'open-users-panel':chatScope.touchUsersToggle,'open-chats-panel':chatScope.touchChatsToggle}">
+    <div class="panel-left-chats">
+      <div ng-repeat="chat in chatScope.chatRooms | filter:chatScope.search.chatQuery" class="chat-control cp-background animate-repeat" ng-click="chatScope.joinChat(chat)">
+        <span>{{chat.name}}</span>
+        <span class="fa fa-angle-right pull-right" aria-hidden="true"></span>
+        <span class="fa fa-info-circle pull-right" bs-tooltip data-placement="bottom" data-title="{{chat.description}}" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-search-form left-panel" ng-class="{'open-users-panel':chatScope.touchUsersToggle,'open-chats-panel':chatScope.touchChatsToggle}">
+    <input type="text" placeholder="Search Public Chats..." ng-model="chatScope.search.chatQuery" class="chat-search cp-background" />
+  </div>
+
+  <div class="panel-right-outer right-panel" ng-cloak="" ng-class="{'open-chats-panel':chatScope.touchChatsToggle,'open-user-panel':chatScope.touchUsersToggle}">
+    <div id="panel-right">
+      <div ng-repeat="chat in chatScope.userChats | orderBy:'_priority' " class="user-chat animate-repeat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
+        <div class="chat-body" ng-if="chat._open">
+          <div class="chat-box-outer">
+            <div class="chat-box">  
+              <ul id="messages" class="chat" >
+                <li ng-repeat="messageBlock in chatScope.userMessageBlocks[chat.$id]" 
+                ng-class="{righttext:(messageBlock.userName != chatScope.user.uid)}"
+                class="fade-in-out-delay"
+                ng-click="log()">
+                  <div class="user-image" ng-if="messageBlock.userName == chatScope.user.uid">
+                    <img ng-src="{{profile.avatarURL}}" alt="{{profile.userName}}" class="current-user-avatar" />
+                    <p class="user-name" style="left:0px">{{profile.userName}} &bull;
+                     <span am-time-ago="messageBlock.lastUpdated"></span>
+                    </p>
+                  </div>
+                  <div class="message-block">
+                    <span ng-repeat="message in messageBlock.messages">{{message.message}}<br/></span>
+                  </div>
+                  <div class="user-image {{chatScope.users[messageBlock.userName].status}}" ng-if="messageBlock.userName != chatScope.user.uid">
+                    <img ng-src="{{chatScope.users[messageBlock.userName].avatarURL}}" alt="{{chatScope.users[messageBlock.userName].userName}}" class="avatar {{chatScope.users[messageBlock.userName].status}}" />
+                    <p class="user-name" style="right:0px">{{chatScope.users[messageBlock.userName].userName}} &bull; 
+                     <span am-time-ago="messageBlock.lastUpdated"></span>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <form id="chat-form" ng-submit="chatScope.addMessage(chatScope.message,chat,$index);chatScope.message = null;chat._newMessage=false;">
+            <input class="chat-input" id="input{{$index}}" placeholder="Message..." ng-model="chatScope.message">
+            <button type="submit" style="display:none"></button>
+          </form>
+        </div>
+        <div class="chat-control cp-background" ng-class="{'animated-slow flash-half infinite':chat._newMessage}">
+          <span class="fa pull-right" aria-hidden="true" 
+        		ng-click="chatScope.toggleChat(chat.$id)"
+        		ng-class="{'fa-angle-up':!chat._open,'fa-angle-down':chat._open}"></span>
+          <span class="chat-control-text">{{chat.name}}</span>
+          <div class="chat-member-container">
+          	<img ng-repeat="(id,value) in chat._members" ng-if="chatScope.user.uid != id" class="img-circle chat-icon chat-control-left pull-right" ng-src="{{chatScope.users[id].avatarURL}}" alt="" bs-tooltip data-placement="top" data-title="{{chatScope.users[id].userName}} ({{chatScope.users[id].status}})" data-delay="150" aria-hidden="true">
+          	<span class="fa fa-plus-circle add-user pull-right" ng-click="chatScope.setFocusChat(chat);chatScope.newUserModal.show()"></span>
+          </div>
+        </div>
+      <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="new-chat cp-background right-panel" ng-click="chatScope.newChatModal.show()" ng-class="{'open-chats-panel':chatScope.touchChatsToggle,'open-user-panel':chatScope.touchUsersToggle}">New Chatroom</div>
+
+</div>
