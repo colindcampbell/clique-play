@@ -108,10 +108,10 @@ angular.module('cliquePlayApp')
           var newPos = chatScope.userChats.map(function(e) { return e.$id; }).indexOf(event.key);
           if(chatRoomRef.lastUserID !== chatScope.user.uid && !chatScope.userChats[newPos]._open){
             chatScope.userChats[newPos]._newMessage = true;
-            if(!chatScope.touchChatsToggle){
-              chatScope.newMessage = true;
-            }
             chatScope.userChats[newPos]._priority = 0 - Date.now();
+          }
+          if(!chatScope.touchChatsToggle){
+            chatScope.newMessage = true;
           }
         })
       });
@@ -375,6 +375,26 @@ angular.module('cliquePlayApp')
       $('body').removeClass(oldClass).addClass(newClass);
     }else{
       $('body').removeClass(newClass)
+    }
+  }
+
+  chatScope.navSwipe = function(direction){
+    if(direction == 'users'){
+     if(chatScope.touchChatsToggle){
+       chatScope.openPanel('chats','users')
+     }else if(!chatScope.touchChatsToggle && !chatScope.touchUsersToggle){
+       chatScope.openPanel('users','chats')
+     }else{
+       return;
+     }
+    }else if(direction == 'chats'){
+     if(chatScope.touchUsersToggle){
+       chatScope.openPanel('users','chats')
+     }else if(!chatScope.touchChatsToggle && !chatScope.touchUsersToggle){
+       chatScope.openPanel('chats','users')
+     }else{
+       return;
+     }
     }
   }
 

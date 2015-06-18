@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
 </head>
-<body ng-app="cliquePlayApp">
+<body ng-app="cliquePlayApp" ng-controller="ChatCtrl as chatScope" ng-swipe-left="chatScope.navSwipe('chats')" ng-swipe-right="chatScope.navSwipe('users')">
   <!--[if lt IE 9]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -41,13 +41,11 @@
     </ul>
   </div>
 
-  <div id="content" class="cp-background" ng-class="{
-    'open-users-panel':chatScope.touchUsersToggle,
-    'open-chats-panel':chatScope.touchChatsToggle}">
+  <div id="content" class="cp-background">
     <div ng-view="" class="main-content content-block"></div>
   </div>
 
-  <div ng-show-auth="" class="chat" ng-controller="ChatCtrl as chatScope" ng-include="'views/chat.html'">
+  <div ng-show-auth="" class="chat" ng-include="'views/chat.html'">
   </div>
 
   <ul id="scene">

@@ -9,6 +9,14 @@ $chat-closed-width:300px;
 $chat-input-height:38px;
 $chat-box-height:357px;
 
+.swipe-area{
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
+
 .left-panel{
 	left:5px;
 }

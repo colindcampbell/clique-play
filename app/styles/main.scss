@@ -4,11 +4,11 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // endbower
 
 // Partial Imports
-@import "partials/touchscreen";
-@import "partials/navigation";
-@import "partials/chat";
-@import "partials/animations";
-@import "partials/mobile";
+@import "touchscreen";
+@import "navigation";
+@import "chat";
+@import "animations";
+@import "mobile";
 
 
 *{

@@ -1,22 +1,20 @@
 
-<div id="touch-users-toggle" class="touch-toggle cp-mobile-nav" 
-	ng-swipe-right="chatScope.openPanel('users','chats')"
+<div id="touch-users-toggle" class="touch-toggle cp-mobile-nav"
  ng-click="chatScope.openPanel('users','chats')"> 
-  <span class="fa fa-users"></span>
+  <span class="fa" ng-class="{'fa-close':chatScope.touchUsersToggle,'fa-users':!chatScope.touchUsersToggle}"></span>
 </div>
 
 <div id="touch-chats-toggle" class="touch-toggle cp-mobile-nav" 
  ng-click="chatScope.openPanel('chats','users')"
- ng-swipe-left="chatScope.openPanel('chats','users')"
  ng-class="{'new-message animated-slow flash-half infinite':chatScope.newMessage}"> 
-  <span class="fa fa-comments"> </span>
+  <span class="fa" ng-class="{'fa-close':chatScope.touchChatsToggle,'fa-comments':!chatScope.touchChatsToggle}"> </span>
 </div>
 
 
 <div id="greeting" ng-if="chatScope.user" ng-cloak="">
 	<a href="#/account">
-   <span>{{profile.userName}} </span>
-   <img ng-src="{{profile.avatarURL}}" alt="profile image" class="img-rounded">
+   <span ng-cloak>{{profile.userName}} </span>
+   <img ng-src="{{profile.avatarURL}}" class="img-rounded">
   </a>
 </div>
 

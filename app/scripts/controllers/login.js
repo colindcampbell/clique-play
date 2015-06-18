@@ -7,7 +7,17 @@ angular.module('cliquePlayApp')
       $scope.err = null;
       Auth.$authWithOAuthPopup(provider, {rememberMe: true}).then(function(auth){
         redirect(auth);
-      }, showError);
+      }).catch(function(err){
+        if (err.code === "TRANSPORT_UNAVAILABLE") {
+          // fall-back to browser redirects, and pick up the session
+          // automatically when we come back to the origin page
+          Auth.$authWithOAuthRedirect(provider, {rememberMe: true}).then(function(auth){
+            redirect(auth);
+          }, showError);
+        }else{
+          showError(err);
+        }
+      });
     };
 
     $scope.anonymousLogin = function() {
@@ -69,8 +79,7 @@ angular.module('cliquePlayApp')
     }
 
     function redirect(user) {
-      $scope.user = user;
-      var userPresence = $firebaseObject(PresenceRef.child($scope.user.uid));
+      var userPresence = $firebaseObject(PresenceRef.child(user.uid));
       userPresence.$loaded().then(function(){
         userPresence.status?$location.path('/gamedash'):$location.path('/account');
       })
