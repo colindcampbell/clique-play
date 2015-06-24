@@ -5,14 +5,46 @@
 	      <button type="button" class="close" aria-label="Close" ng-click="$hide();"><span aria-hidden="true">&times;</span></button>
 	      <h3 class="modal-title" ng-bind="title"></h3>
 	    </div>
-	    <div class="modal-body">
-	    <ul>
-	    	<li ng-repeat="(id,member) in focusChat._members">{{id}}: {{users[id].userName}}</li>
-	    </ul>
+	    <div class="modal-body add-user-modal">
+	    	<p style="color:#ccc">Select Users to Add</p>
+		    <div id="panel-left-add" class="add-user-panel">
+			    <ul class="panel-users">
+			    	<li ng-repeat="member in chatScope.availableUsers | filter:chatScope.search.addUserQuery" class="users animate-repeat" ng-class="{'highlight':member.userSelected}" ng-click="chatScope.selectUser($index)">
+							<div class="user-image">
+			          <img ng-src="{{member.avatarURL}}" class="avatar">
+			        </div>
+			        <div class="user-info">
+			          <span class="name" >{{member.userName}}</span><br>
+			          <span class="timestamp" am-time-ago="member.lastOnline"></span>
+			        </div>
+			    	</li>
+			    </ul>
+			    <div class="search-form">
+			      <input type="text" placeholder="Search Users..." ng-model="chatScope.search.addUserQuery" class="user-search" />
+			    </div>
+		    </div>
+		    <div id="transfer-users">
+		    	<span class="fa fa-angle-right fade-in-out" ng-if="chatScope.stagedAddUsers.length" ng-click="chatScope.addMembers()"></span>
+		    	<!-- <br/>
+		    	<span class="fa fa-angle-left"></span> -->
+		    </div>
+		    <div id="panel-right-add" class="add-user-panel">
+			    <ul class="panel-users">
+			    	<li ng-repeat="(id,member) in chatScope.currentUsers" class="users animate-repeat">
+							<div class="user-image">
+			          <img ng-src="{{chatScope.users[id].avatarURL}}" class="avatar">
+			        </div>
+			        <div class="user-info">
+			          <span class="name" >{{chatScope.users[id].userName}}</span><br>
+			          <span class="timestamp" am-time-ago="chatScope.users[id].lastOnline"></span>
+			        </div>
+			    	</li>
+			    </ul>
+		    </div>
 		  </div>
 			<div class="modal-footer">
 				<div class="col-sm-offset-3 col-sm-9">
-	        <button class="btn btn-primary" ng-click="addUsersToChat();$hide();" ng-hide="createMode">Add</button>
+	        <button class="btn btn-primary" ng-click="chatScope.saveMembers();$hide();" ng-hide="createMode">Add</button>
 	        <button type="button" class="btn btn-warning" ng-click="$hide();">Close</button>
 	      </div>
 			</div>

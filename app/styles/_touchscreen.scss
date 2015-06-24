@@ -12,6 +12,9 @@
 		background-position: center center;
 		background-repeat: no-repeat;
 	}
+  .titlebar{
+    margin-bottom: 2px;
+  }
 	.cp-background{
 		opacity: 1;
 		background-color: rgba(120,120,120,.6);
@@ -99,7 +102,7 @@
   	top:45px;
   	bottom:156px;
   }
-  .panel-left-users,
+  .panel-users,
   .panel-left-chats{
   	right:0
   }
@@ -181,9 +184,6 @@
   	    -ms-transition: .5s right ease;
   	     -o-transition: .5s right ease;
   	        transition: .5s right ease;
-  }
-  .main-content{
-    right:10px;
   }
   #content{
   	position: fixed;	

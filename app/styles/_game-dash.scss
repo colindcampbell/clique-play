@@ -1,0 +1,18 @@
+.titlebar{
+	padding:9px 18px;
+	line-height: 44px;
+	margin-bottom: 3px;
+	p{
+		font-size:24px;
+		margin:0;
+		color:#ddd;
+	}
+}
+
+.game-block{
+	padding:9px 18px;
+	.game-title{
+		float:left;
+		margin: 7px 10px 0 0;
+	}
+}

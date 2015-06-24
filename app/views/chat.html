@@ -29,7 +29,7 @@
 <div class="content-block">
 
   <div id="panel-left-users-outer" class="cp-background left-panel" ng-cloak="" ng-class="{'open-users-panel':chatScope.touchUsersToggle,'open-chats-panel':chatScope.touchChatsToggle}">
-    <ul class="panel-left-users">
+    <ul class="panel-users">
       <li ng-repeat="u in chatScope.usersArray | filter:chatScope.search.userQuery" ng-if="profile.avatarURL != u.avatarURL" ng-mouseover="u._hover = true" ng-mouseleave="u._hover = false" class="users user-{{u.status}} animate-repeat">
         <div class="user-image {{u.status}}">
           <img ng-src="{{u.avatarURL}}" alt="" class="avatar {{u.status}}">

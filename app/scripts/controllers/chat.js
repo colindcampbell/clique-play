@@ -16,6 +16,9 @@ angular.module('cliquePlayApp')
   chatScope.touchChatsToggle = false;
   chatScope.touchUsersToggle = false;
   chatScope.newMessage = false;
+  chatScope.usersToAdd = [];
+  chatScope.stagedAddUsers = [];
+  chatScope.newUsers = {};
   chatScope.chatRooms = $firebaseArray(ChatRoomsRef.orderByChild('privateChat').equalTo(false));
   var amOnline = ConnectionRef, userPresence, profile;
 
@@ -68,7 +71,6 @@ angular.module('cliquePlayApp')
         chatScope.updateChatPriorities(val.$id);
       });
       chatScope.userChatKeysArray.$watch(function(event){
-        // console.log(chatScope.userChatKeys);
         if ( event.event==='child_added' ) {
           chatScope.getChats(event.key,true,0);
         }else if(event.event === 'child_moved'){
@@ -158,7 +160,6 @@ angular.module('cliquePlayApp')
           userPresence.setPriority(null);
         });
       }).catch(alert);
-
     // Will eventually be friends
     var users = PresenceRef;
     users.orderByPriority().on('value', function(){
@@ -287,12 +288,54 @@ angular.module('cliquePlayApp')
     })
   };
 
-  chatScope.addUsersToChat = function(){
-    console.log(chatScope.focusChat);
-  }
-
   chatScope.setFocusChat = function(chat){
     chatScope.focusChat = chat;
+    chatScope.availableUsers = angular.copy(chatScope.usersArray);
+    chatScope.currentUsers = angular.copy(chat._members);
+    angular.forEach(chat._members, function(el, id){
+      var pos = chatScope.availableUsers.map(function(e) { return e.$id; }).indexOf(id);
+      chatScope.availableUsers.splice(pos, 1);
+    })
+    angular.forEach(chatScope.availableUsers, function(el,id){
+      el.userSelected = false;
+    });
+  }
+
+  chatScope.selectUser = function(index){
+    var user = chatScope.availableUsers[index];
+    user.userSelected = !user.userSelected;
+    if(user.userSelected){
+      chatScope.stagedAddUsers.push(user);
+    }else{
+      var pos = chatScope.stagedAddUsers.indexOf(user)
+      if(pos != -1){
+        chatScope.stagedAddUsers.splice(pos, 1);
+      }
+    }
+  }
+
+  chatScope.addMembers = function(){
+    var elements = [];
+    angular.forEach(chatScope.stagedAddUsers, function(el, index){
+      chatScope.currentUsers[el.$id] = {member:true};
+      chatScope.newUsers[el.$id] = {member:true};
+      elements.push(el);
+    })
+    for (var i=0; i<elements.length; i++){
+      var pos = chatScope.availableUsers.indexOf(elements[i]);
+      chatScope.availableUsers.splice(pos, 1);
+    }
+    chatScope.stagedAddUsers = [];
+  }
+
+  chatScope.saveMembers = function(){
+    angular.forEach(chatScope.newUsers, function(el,index){
+      chatScope.focusChat._members[index] = {member:true};
+      var userChats = RootRef.child('users/'+index+'/chatRooms/'+chatScope.focusChat.$id),
+          chatMembers = RootRef.child('chatMembers/'+chatScope.focusChat.$id+'/'+index);
+      userChats.update({member:true});
+      chatMembers.update({member:true});
+    })
   }
 
   var chatSuccessAlert = function(error){
@@ -334,7 +377,6 @@ angular.module('cliquePlayApp')
 
   chatScope.log = function(item){
     console.log(item);
-    console.log('worked');
   };
 
 
@@ -399,18 +441,6 @@ angular.module('cliquePlayApp')
   }
 
   chatScope.init();
-
-  // chatScope.chatAside = $aside({
-  //   "title": 'My Chats',
-  //   scope: chatScope, 
-  //   template: 'views/chatAside.html',
-  //   show: false
-  // });
-
-  // chatScope.chatAside.$promise.then(function() {
-  //   // chatScope.chatAside.show();
-  //   chatScope.chatAsideReady = true;
-  // });
 
 })
 .config(function(IdleProvider) {
