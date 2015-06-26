@@ -269,10 +269,10 @@ angular.module('cliquePlayApp')
         el._open=false;
       });
       chatScope.userChats[pos]._open = true;
-      chatScope.userChats[pos]._priority = 0 - Date.now();
       panel.scrollTopAnimated(0);
       chatScope.scrollBot(false);
     }else{
+      chatScope.userChats[pos]._priority = 0 - Date.now();
       chatScope.userChats[pos]._open = false;
     }
   };

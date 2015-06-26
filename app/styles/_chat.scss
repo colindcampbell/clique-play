@@ -1,13 +1,4 @@
-// Variables
-$panel-control-bg-color:#ccc;
-$panel-bg-color:#536896;
 
-$panel-left-width:200px;
-$chat-width:300px;
-$chat-closed-width:300px;
-
-$chat-input-height:38px;
-$chat-box-height:357px;
 
 .swipe-area{
 	position: absolute;
@@ -99,6 +90,7 @@ $chat-box-height:357px;
 	  box-sizing:border-box;
 	  margin-bottom: 3px;
 	  position: relative;
+	  white-space: nowrap;
 	}
 	.user-info{
 		display: inline-block;
@@ -198,17 +190,20 @@ $chat-box-height:357px;
 
 .panel-right-outer{
 	position: absolute;
-	top:70px;
+	top:75px;
 	width:300px;
-	bottom:43px;
+	bottom:6px;
 	-ms-overflow-x: hidden;
 	    overflow-x: hidden;
+	background-color: #FFF;
+	&:hover{
+		@include card(1);
+	}
 }
 
 #panel-right{
 	position: absolute;
 	right:-17px;
-	padding-top: 401px;
 	top:0;
 	bottom: 0;
 	left: 0;
@@ -217,15 +212,15 @@ $chat-box-height:357px;
 	-ms-overflow-x: hidden;
 	    overflow-x: hidden;
 	.chat-open{
+		@include card(2);
 		.chat-body{
-			top:0px;
-			left:0;
-			right:0;
-			position:absolute;
+  		display: block;
+  		position: relative;
 		}
 		.chat-control{
 			opacity:1;
-  		background-color: rgba(60, 85, 110, 0.85);
+  		background-color: $right-panel-color;
+  		color:white;
 		}
 	}
 	.new-message{
@@ -237,10 +232,10 @@ $chat-box-height:357px;
 	.chat-control{
 		overflow: visible;
 		width:$chat-closed-width;
-		height:35px;
+		height:40px;
 		position: relative;
-		color:white;
-		margin-bottom: 3px;
+		color:$right-panel-color;
+		border-bottom: 1px solid #ddd;
 		span{
 			padding:5px;
 			font-size: 20px;
@@ -248,42 +243,52 @@ $chat-box-height:357px;
 			padding-right: 10px;
 			cursor:pointer;
 		}
+		.chat-toggle{
+			font-size:32px;
+			padding: 3px 8px 3px 6px;
+		  border-left: 2px solid #e8e8e8;
+		}
 		.chat-control-text{
 			padding-left: 10px;
 			padding-right: 4px;
 			margin: 0;
 			font-size: 20px;
-			line-height: 33px;
+			line-height: 36px;
 			cursor: auto;
 		}
 		.add-user{
-			margin: 2px -5px 0 0;
+			margin: 6px -5px 0 0;
 			cursor: pointer;
 		}
 		img.chat-icon{
 			width:24px;
 			height:24px;
-			margin: 5px 3px 0 0;
+			margin: 7px 3px 0 0;
 		}
 		.chat-member-container {
 		  position: absolute;
-		  right: 29px;
+		  right: 41px;
 		  top: 0;
 		}
 	}
 }
 
 .new-chat{
-	position: absolute;
-	text-align: center;
-	bottom: 5px;
-	width: 300px;
-	height: 35px;
-	padding-top: 5px;
-	color:#fff;
-	cursor:pointer;
-	-webkit-border-radius: 0 0 10px 0;
-	        border-radius: 0 0 10px 0;
+	background-color: $right-panel-color;
+  position: absolute;
+  text-align: center;
+  bottom: 10px;
+  width: 66px;
+  height: 66px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 33px;
+  font-size: 50px;
+  line-height: 53px;
+  @include card(3);
+  &:hover{
+  	@include card(4)
+  }
 }
 
 .chat li{
@@ -384,7 +389,7 @@ $chat-box-height:357px;
 	position: relative;
 	height:$chat-box-height;
 	overflow: hidden;
-	background: rgba(230,230,230, .85)
+	background: white;
 }
 
 .chat-box{
@@ -409,14 +414,14 @@ $chat-box-height:357px;
 
 #chat-form{
 	position: relative;
-	margin-bottom: 3px;
 	.chat-input{
 		width:100%;
-		color:#777;
+		color:#666;
 		padding:5px 10px;
 		font-size: 22px;
 		border:none;
-		opacity: .85;
+		opacity: 1;
+		background-color: #E8E8E8;
 		// -webkit-border-radius: 0 0 5px 0px;
 		//         border-radius: 0 0 5px 0px;
 	}

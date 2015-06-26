@@ -23,9 +23,9 @@
   <!--[if lt IE 9]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-  <div id="brand" class="cp-background">
+  <div id="brand">
     <a id="logo" href="#/">
-      ( CliquePlay )
+      CliquePlay
     </a>
   </div>
   <div id="touch-login" class="touch-toggle cp-mobile-nav" ng-hide-auth="" >
@@ -42,13 +42,19 @@
   </div>
 
   <div id="content">
+    <div id="greeting" ng-if="chatScope.user" ng-cloak="">
+      <a href="#/account">
+       <span ng-cloak>{{profile.userName}} </span>
+       <img ng-src="{{profile.avatarURL}}">
+      </a>
+    </div>
     <div ng-view="" class="main-content content-block"></div>
   </div>
 
   <div ng-show-auth="" class="chat" ng-include="'views/chat.html'">
   </div>
 
-  <ul id="scene">
+<!--   <ul id="scene">
     <li class="layer" data-depth="1.00"><div class="layer-1"></div></li>
     <li class="layer" data-depth="1.00"><div class="layer-2"></div></li>
     <li class="layer" data-depth="1.00"><div class="layer-3"></div></li>
@@ -57,12 +63,12 @@
     <li class="layer" data-depth="1.00"><div class="layer-6"></div></li>
     <li class="layer" data-depth="1.00"><div class="layer-7"></div></li>
     <li class="layer" data-depth="1.00"><div class="layer-8"></div></li>
-    <!-- <li class="layer" data-depth="1.00"><div class="layer-9"></div></li> -->
-    <!-- <li class="layer" data-depth="1.00"><div class="layer-10"></div></li> -->
-    <!-- <li class="layer" data-depth="1.00"><div class="layer-11"></div></li> -->
-    <!-- <li class="layer" data-depth="1.00"><div class="layer-12"></div></li> -->
+    <li class="layer" data-depth="1.00"><div class="layer-9"></div></li>
+    <li class="layer" data-depth="1.00"><div class="layer-10"></div></li>
+    <li class="layer" data-depth="1.00"><div class="layer-11"></div></li>
+    <li class="layer" data-depth="1.00"><div class="layer-12"></div></li>
   </ul>
-
+ -->
   <div id="alerts-container"></div>
 
 

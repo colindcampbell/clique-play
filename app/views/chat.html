@@ -1,21 +1,17 @@
 
-<div id="touch-users-toggle" class="touch-toggle cp-mobile-nav"
+<div id="touch-users-toggle" class="touch-toggle"
  ng-click="chatScope.openPanel('users','chats')"> 
   <span class="fa" ng-class="{'fa-close':chatScope.touchUsersToggle,'fa-users':!chatScope.touchUsersToggle}"></span>
 </div>
 
-<div id="touch-chats-toggle" class="touch-toggle cp-mobile-nav" 
+<div id="touch-users-logout" class="touch-toggle" ng-click="chatScope.logout()"> 
+  <span class="fa fa-sign-out"></span>
+</div>
+
+<div id="touch-chats-toggle" class="touch-toggle" 
  ng-click="chatScope.openPanel('chats','users')"
  ng-class="{'new-message animated-slow flash-half infinite':chatScope.newMessage}"> 
   <span class="fa" ng-class="{'fa-close':chatScope.touchChatsToggle,'fa-comments':!chatScope.touchChatsToggle}"> </span>
-</div>
-
-
-<div id="greeting" ng-if="chatScope.user" ng-cloak="">
-	<a href="#/account">
-   <span ng-cloak>{{profile.userName}} </span>
-   <img ng-src="{{profile.avatarURL}}" class="img-rounded">
-  </a>
 </div>
 
 <div id="header">
@@ -69,6 +65,16 @@
   <div class="panel-right-outer right-panel" ng-cloak="" ng-class="{'open-chats-panel':chatScope.touchChatsToggle,'open-user-panel':chatScope.touchUsersToggle}">
     <div id="panel-right">
       <div ng-repeat="chat in chatScope.userChats | orderBy:'_priority' " class="user-chat animate-repeat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
+      	<div class="chat-control" ng-class="{'animated-slow flash-half infinite':chat._newMessage}">
+          <span class="fa pull-right chat-toggle" aria-hidden="true" 
+        		ng-click="chatScope.toggleChat(chat.$id)"
+        		ng-class="{'fa-angle-up':!chat._open,'fa-angle-down':chat._open}"></span>
+          <span class="chat-control-text">{{chat.name}}</span>
+          <div class="chat-member-container">
+          	<img ng-repeat="(id,value) in chat._members" ng-if="chatScope.user.uid != id" class="img-circle chat-icon chat-control-left pull-right" ng-src="{{chatScope.users[id].avatarURL}}" alt="" bs-tooltip data-placement="bottom" data-title="{{chatScope.users[id].userName}} ({{chatScope.users[id].status}})" data-delay="150" aria-hidden="true">
+          	<span class="fa fa-plus-circle add-user pull-right" ng-click="chatScope.setFocusChat(chat);chatScope.newUserModal.show()"></span>
+          </div>
+        </div>
         <div class="chat-body" ng-if="chat._open">
           <div class="chat-box-outer">
             <div class="chat-box">  
@@ -101,21 +107,12 @@
             <button type="submit" style="display:none"></button>
           </form>
         </div>
-        <div class="chat-control cp-background" ng-class="{'animated-slow flash-half infinite':chat._newMessage}">
-          <span class="fa pull-right" aria-hidden="true" 
-        		ng-click="chatScope.toggleChat(chat.$id)"
-        		ng-class="{'fa-angle-up':!chat._open,'fa-angle-down':chat._open}"></span>
-          <span class="chat-control-text">{{chat.name}}</span>
-          <div class="chat-member-container">
-          	<img ng-repeat="(id,value) in chat._members" ng-if="chatScope.user.uid != id" class="img-circle chat-icon chat-control-left pull-right" ng-src="{{chatScope.users[id].avatarURL}}" alt="" bs-tooltip data-placement="top" data-title="{{chatScope.users[id].userName}} ({{chatScope.users[id].status}})" data-delay="150" aria-hidden="true">
-          	<span class="fa fa-plus-circle add-user pull-right" ng-click="chatScope.setFocusChat(chat);chatScope.newUserModal.show()"></span>
-          </div>
-        </div>
+
       <div class="clearfix"></div>
       </div>
     </div>
+	  <div class="new-chat right-panel" ng-click="chatScope.newChatModal.show()" ng-class="{'open-chats-panel':chatScope.touchChatsToggle,'open-user-panel':chatScope.touchUsersToggle}">+</div>
   </div>
 
-  <div class="new-chat cp-background right-panel" ng-click="chatScope.newChatModal.show()" ng-class="{'open-chats-panel':chatScope.touchChatsToggle,'open-user-panel':chatScope.touchUsersToggle}">New Chatroom</div>
 
 </div>

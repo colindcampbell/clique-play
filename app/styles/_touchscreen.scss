@@ -31,9 +31,10 @@
 	}
 	.touch-toggle{
 		position: absolute;	
-		width: 40px;	
-		height: 40px;	
-		top:3px;
+		width: 50px;	
+		height: 50px;	
+		top:0;
+    z-index: 21;
 		span{
 			color:white;
 			font-size: 	20px;
@@ -44,38 +45,36 @@
 		}
 	}
 	#touch-users-toggle{
-		display: block;	
-		left: 3px;	
-		-webkit-border-radius: 10px 0 0 0;
-		        border-radius: 10px 0 0 0;
+		display: inline;	
+		left: 0px;	
 	}
+  #touch-users-logout{
+    display: inline; 
+    right: 37px;  
+  }
 	#touch-chats-toggle{
-		display: block;	
-		right: 3px;	
-		-webkit-border-radius: 0 10px 0 0;
-		        border-radius: 0 10px 0 0;	
+		display: inline;	
+		right: 0px;	
 	}
 	#touch-login{
-		display: block;	
-		right: 3px;	
-		-webkit-border-radius: 0 10px 0 0;
-		        border-radius: 0 10px 0 0;
+		display: inline;	
+		right: 0;	
 	}
   #brand{
   	-webkit-border-radius: 0;
   	        border-radius: 0;
-    height: 40px;
-    right: 45px;
-    left: 45px;
-    top:3px;
+    height: 50px;
+    right: 0;
+    left: 0;
+    top:0;
     text-align: left;
     width:inherit;
     padding: 0;
     margin: 0;		
     #logo{
-   		margin: 4px 0 0 10px;	
+   		margin: 4px 0 0 50px;	
     	font-size: 	22px;
-    	line-height: 37px;
+    	line-height: 44px;
     }
   }
   #brand.cp-background{
@@ -85,8 +84,8 @@
   	display: none;
   }
   #greeting{
-  	right:53px;
-  	top:8px;
+  	right:93px;
+  	top:10px;
   	img{
   		width:30px;
   		height:30px
@@ -99,7 +98,7 @@
 // *************** CHAT AND USERS *************** //
   #panel-left-users-outer{
   	position: fixed;	
-  	top:45px;
+  	top:52px;
   	bottom:156px;
   }
   .panel-users,
@@ -138,22 +137,14 @@
   	        transition: .5s left ease;
   }
   #panel-right{
-  	padding-top: 0;
   	right:0;
-  	.chat-open .chat-body{
-  		display: block;
-  		position: relative;
-  	}
-    .chat-control{
-      margin-bottom: 2px;
-    }
   }
 	.chat-box-outer{
 		height:300px;
 		background-color: rgba(200,200,200,.5);
 	}
   .panel-right-outer{
-  	top:45px;
+  	top:52px;
   	bottom:41px;
   	position: fixed;	
   }
@@ -187,7 +178,7 @@
   }
   #content{
   	position: fixed;	
-  	top:45px;
+  	top:52px;
   	left:3px;
   	right:3px;
   	bottom: 3px;
@@ -213,6 +204,33 @@
 	}
   #scene{
     display: none;
+  }
+
+  .modal.center .modal-dialog{
+    max-width:510px;
+    width:100%;
+    margin:10% 0;
+  }
+
+  .add-user-modal{
+    width:100%;
+    max-width:510px;
+    padding: 1% 3%;
+    .add-user-panel{
+      width:42%;
+    }
+  }
+
+  #panel-right-add{
+    right:1%;
+  }
+  
+  #panel-left-add{
+    left:1%;
+  }
+
+  #transfer-users span{
+    font-size: 50px;  
   }
 
 }

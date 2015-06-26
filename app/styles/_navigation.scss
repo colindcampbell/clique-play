@@ -1,31 +1,38 @@
+
 #brand{
-  width:300px;
+  width: 299px;
   position: absolute;
-  right:5px;
-  top:5px;
+  right: 6px;
+  top: 6px;
   text-align: center;
-  z-index:21;
-  padding:3px 0 10px;
-  height:62px;
-  -webkit-border-radius: 0 10px 0 0;
-          border-radius: 0 10px 0 0;
+  z-index: 21;
+  padding: 3px 0 12px;
+  height: 64px;
+  transition: all .3s ease;
+  background-color: white;
   -webkit-transition: all .3s ease;
      -moz-transition: all .3s ease;
       -ms-transition: all .3s ease;
        -o-transition: all .3s ease;
           transition: all .3s ease;
   a{
-    color:white;
+    padding:8px 74px;
+    color:$right-panel-color;
     font-size: 37px;
-  -webkit-transition: all .3s ease;
-     -moz-transition: all .3s ease;
-      -ms-transition: all .3s ease;
-       -o-transition: all .3s ease;
-          transition: all .3s ease;
+    line-height: 55px;
+    padding: 7px 76px 10px;
+  -webkit-transition: all .2s ease;
+     -moz-transition: all .2s ease;
+      -ms-transition: all .2s ease;
+       -o-transition: all .2s ease;
+          transition: all .2s ease;
+    &:hover{
+      color:$right-panel-hover;
+    }
   }
-}
-#brand a:hover{
-  color:#333;
+  &:hover{
+    @include card(1);
+  }
 }
 
 #logo-mobile{
@@ -90,4 +97,8 @@
 
 #touch-chats-toggle{
   display: none;  
+}
+
+#touch-users-logout{
+  display: none;
 }
