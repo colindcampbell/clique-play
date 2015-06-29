@@ -148,7 +148,7 @@ angular.module('cliquePlayApp')
         });
         $scope.$on('IdleStart', function () {
           userPresence.update({status:'idle'});
-          userPresence.setPriority(0);
+          userPresence.setPriority( (0-Date.now())*100 );
         });
         $scope.$on('IdleTimeout', function () {
           userPresence.update({status:'offline'});
@@ -263,16 +263,22 @@ angular.module('cliquePlayApp')
     chatScope.userChats[pos]._newMessage = false;
     if (!chatScope.userChats[pos]._open) {
       angular.forEach(chatScope.userChats, function(el){
-        if(el._open){
-          el._priority = 0-Date.now()+1;
-        }
         el._open=false;
+        if(el._open){
+          setTimeout(function(){
+            el._priority = 0-Date.now();
+          }, 500)
+        }
       });
-      chatScope.userChats[pos]._open = true;
+      // setTimeout(function(){
+        chatScope.userChats[pos]._open = true;
+      // }, 100)
       panel.scrollTopAnimated(0);
       chatScope.scrollBot(false);
     }else{
-      chatScope.userChats[pos]._priority = 0 - Date.now();
+      setTimeout(function(){
+        chatScope.userChats[pos]._priority = 0 - Date.now();
+      }, 500);
       chatScope.userChats[pos]._open = false;
     }
   };
@@ -421,7 +427,8 @@ angular.module('cliquePlayApp')
   }
 
   chatScope.navSwipe = function(direction){
-    if(direction == 'users'){
+
+    if(direction == 'users' && chatScope.user){
      if(chatScope.touchChatsToggle){
        chatScope.openPanel('chats','users')
      }else if(!chatScope.touchChatsToggle && !chatScope.touchUsersToggle){
@@ -429,7 +436,7 @@ angular.module('cliquePlayApp')
      }else{
        return;
      }
-    }else if(direction == 'chats'){
+    }else if(direction == 'chats' && chatScope.user){
      if(chatScope.touchUsersToggle){
        chatScope.openPanel('users','chats')
      }else if(!chatScope.touchChatsToggle && !chatScope.touchUsersToggle){

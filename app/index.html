@@ -23,7 +23,7 @@
   <!--[if lt IE 9]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-  <div id="brand">
+  <div id="brand" class="cp-background">
     <a id="logo" href="#/">
       CliquePlay
     </a>
@@ -33,16 +33,19 @@
   </div>
   <div id="header" ng-cloak="">
     <ul>
-      <li><a id="gamedash" class="cp-background" style="top:5px" ng-href="#/gamedash">Game Dash</a></li>
+      <li><a id="gamedash" class="left-text cp-background" style="top:5px" ng-href="#/gamedash">Game Dash</a></li>
       <li>
-        <a class="cp-background" style="top:70px;padding-bottom:13px" ng-hide-auth="" href="#/login">Login</a>
-        <a class="cp-background cp-small-link" style="top:70px" ng-show-auth="" href="#/account">Account</a>
+        <a style="top:70px;padding-bottom:13px" ng-hide-auth="" class="left-text cp-background" href="#/login">Login</a>
+        <a class="cp-small-link left-text cp-background" style="top:70px" ng-show-auth="" href="#/account">Account</a>
+      </li>
+      <li ng-show-auth="">
+        <a class="cp-small-link left-text cp-background" style="top:70px;left:106px;margin-top:0;width:99px" ng-click="chatScope.logout()">Logout</a>
       </li>
     </ul>
   </div>
 
   <div id="content">
-    <div id="greeting" ng-if="chatScope.user" ng-cloak="">
+    <div id="greeting" ng-if="chatScope.user" ng-show-auth="" ng-cloak="">
       <a href="#/account">
        <span ng-cloak>{{profile.userName}} </span>
        <img ng-src="{{profile.avatarURL}}">

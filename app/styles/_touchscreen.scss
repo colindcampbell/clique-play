@@ -1,28 +1,6 @@
 
 .touch{
 // **************** NAVIGATION **************** //
-	body{
-		background-color: #333;
-		background-image: url('../images/mrks_bckg.png');
-		background-attachment: fixed;
-		-webkit-background-size: cover;
-		     -o-background-size: cover;
-		        background-size: cover;
-		background-blend-mode:multiply;
-		background-position: center center;
-		background-repeat: no-repeat;
-	}
-  .titlebar{
-    margin-bottom: 2px;
-  }
-	.cp-background{
-		opacity: 1;
-		background-color: rgba(120,120,120,.6);
-	}
-	.cp-background:hover{
-		opacity: 1;
-		background-color: rgba(120,120,120,.6);
-	}
 	.cp-mobile-nav{
 		background-color: rgba(50,100,120,.80);
 	}
@@ -70,22 +48,24 @@
     text-align: left;
     width:inherit;
     padding: 0;
-    margin: 0;		
+    margin: 0;
+    background-color: $right-panel-color;
+    @include card(2);   
     #logo{
+      color:white;
    		margin: 4px 0 0 50px;	
     	font-size: 	22px;
     	line-height: 44px;
+      padding: 5px 0;
     }
-  }
-  #brand.cp-background{
-  	background-color: rgba(50,100,120,.80);
   }
   #header{
   	display: none;
   }
   #greeting{
-  	right:93px;
-  	top:10px;
+  	right:0;
+  	top:initial;
+    bottom:0;
   	img{
   		width:30px;
   		height:30px
@@ -93,20 +73,25 @@
   	span{
   		font-size: 16px;
   	}
+    a{
+      line-height: 26px;
+    }
   }
 
 // *************** CHAT AND USERS *************** //
   #panel-left-users-outer{
   	position: fixed;	
-  	top:52px;
+  	top:50px;
   	bottom:156px;
+    @include card(2);
   }
   .panel-users,
   .panel-left-chats{
   	right:0
   }
   .panel-left-chats-outer{
-  	position: fixed;		
+  	position: fixed;	
+    @include card(2);	
   }
   .chat-search-form{
   	position: fixed;
@@ -121,7 +106,7 @@
   	        transition: .5s left ease;  
   }
   .open-users-panel{
-  	left:3px;
+  	left:0px;
   	-webkit-transition: .5s left ease;
   	   -moz-transition: .5s left ease;
   	    -ms-transition: .5s left ease;
@@ -129,7 +114,7 @@
   	        transition: .5s left ease;
   }
   .left-panel.open-chats-panel{
-  	left:-503px;
+  	left:-500px;
   	-webkit-transition: .5s left ease;
   	   -moz-transition: .5s left ease;
   	    -ms-transition: .5s left ease;
@@ -141,16 +126,15 @@
   }
 	.chat-box-outer{
 		height:300px;
-		background-color: rgba(200,200,200,.5);
 	}
   .panel-right-outer{
-  	top:52px;
-  	bottom:41px;
-  	position: fixed;	
-  }
-  .new-chat{
+  	top:50px;
+  	bottom:0;
   	position: fixed;
-  	bottom: 3px;	
+    @include card(2);	
+    &:hover{
+      @include card(2);
+    }
   }
   .right-panel{
   	right:-300px;
@@ -161,7 +145,7 @@
   	        transition: .5s right ease;
   }
   .open-chats-panel{
-  	right:3px;
+  	right:0px;
   	-webkit-transition: .5s right ease;
   	   -moz-transition: .5s right ease;
   	    -ms-transition: .5s right ease;
@@ -169,7 +153,7 @@
   	        transition: .5s right ease;
   }
 	.right-panel.open-user-panel{
-  	right:-503px;
+  	right:-500px;
   	-webkit-transition: .5s right ease;
   	   -moz-transition: .5s right ease;
   	    -ms-transition: .5s right ease;
@@ -178,34 +162,32 @@
   }
   #content{
   	position: fixed;	
-  	top:52px;
-  	left:3px;
-  	right:3px;
-  	bottom: 3px;
-  	-webkit-border-radius: 	0 0 10px 10px;
-  	        border-radius: 	0 0 10px 10px;
+  	top:50px;
+  	left:0px;
+  	right:0px;
+  	bottom: 0px;
   	-webkit-transition: .5s all ease;
   	   -moz-transition: .5s all ease;
   	    -ms-transition: .5s all ease;
   	     -o-transition: .5s all ease;
   	        transition: .5s all ease;
   }
-  .open-users #content{
-  	left:205px;
-  	right:-200px;
-  	-webkit-border-radius: 	0;
-  	        border-radius: 	0;
+ //  .open-users #content{
+ //  	left:200px;
+ //  	right:-200px;
+ //  	-webkit-border-radius: 	0;
+ //  	        border-radius: 	0;
+ //  }
+ //  .open-chats #content{
+	// 	right:300px;
+	// 	left:-300px;
+	// 	-webkit-border-radius: 	0;
+	// 	        border-radius: 	0;
+	// }
+  .new-chat{
+    right:8px;
+    bottom: 8px;
   }
-  .open-chats #content{
-		right:305px;
-		left:-300px;
-		-webkit-border-radius: 	0;
-		        border-radius: 	0;
-	}
-  #scene{
-    display: none;
-  }
-
   .modal.center .modal-dialog{
     max-width:510px;
     width:100%;

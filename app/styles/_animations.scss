@@ -57,8 +57,8 @@
 .animate-repeat.ng-move,
 .animate-repeat.ng-enter,
 .animate-repeat.ng-leave {
-  -webkit-transition:all ease .3s;
-          transition:all ease .3s;
+  -webkit-transition:all ease .6s;
+          transition:all ease .6s;
 }
 
 .animate-repeat.ng-leave.ng-leave-active,
@@ -75,21 +75,21 @@
   max-height:500px;
 }
 
-.touch{
-  .animate-repeat.ng-enter,
-  .animate-repeat.ng-leave,
-  .animate-repeat.ng-enter.ng-enter-active,
-  .animate-repeat.ng-leave.ng-leave-active{
-    opacity:1;
-    max-height:500px;
-    -webkit-transition: .01s;
-       -moz-transition: .01s;
-        -ms-transition: .01s;
-         -o-transition: .01s;
-            transition: .01s;
-  }
+// .touch{
+//   .animate-repeat.ng-enter,
+//   .animate-repeat.ng-leave,
+//   .animate-repeat.ng-enter.ng-enter-active,
+//   .animate-repeat.ng-leave.ng-leave-active{
+//     opacity:1;
+//     max-height:500px;
+//     -webkit-transition: .01s;
+//        -moz-transition: .01s;
+//         -ms-transition: .01s;
+//          -o-transition: .01s;
+//             transition: .01s;
+//   }
 
-}
+// }
 
 .open-users-panel.ng-enter,
 .open-users-panel.ng-leave{
@@ -137,33 +137,39 @@
 // }
 
 
-.chat-body.ng-enter, .chat-body.ng-leave {
-  -webkit-transition:.3s ease all;
-          transition:.3s ease all;
-  position:absolute;
-  left:0;
-  right:0;
+.chat-body.ng-enter{
+-webkit-transition: all 500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+   -moz-transition: all 500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+     -o-transition: all 500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+        transition: all 500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); /* easeOutCubic */
+  overflow: hidden;
+  opacity:0;
+  max-height:0;
+}
+.chat-body.ng-leave {
+  // -webkit-transition:.5s ease-out all;
+  //         transition:.5s ease-out all;
+// -webkit-transition: all 500ms cubic-bezier(0.530, 0.005, 0.350, 1.000); 
+//    -moz-transition: all 500ms cubic-bezier(0.530, 0.005, 0.350, 1.000); 
+//      -o-transition: all 500ms cubic-bezier(0.530, 0.005, 0.350, 1.000); 
+//         transition: all 500ms cubic-bezier(0.530, 0.005, 0.350, 1.000); /* custom */
+-webkit-transition: all 500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+   -moz-transition: all 500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+     -o-transition: all 500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+        transition: all 500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); /* easeOutCubic */
+  overflow: hidden;
+  opacity:1;
+  max-height:398px;
 }
 
-.chat-body.ng-enter {
-  z-index:100;
-  opacity:0;
-  right:0;
-}
 .chat-body.ng-enter.ng-enter-active {
   opacity:1;
-  right:0;
+  max-height:398px;
 }
 
-.chat-body.ng-leave {
-  z-index:101;
-  opacity:1;
-  right:0;
-}
 .chat-body.ng-leave.ng-leave-active {
   opacity:0;
-  top:0px;
-  right:0;
+  max-height:0;
 }
 
 .content-block.ng-enter, .content-block.ng-leave {

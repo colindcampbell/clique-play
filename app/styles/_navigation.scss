@@ -3,35 +3,25 @@
   width: 299px;
   position: absolute;
   right: 6px;
-  top: 6px;
+  top: 5px;
   text-align: center;
   z-index: 21;
   padding: 3px 0 12px;
   height: 64px;
-  transition: all .3s ease;
-  background-color: white;
-  -webkit-transition: all .3s ease;
-     -moz-transition: all .3s ease;
-      -ms-transition: all .3s ease;
-       -o-transition: all .3s ease;
-          transition: all .3s ease;
   a{
     padding:8px 74px;
     color:$right-panel-color;
     font-size: 37px;
     line-height: 55px;
     padding: 7px 76px 10px;
-  -webkit-transition: all .2s ease;
-     -moz-transition: all .2s ease;
-      -ms-transition: all .2s ease;
-       -o-transition: all .2s ease;
-          transition: all .2s ease;
+  -webkit-transition: all .2s ease-out;
+     -moz-transition: all .2s ease-out;
+      -ms-transition: all .2s ease-out;
+       -o-transition: all .2s ease-out;
+          transition: all .2s ease-out;
     &:hover{
       color:$right-panel-hover;
     }
-  }
-  &:hover{
-    @include card(1);
   }
 }
 
@@ -44,10 +34,8 @@
 }
 
 #gamedash{
-  -webkit-border-radius: 10px 0 0 0;
-          border-radius: 10px 0 0 0;
   height:62px;
-  width:200px;
+  font-size: 27px;
 }
 
 /* Custom page header */
@@ -70,18 +58,6 @@
     margin-bottom: 0;
     line-height: 40px;
     padding-bottom: 19px;
-  }
-  a{
-    color:white;
-  	font-size: 24px;
-    -webkit-transition: color .3s;
-       -moz-transition: color .3s;
-        -ms-transition: color .3s;
-         -o-transition: color .3s;
-            transition: color .3s;
-  }
-  a:hover{
-    color:#000;
   }
   .cp-small-link{
     padding-top: 5px;

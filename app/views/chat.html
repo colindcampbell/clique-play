@@ -14,14 +14,6 @@
   <span class="fa" ng-class="{'fa-close':chatScope.touchChatsToggle,'fa-comments':!chatScope.touchChatsToggle}"> </span>
 </div>
 
-<div id="header">
-  <ul>
-    <li>
-      <a class="cp-background cp-small-link" style="top:70px;left:106px;margin-top:0;width:99px" ng-click="chatScope.logout()">Logout</a>
-    </li>
-  </ul>
-</div>
-
 <div class="content-block">
 
   <div id="panel-left-users-outer" class="cp-background left-panel" ng-cloak="" ng-class="{'open-users-panel':chatScope.touchUsersToggle,'open-chats-panel':chatScope.touchChatsToggle}">
@@ -50,7 +42,7 @@
 
   <div class="panel-left-chats-outer left-panel" ng-cloak="" ng-class="{'open-users-panel':chatScope.touchUsersToggle,'open-chats-panel':chatScope.touchChatsToggle}">
     <div class="panel-left-chats">
-      <div ng-repeat="chat in chatScope.chatRooms | filter:chatScope.search.chatQuery" class="chat-control cp-background animate-repeat" ng-click="chatScope.joinChat(chat)">
+      <div ng-repeat="chat in chatScope.chatRooms | filter:chatScope.search.chatQuery" class="chat-control cp-background animate-repeat left-text" ng-click="chatScope.joinChat(chat)">
         <span>{{chat.name}}</span>
         <span class="fa fa-angle-right pull-right" aria-hidden="true"></span>
         <span class="fa fa-info-circle pull-right" bs-tooltip data-placement="bottom" data-title="{{chat.description}}" aria-hidden="true"></span>
@@ -62,16 +54,16 @@
     <input type="text" placeholder="Search Public Chats..." ng-model="chatScope.search.chatQuery" class="chat-search cp-background" />
   </div>
 
-  <div class="panel-right-outer right-panel" ng-cloak="" ng-class="{'open-chats-panel':chatScope.touchChatsToggle,'open-user-panel':chatScope.touchUsersToggle}">
+  <div class="panel-right-outer right-panel cp-background" ng-cloak="" ng-class="{'open-chats-panel':chatScope.touchChatsToggle,'open-user-panel':chatScope.touchUsersToggle}">
     <div id="panel-right">
       <div ng-repeat="chat in chatScope.userChats | orderBy:'_priority' " class="user-chat animate-repeat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
       	<div class="chat-control" ng-class="{'animated-slow flash-half infinite':chat._newMessage}">
           <span class="fa pull-right chat-toggle" aria-hidden="true" 
         		ng-click="chatScope.toggleChat(chat.$id)"
-        		ng-class="{'fa-angle-up':!chat._open,'fa-angle-down':chat._open}"></span>
+        		ng-class="{'fa-angle-up':chat._open,'fa-angle-down':!chat._open}"></span>
           <span class="chat-control-text">{{chat.name}}</span>
           <div class="chat-member-container">
-          	<img ng-repeat="(id,value) in chat._members" ng-if="chatScope.user.uid != id" class="img-circle chat-icon chat-control-left pull-right" ng-src="{{chatScope.users[id].avatarURL}}" alt="" bs-tooltip data-placement="bottom" data-title="{{chatScope.users[id].userName}} ({{chatScope.users[id].status}})" data-delay="150" aria-hidden="true">
+          	<img ng-repeat="(id,value) in chat._members" ng-if="chatScope.user.uid != id" class="chat-icon chat-control-left pull-right" ng-src="{{chatScope.users[id].avatarURL}}" alt="" bs-tooltip data-placement="bottom" data-title="{{chatScope.users[id].userName}} ({{chatScope.users[id].status}})" data-delay="150" aria-hidden="true">
           	<span class="fa fa-plus-circle add-user pull-right" ng-click="chatScope.setFocusChat(chat);chatScope.newUserModal.show()"></span>
           </div>
         </div>
@@ -111,7 +103,7 @@
       <div class="clearfix"></div>
       </div>
     </div>
-	  <div class="new-chat right-panel" ng-click="chatScope.newChatModal.show()" ng-class="{'open-chats-panel':chatScope.touchChatsToggle,'open-user-panel':chatScope.touchUsersToggle}">+</div>
+	  <div class="new-chat" ng-click="chatScope.newChatModal.show()">+</div>
   </div>
 
 

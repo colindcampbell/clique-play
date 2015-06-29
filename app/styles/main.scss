@@ -79,10 +79,10 @@ body{
 #content{
   color:black;
   position: absolute;
-  top: 6px;
-  left: 209px;
+  top: 5px;
+  left: 211px;
   right: 311px;
-  bottom:7px;
+  bottom:6px;
   overflow:hidden;
   background:white;
   -webkit-transition: all .2s ease;
@@ -121,25 +121,30 @@ body{
 }
 
 .cp-background{
-  opacity:.80;
-  background-color: rgba(100,100,100,.7);
-  // -webkit-border-radius: 3px;
-  //         border-radius: 3px;
-  -webkit-transition: background-color .3s, opacity .3s;
-     -moz-transition: background-color .3s, opacity .3s;
-      -ms-transition: background-color .3s, opacity .3s;
-       -o-transition: background-color .3s, opacity .3s;
-          transition: background-color .3s, opacity .3s;
+  background-color: #FFF;
 }
 
 .cp-background:hover{
-  opacity:1;
-  background-color: rgba(100,100,100,.85);
+  @include card(1);
 }
 
 .cp-background-dark{
   opacity:1;
   background-color: rgba(100,100,100,.85);
+}
+
+.left-text{
+  color:$left-panel-color;
+  &:hover{
+    color:$left-panel-hover;
+  }
+}
+
+.right-text{
+  color:$right-panel-color;
+  &:hover{
+    color:$right-panel-hover;
+  }
 }
 
 .content-container{
@@ -149,19 +154,25 @@ body{
 }
 
 div.online{
-  border-bottom:4px solid #43A047;
-  -webkit-border-radius: 0 0 4px 4px;
-          border-radius: 0 0 4px 4px;
+  border-bottom:3px solid #43A047;
+  -webkit-border-radius: 0 0 3px 3px;
+          border-radius: 0 0 3px 3px;
 }
 div.idle{
-  border-bottom:4px solid #FFCA28;
-  -webkit-border-radius: 0 0 4px 4px;
-          border-radius: 0 0 4px 4px;
+  border-bottom:3px solid #FFCA28;
+  -webkit-border-radius: 0 0 3px 3px;
+          border-radius: 0 0 3px 3px;
 }
 div.offline{
-  border-bottom:4px solid #B71C1C;
-  -webkit-border-radius: 0 0 4px 4px;
-          border-radius: 0 0 4px 4px;
+  border-bottom:3px solid #B71C1C;
+  -webkit-border-radius: 0 0 3px 3px;
+          border-radius: 0 0 3px 3px;
+}
+.users{
+  .offline,.idle,.online{
+    -webkit-border-radius: 0;
+            border-radius: 0;
+  }
 }
 img.idle{
   -webkit-filter: grayscale(50%);

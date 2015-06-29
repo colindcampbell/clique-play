@@ -9,5 +9,8 @@ $chat-closed-width:300px;
 $chat-input-height:38px;
 $chat-box-height:357px;
 
-$right-panel-color: #19b698;
-$right-panel-hover: #16A085;
+$right-panel-color: #16A085;
+$right-panel-hover: lighten($right-panel-color, 5%);
+
+$left-panel-color: #0179b6;
+$left-panel-hover: lighten($left-panel-color, 5%);

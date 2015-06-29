@@ -36,7 +36,6 @@
 	    overflow-y: scroll;
 	p{
 		margin:0;
-		color:white;
 	}
 	.chat-control{
 		width:100%;
@@ -49,7 +48,6 @@
 			padding: 5px;
 		  font-size: 20px;
 		  vertical-align: middle;
-		  color:white;
 		  margin-left: 0;
 		  margin-top: 2px;
 		}
@@ -59,7 +57,7 @@
 #panel-left-users-outer{	
 	position: absolute;
 	width:$panel-left-width;
-	top:109px;
+	top:111px;
 	bottom:157px;
 	overflow: hidden;
 }
@@ -67,10 +65,10 @@
 .panel-users{
 	list-style: none;
 	position: absolute;
-	top: 5px;
-	bottom: 5px;
+	top: 0;
+	bottom: 0;
 	right: -17px;
-	left: 5px;	
+	left: 0;	
 	margin: 0;
 	padding: 0;
 	-ms-overflow-y: scroll;
@@ -78,9 +76,9 @@
 	-ms-overflow-x: hidden;
 	    overflow-x: hidden;
 	.user-image{
-		width:40px;
+		width:42px;
+		height:45px;
 		display: inline-block;
-		
 	}
 	.users{
 		margin: 0;
@@ -88,23 +86,37 @@
 		line-height:18px;
 	  list-style:none;
 	  box-sizing:border-box;
-	  margin-bottom: 3px;
 	  position: relative;
 	  white-space: nowrap;
+	  border-bottom:1px solid #e6e6e6;
+	  &:hover{
+	  	.user-info{
+	  		color:white;
+	  		font-weight: 400;
+	  	}
+	  	.timestamp{
+	  		color:#ddd;
+	  	}
+	  	.user-hover{
+	  		color:#eee;
+	  	}
+	  	background-color: $left-panel-color;
+	  }
 	}
 	.user-info{
 		display: inline-block;
 		margin-left: 5px;
 		vertical-align:middle;
 	}
-	.user-online,.idle{
+	.user-online,.user-idle{
 		.user-info{
-			color:white;
+			color:$left-panel-color;
+			font-weight:600;
 		}
 	}
 	.user-offline{
 		.user-info{
-			color:#ccc;
+			color:$left-panel-hover;
 		}
 	}
 	.user-hover{
@@ -195,10 +207,6 @@
 	bottom:6px;
 	-ms-overflow-x: hidden;
 	    overflow-x: hidden;
-	background-color: #FFF;
-	&:hover{
-		@include card(1);
-	}
 }
 
 #panel-right{
@@ -212,10 +220,11 @@
 	-ms-overflow-x: hidden;
 	    overflow-x: hidden;
 	.chat-open{
-		@include card(2);
+		@include card(1);
 		.chat-body{
   		display: block;
   		position: relative;
+  		overflow:hidden;
 		}
 		.chat-control{
 			opacity:1;
@@ -223,9 +232,21 @@
   		color:white;
 		}
 	}
+	.chat-closed .chat-control{
+		&:after{
+		  content: "";
+		  position: absolute;
+		  left: 1%;
+		  bottom: 0;
+		  height: 1px;
+		  width: 98%;
+		  border-bottom: 1px solid #e6e6e6;
+		}
+	}
 	.new-message{
 		.chat-control{
-			background-color: #00A6A0;		
+			background-color: $right-panel-hover;	
+			color:white;	
 		}
 	}
 	// Chat Control Closed
@@ -235,7 +256,11 @@
 		height:40px;
 		position: relative;
 		color:$right-panel-color;
-		border-bottom: 1px solid #ddd;
+		-webkit-transition: all ease-out .5s;
+		   -moz-transition: all ease-out .5s;
+		    -ms-transition: all ease-out .5s;
+		     -o-transition: all ease-out .5s;
+		        transition: all ease-out .5s;
 		span{
 			padding:5px;
 			font-size: 20px;
@@ -245,8 +270,16 @@
 		}
 		.chat-toggle{
 			font-size:32px;
-			padding: 3px 8px 3px 6px;
-		  border-left: 2px solid #e8e8e8;
+			padding: 3px 8px;
+		  &:after {
+			  content: "";
+			  position: absolute;
+			  left: 0;
+			  bottom: 9%;
+			  height: 80%;
+			  width: 1px;
+			  border-left: 1px solid #e6e6e6;
+			}
 		}
 		.chat-control-text{
 			padding-left: 10px;
@@ -257,7 +290,7 @@
 			cursor: auto;
 		}
 		.add-user{
-			margin: 6px -5px 0 0;
+			margin: 5px -5px 0 0;
 			cursor: pointer;
 		}
 		img.chat-icon{
@@ -278,16 +311,18 @@
   position: absolute;
   text-align: center;
   bottom: 10px;
-  width: 66px;
-  height: 66px;
+  width: 60px;
+  height: 60px;
   color: #fff;
   cursor: pointer;
-  border-radius: 33px;
+  border-radius: 30px;
   font-size: 50px;
-  line-height: 53px;
+  line-height: 48px;
+  right:10px;
   @include card(3);
   &:hover{
-  	@include card(4)
+  	@include card(4);
+  	background-color: $right-panel-hover;
   }
 }
 
@@ -301,40 +336,47 @@
 	max-width:81%;
 	display: inline-block;
 	padding: 10px 15px;
-  background-color: rgba(5,10,50,.7);
-  -webkit-border-radius: 4px;
-          border-radius: 4px;
+  background-color: $left-panel-color;
+  -webkit-border-radius: 3px 3px 3px 0;
+          border-radius: 3px 3px 3px 0;
   position: relative;
   margin-left: 2%;
-  border-right:2px solid #999;
-  border-bottom: 2px solid #333;
+  // border-right:2px solid #999;
+  // border-bottom: 2px solid #333;
   text-align: left;
+  bottom:-5px;
   span{
   	color:white;
   }
 }
 
 .righttext .message-block{
-  background-color: rgba(0,40,50,.7);
-	border-right:none;
-	border-left: 2px solid #999;
+  background-color: $right-panel-color;
+  -webkit-border-radius: 3px 3px 0 3px ;
+          border-radius: 3px 3px 0 3px ;
+	// border-right:none;
+	// border-left: 2px solid #999;
   margin-left: 0;
 	margin-right: 2%;	
 }
-
+.users .user-image .avatar{
+	-webkit-border-radius: none;
+	        border-radius: none;
+	height:100%;
+}
 .user-image{
 	width:15%;
 	display: inline-block;
 	position: relative;
 	.avatar{
 		width:100%;
-		-webkit-border-radius: 4px 4px 0 0;
-		        border-radius: 4px 4px 0 0;
+		-webkit-border-radius: 3px 3px 0 0;
+		        border-radius: 3px 3px 0 0;
 	}
 	.current-user-avatar{
 		width:100%;
-		-webkit-border-radius: 4px;
-		        border-radius: 4px;
+		-webkit-border-radius: 3px;
+		        border-radius: 3px;
 	}
 	.user-name{
 		position: absolute;
@@ -359,24 +401,19 @@
    content:"";
    position: absolute;
    right: 100%;
-   bottom: 8px;
+   bottom: 0;
    width: 0;
    height: 0;
-   border-top: 4px solid transparent;
-   border-right: 8px solid rgba(5,10,50,.8);
-   border-bottom: 4px solid transparent;
+   border-top: 6px solid transparent;
+   border-right: 8px solid $left-panel-color;
+   // border-bottom: 4px solid transparent;
 }
 
 .righttext .message-block:before{
-   content:"";
-   position: absolute;
    left: 100%;
-   bottom: 8px;
-   width: 0;
-   height: 0;
-   border-top: 4px solid transparent;
-   border-left: 8px solid rgba(0,40,50,.8);
-   border-bottom: 4px solid transparent;
+   border-top: 6px solid transparent;
+   border-left: 8px solid $right-panel-color;
+   // border-bottom: 4px solid transparent;
    border-right: none;
    
 }
@@ -449,8 +486,8 @@
   top: 35px;
   overflow: hidden;
   .user-image .avatar{
-  	-webkit-border-radius: 4px;
-  	        border-radius: 4px;
+  	-webkit-border-radius: 3px;
+  	        border-radius: 3px;
   }
   .users{
   	cursor: pointer;
