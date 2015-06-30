@@ -43,7 +43,7 @@ angular.module('cliquePlayApp')
               $scope.profile.userName = $scope.user.password.email;
             }
             if (!$scope.profile.avatarURL) {
-              $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
+              $scope.profile.avatarURL = '../images/default_profile_picture.png';
             }
             break;
           case 'anonymous':
@@ -51,7 +51,7 @@ angular.module('cliquePlayApp')
               $scope.profile.userName = 'anonymous';
             }
             if (!$scope.profile.avatarURL) {
-              $scope.profile.avatarURL = 'http://freelanceme.net/Images/default%20profile%20picture.png';
+              $scope.profile.avatarURL = '../images/default_profile_picture.png';
             }
             break;
         }

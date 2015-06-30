@@ -48,12 +48,12 @@ angular.module('cliquePlayApp')
             // authenticate so we have permission to write to Firebase
             return Auth.$authWithPassword({email: email, password: pass}, {rememberMe: true});
           })
-          .then(createProfile)
+          // .then(createProfile)
           .then(redirect, showError);
       }
 
       function createProfile(user) {
-        var ref = RootRef.child('users', user.uid), def = $q.defer();
+        var ref = RootRef.child('users/'+user.uid), def = $q.defer();
         ref.set({email: email, name: firstPartOfEmail(email)}, function(err) {
           $timeout(function() {
             if( err ) {
@@ -79,10 +79,7 @@ angular.module('cliquePlayApp')
     }
 
     function redirect(user) {
-      var userPresence = $firebaseObject(PresenceRef.child(user.uid));
-      userPresence.$loaded().then(function(){
-        userPresence.status?$location.path('/gamedash'):$location.path('/account');
-      })
+      $location.path('/gamedash');
     }
 
     function showError(err) {

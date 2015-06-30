@@ -2,10 +2,10 @@
 .touch{
 // **************** NAVIGATION **************** //
 	.cp-mobile-nav{
-		background-color: rgba(50,100,120,.80);
+		background-color: $right-panel-color;
 	}
 	.cp-mobile-nav.new-message{
-		background-color: #00A6A0;
+		background-color: $left-panel-color;
 	}
 	.touch-toggle{
 		position: absolute;	
@@ -125,7 +125,7 @@
   	right:0;
   }
 	.chat-box-outer{
-		height:300px;
+		height:250px;
 	}
   .panel-right-outer{
   	top:50px;
@@ -172,18 +172,9 @@
   	     -o-transition: .5s all ease;
   	        transition: .5s all ease;
   }
- //  .open-users #content{
- //  	left:200px;
- //  	right:-200px;
- //  	-webkit-border-radius: 	0;
- //  	        border-radius: 	0;
- //  }
- //  .open-chats #content{
-	// 	right:300px;
-	// 	left:-300px;
-	// 	-webkit-border-radius: 	0;
-	// 	        border-radius: 	0;
-	// }
+  .main-content{
+    right:0;
+  }
   .new-chat{
     right:8px;
     bottom: 8px;
@@ -192,6 +183,7 @@
     max-width:510px;
     width:100%;
     margin:10% 0;
+    min-width:300px;
   }
 
   .add-user-modal{

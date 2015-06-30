@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
 </head>
-<body ng-app="cliquePlayApp" ng-controller="ChatCtrl as chatScope" ng-swipe-left="chatScope.navSwipe('chats')" ng-swipe-right="chatScope.navSwipe('users')">
+<body ng-app="cliquePlayApp" ng-controller="ChatCtrl as userScope" ng-swipe-left="userScope.socialService.navSwipe('chats')" ng-swipe-right="userScope.socialService.navSwipe('users')">
   <!--[if lt IE 9]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -39,16 +39,16 @@
         <a class="cp-small-link left-text cp-background" style="top:70px" ng-show-auth="" href="#/account">Account</a>
       </li>
       <li ng-show-auth="">
-        <a class="cp-small-link left-text cp-background" style="top:70px;left:106px;margin-top:0;width:99px" ng-click="chatScope.logout()">Logout</a>
+        <a class="cp-small-link left-text cp-background" style="top:70px;left:106px;margin-top:0;width:99px" ng-click="userScope.socialService.logout()">Logout</a>
       </li>
     </ul>
   </div>
 
-  <div id="content">
-    <div id="greeting" ng-if="chatScope.user" ng-show-auth="" ng-cloak="">
+  <div id="content" class="cp-background">
+    <div id="greeting" ng-if="userScope.socialService.user" ng-show-auth="" ng-cloak="">
       <a href="#/account">
-       <span ng-cloak>{{profile.userName}} </span>
-       <img ng-src="{{profile.avatarURL}}">
+       <span ng-cloak>{{userScope.socialService.userProfile.userName}} </span>
+       <img ng-src="{{userScope.socialService.userProfile.avatarURL}}">
       </a>
     </div>
     <div ng-view="" class="main-content content-block"></div>
@@ -124,6 +124,7 @@
         <script src="scripts\routes.js"></script>
         <script src="scripts/filters/messagerange.js"></script>
         <script src="scripts/controllers/yahtzee.js"></script>
+        <script src="scripts/services/user.js"></script>
         <!-- endbuild -->
 </body>
 </html>
