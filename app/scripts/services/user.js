@@ -450,53 +450,48 @@ angular.module('cliquePlayApp')
   }
 
   service.createProfile = function(){
-  	service.userProfile = $firebaseObject(RootRef.child('users/' + service.user.uid));
-    service.userProfile.$loaded()
-      .then(function() {
-        switch (service.user.provider) {
-          case 'facebook':
-            service.userProfile.firstName = service.user.facebook.cachedUserProfile.first_name;
-            service.userProfile.lastName = service.user.facebook.cachedUserProfile.last_name;
-            if (!service.userProfile.userName) {
-              service.userProfile.userName = service.user.facebook.displayName;
-            }
-            if (!service.userProfile.avatarURL) {
-              service.userProfile.avatarURL = service.user.facebook.cachedUserProfile.picture.data.url;
-            }
-            break;
-          case 'google':
-            service.userProfile.name = service.user.google.cachedUserProfile.name;
-            service.userProfile.firstName = service.user.google.cachedUserProfile.given_name;
-            service.userProfile.lastName = service.user.google.cachedUserProfile.family_name;
-            if (!service.userProfile.userName) {
-              service.userProfile.userName = service.user.google.displayName;
-            }
-            if (!service.userProfile.avatarURL) {
-              service.userProfile.avatarURL = service.user.google.cachedUserProfile.picture;
-            }
-            break;
-          case 'password':
-            service.userProfile.email = service.user.password.email;
-            if (!service.userProfile.userName) {
-              service.userProfile.userName = service.user.password.email;
-            }
-            if (!service.userProfile.avatarURL) {
-              service.userProfile.avatarURL = '../images/default_profile_picture.png';
-            }
-            break;
-          case 'anonymous':
-            if (!service.userProfile.userName) {
-              service.userProfile.userName = 'anonymous';
-            }
-            if (!service.userProfile.avatarURL) {
-              service.userProfile.avatarURL = '../images/default_profile_picture.png';
-            }
-            break;
+    switch (service.user.provider) {
+      case 'facebook':
+        service.userProfile.firstName = service.user.facebook.cachedUserProfile.first_name;
+        service.userProfile.lastName = service.user.facebook.cachedUserProfile.last_name;
+        if (!service.userProfile.userName) {
+          service.userProfile.userName = service.user.facebook.displayName;
         }
-        service.userProfile.$save();
-        console.log(service.userProfile);
-        service.userStatus();
-      }).catch(alert);
+        if (!service.userProfile.avatarURL) {
+          service.userProfile.avatarURL = service.user.facebook.cachedUserProfile.picture.data.url;
+        }
+        break;
+      case 'google':
+        service.userProfile.name = service.user.google.cachedUserProfile.name;
+        service.userProfile.firstName = service.user.google.cachedUserProfile.given_name;
+        service.userProfile.lastName = service.user.google.cachedUserProfile.family_name;
+        if (!service.userProfile.userName) {
+          service.userProfile.userName = service.user.google.displayName;
+        }
+        if (!service.userProfile.avatarURL) {
+          service.userProfile.avatarURL = service.user.google.cachedUserProfile.picture;
+        }
+        break;
+      case 'password':
+        service.userProfile.email = service.user.password.email;
+        if (!service.userProfile.userName) {
+          service.userProfile.userName = service.user.password.email;
+        }
+        if (!service.userProfile.avatarURL) {
+          service.userProfile.avatarURL = '../images/default_profile_picture.png';
+        }
+        break;
+      case 'anonymous':
+        if (!service.userProfile.userName) {
+          service.userProfile.userName = 'anonymous';
+        }
+        if (!service.userProfile.avatarURL) {
+          service.userProfile.avatarURL = '../images/default_profile_picture.png';
+        }
+        break;
+    }
+    service.userProfile.$save();
+    service.userStatus();
   }
 
   })
