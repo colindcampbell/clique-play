@@ -7,6 +7,9 @@
 		<h3 class="game-title">Super Yahtzee</h3>
 		<button class="btn btn-info" ng-click="newGameModal.show()">New Game</button>
 		<button class="btn btn-info">Join Game</button>
+		<div ng-repeat="game in userYahtzeeKeys">
+			<a href="#/yahtzee/{{game.$id}}">{{game.$id}}</a>
+		</div>
 	</div>
 
 

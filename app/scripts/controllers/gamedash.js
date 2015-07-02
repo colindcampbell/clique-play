@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cliquePlayApp')
-.controller('GameDashCtrl', function ($scope, user, RootRef, YahtzeeGamesRef, YahtzeeRoomsRef, $firebaseArray, $firebaseObject, $location, $modal) {
+.controller('GameDashCtrl', function ($scope, user, RootRef, YahtzeeService, SocialService, YahtzeeGamesRef, YahtzeeRoomsRef, $firebaseArray, $firebaseObject, $location, $modal) {
 
 	$scope.games = [
 		{name:'yahtzee'},
@@ -14,6 +14,7 @@ angular.module('cliquePlayApp')
 	$scope.yahtzeeRooms = $firebaseArray(YahtzeeRoomsRef);
 	$scope.profile = $firebaseObject(RootRef.child('users/'+$scope.user.uid));
 	$scope.userYahtzeeKeys = $firebaseArray(RootRef.child('users/'+$scope.user.uid+'/yahtzeeRooms'));
+	$scope.userYahtzeeKeys.$loaded().then(function(){console.log($scope.userYahtzeeKeys);})
 
 	$scope.newGameModal = $modal({
     scope: $scope,
@@ -46,5 +47,7 @@ angular.module('cliquePlayApp')
 			break;
 		}
 	}
+
+
 
 });
