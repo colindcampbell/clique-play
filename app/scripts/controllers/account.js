@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cliquePlayApp')
-  .controller('AccountCtrl', function($scope, user, Auth, RootRef, PresenceRef, $firebaseObject, $timeout, $location) {
+  .controller('AccountCtrl', function($scope, user, Auth, RootRef, PresenceRef, $firebaseObject, $timeout) {
 
     $scope.user = user;
     $scope.messages = [];
@@ -60,7 +60,7 @@ angular.module('cliquePlayApp')
             status:'online',
             avatarURL:$scope.profile.avatarURL,
             userName:$scope.profile.userName
-          })
+          });
         }
       }).catch(alert);
 

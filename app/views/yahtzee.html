@@ -1,5 +1,86 @@
-<h2>Yahtzee</h2>
+<!-- <h2>Yahtzee</h2> -->
 
-<div class="btn btn-info" ng-click="rollDice();">Roll Dice</div>
+<div class="dice-container">
+	<div ng-repeat="dye in yahtzeeScope.yahtzeeService.savedDice track by $index" class="dice saved-dice animate-repeat-dice"
+	 ng-click="yahtzeeScope.yahtzeeService.unsaveDye($index)">
+		<div ng-if="dye==1">
+			<div class="dye dice-{{dye}} one"></div>
+		</div>
+		<div ng-if="dye==2">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+		</div>
+		<div ng-if="dye==3">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+			<div class="dye dice-{{dye}} three"></div>
+		</div>
+		<div ng-if="dye==4">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+			<div class="dye dice-{{dye}} three"></div>
+			<div class="dye dice-{{dye}} four"></div>
+		</div>
+		<div ng-if="dye==5">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+			<div class="dye dice-{{dye}} three"></div>
+			<div class="dye dice-{{dye}} four"></div>
+			<div class="dye dice-{{dye}} five"></div>
+		</div>
+		<div ng-if="dye==6">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+			<div class="dye dice-{{dye}} three"></div>
+			<div class="dye dice-{{dye}} four"></div>
+			<div class="dye dice-{{dye}} five"></div>
+			<div class="dye dice-{{dye}} six"></div>
+		</div>
+	</div>
 
-<div ng-repeat="dye in dice track by $index">{{dye}}</div>
+	<div class="clearfix"></div>
+
+	<div class="roll-dice" ng-click="yahtzeeScope.yahtzeeService.rollDice();">
+		<span ng-if="yahtzeeScope.yahtzeeService.rolls === 1">First Roll</span>
+		<span ng-if="yahtzeeScope.yahtzeeService.rolls === 2">Second Roll</span>
+		<span ng-if="yahtzeeScope.yahtzeeService.rolls === 3">Third Roll</span>
+		<span ng-if="yahtzeeScope.yahtzeeService.rolls === 4">Finish Turn</span>
+	</div>
+
+	<div ng-if="yahtzeeScope.yahtzeeService.rolls !== 1" ng-repeat="dye in yahtzeeScope.yahtzeeService.dice track by $index" class="dice animate-repeat-dice"
+	 ng-click="yahtzeeScope.yahtzeeService.saveDye($index)">
+		<div ng-if="dye==1">
+			<div class="dye dice-{{dye}} one"></div>
+		</div>
+		<div ng-if="dye==2">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+		</div>
+		<div ng-if="dye==3">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+			<div class="dye dice-{{dye}} three"></div>
+		</div>
+		<div ng-if="dye==4">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+			<div class="dye dice-{{dye}} three"></div>
+			<div class="dye dice-{{dye}} four"></div>
+		</div>
+		<div ng-if="dye==5">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+			<div class="dye dice-{{dye}} three"></div>
+			<div class="dye dice-{{dye}} four"></div>
+			<div class="dye dice-{{dye}} five"></div>
+		</div>
+		<div ng-if="dye==6">
+			<div class="dye dice-{{dye}} one"></div>
+			<div class="dye dice-{{dye}} two"></div>
+			<div class="dye dice-{{dye}} three"></div>
+			<div class="dye dice-{{dye}} four"></div>
+			<div class="dye dice-{{dye}} five"></div>
+			<div class="dye dice-{{dye}} six"></div>
+		</div>
+	</div>
+</div>

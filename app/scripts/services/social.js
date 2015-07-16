@@ -1,20 +1,12 @@
 'use strict';
 
-/**
- * @ngdoc service
- * @name cliquePlayApp.User
- * @description
- * # User
- * Service in the cliquePlayApp.
- */
 angular.module('cliquePlayApp')
-  .service('SocialService', function ($rootScope,RootRef, ChatRoomsRef, ChatTextsRef, PresenceRef, ConnectionRef, Idle, $firebaseArray, $firebaseObject, $timeout, $interval, Auth, $alert, $location) {
+.service('SocialService', function ($rootScope,RootRef, ChatRoomsRef, ChatTextsRef, PresenceRef, ConnectionRef, Idle, $firebaseArray, $firebaseObject, $timeout, $interval, Auth, $alert, $location) {
 
   var service = this;
 
 	service.userProfile = null;
 	service.amOnline = ConnectionRef;
-  service.focusChat;
   service.search = {};
   service.pwProtected = false;
   service.showUserSearch = false;
@@ -49,7 +41,7 @@ angular.module('cliquePlayApp')
         service.loadUserInfo();
       }
     });
-  }
+  };
 
   // Load Chats and Games that user belongs too and set user status
   service.loadUserInfo = function(){
@@ -85,7 +77,7 @@ angular.module('cliquePlayApp')
       var pos = service.userChats.length - 1;
       chatMembers.on('value',function(snapshot){
         service.userChats[pos]._members = $firebaseObject(chatMembers);
-      })
+      });
       service.userChats[pos]._open = false;
       service.userChats[pos]._newMessage = false;
       service.userChats[pos]._priority = priority;
@@ -96,7 +88,7 @@ angular.module('cliquePlayApp')
           keyRef.once('value',function(){
             var priority = 0-Date.now();
             keyRef.setPriority(priority);
-          })
+          });
           service.scrollBot(true);
           var newPos = service.userChats.map(function(e) { return e.$id; }).indexOf(event.key);
           if(chatRoomRef.lastUserID !== service.user.uid && !service.userChats[newPos]._open){
@@ -106,13 +98,13 @@ angular.module('cliquePlayApp')
           if(!service.touchChatsToggle){
             service.newMessage = true;
           }
-        })
+        });
       });
     });
   };
 
   service.userStatus = function(){
-    if(service.user.provider == 'anonymous'){return;};
+    if(service.user.provider === 'anonymous'){return;}
     service.user._presenceSet = true;
     service.userLoaded = true;
     service.userFullName = (service.userProfile.firstName && service.userProfile.lastName)?
@@ -126,10 +118,10 @@ angular.module('cliquePlayApp')
           avatarURL:service.userProfile.avatarURL,
           userName:service.userProfile.userName,
           lastOnline:Date.now()},0-Date.now());
-        if(service.userProfile.avatarURL){service.userPresence.update({avatarURL:service.userProfile.avatarURL})};
-        if(service.userProfile.userName){service.userPresence.update({userName:service.userProfile.userName})};
+        if(service.userProfile.avatarURL){service.userPresence.update({avatarURL:service.userProfile.avatarURL});}
+        if(service.userProfile.userName){service.userPresence.update({userName:service.userProfile.userName});}
         service.userPresence.update({status:'online'});
-        service.userPresence.setPriority(null)
+        service.userPresence.setPriority(null);
       }
     });
     $rootScope.$on('IdleStart', function () {
@@ -145,7 +137,7 @@ angular.module('cliquePlayApp')
       service.userPresence.update({status:'online'});
       service.userPresence.setPriority(null);
     });
-  }
+  };
 
   service.setPresence = function(){
     // Load user profile and update presence
@@ -163,8 +155,8 @@ angular.module('cliquePlayApp')
     users.orderByPriority().on('value', function(){
       service.users = $firebaseObject(users);
       service.usersArray = $firebaseArray(users);
-    })
-  }
+    });
+  };
 
   service.updateChatPriorities = function(chatID){
     var userChatKey = RootRef.child('users/'+service.user.uid+'/chatRooms/'+chatID);
@@ -173,12 +165,12 @@ angular.module('cliquePlayApp')
       chatRoomRef.once('value',function(chatSnap){
         var priority = 0-chatSnap.val().lastMessageTime;
         userChatKey.setPriority(priority);
-      })
-    })
-  }
+      });
+    });
+  };
 
   service.createChat = function(chatName, description, privateChat, userIDs){
-    if(!privateChat){privateChat=false}
+    if(!privateChat){privateChat=false;}
     service.chatRooms.$add({
       name:chatName,
       description:description,
@@ -200,7 +192,7 @@ angular.module('cliquePlayApp')
           otherUserChat.$save();
           newChatMember[id] = ({member:true});
           newChatMember.$save();
-        })
+        });
       }
       newChatTexts.name = chatName;
       newChatTexts.description = description;
@@ -230,7 +222,7 @@ angular.module('cliquePlayApp')
         });
         currentMessageBlockRef.once('value',function(){
           currentMessageBlockRef.update({lastUpdated:Date.now()});
-        })
+        });
         chatRoomRef.once('value', function(dataSnapshot) {
           chatRoomRef.update({lastMessageTime:Date.now()});
           // chatRoomRef.setPriority(0 - Date.now());
@@ -248,8 +240,8 @@ angular.module('cliquePlayApp')
               lastUserID: service.user.uid,
               lastMessageBlockID: ref.key(),
               lastMessageTime: Date.now()
-            })
-          })
+            });
+          });
         }).catch(alert);
       }
     }
@@ -264,13 +256,13 @@ angular.module('cliquePlayApp')
         if(el._open){
           $timeout(function(){
             el._priority = 0-Date.now();
-          }, 500)
+          }, 500);
         }
         el._open=false;
       });
       $timeout(function(){
         var noTouch = document.getElementsByTagName('html')[0].getAttribute('class').search('no-touch');
-        if(noTouch != -1){
+        if(noTouch !== -1){
           angular.element('#input'+index).focus();
         }
       });
@@ -287,13 +279,13 @@ angular.module('cliquePlayApp')
 
   service.joinChat = function(chat){
     var chatMembers = RootRef.child('chatMembers/'+chat.$id+'/'+service.user.uid);
-    var memberChats = RootRef.child('users/'+service.user.uid+'/chatRooms/'+chat.$id)
+    var memberChats = RootRef.child('users/'+service.user.uid+'/chatRooms/'+chat.$id);
     chatMembers.on('value',function(snapshot){
       chatMembers.update({member:true});
-    })
+    });
     memberChats.on('value',function(snapshot){
       memberChats.update({member:true},chatSuccessAlert);
-    })
+    });
   };
 
   service.setFocusChat = function(chat){
@@ -387,7 +379,6 @@ angular.module('cliquePlayApp')
     console.log(item);
   };
 
-
   function alert(msg) {
     service.err = msg;
     $timeout(function() {
@@ -429,7 +420,6 @@ angular.module('cliquePlayApp')
   }
 
   service.navSwipe = function(direction){
-
     if(direction == 'users' && service.user){
      if(service.touchChatsToggle){
        service.openPanel('chats','users')
@@ -494,9 +484,8 @@ angular.module('cliquePlayApp')
     service.userStatus();
   }
 
-  })
-	.config(function(IdleProvider) {
-	    // configure Idle settings
-	    IdleProvider.idle(900); // in seconds
-	    IdleProvider.timeout(86400); // in seconds
-	});
+}).config(function(IdleProvider) {
+    // configure Idle settings
+    IdleProvider.idle(900); // in seconds
+    IdleProvider.timeout(86400); // in seconds
+});

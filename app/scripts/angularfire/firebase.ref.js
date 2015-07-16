@@ -19,6 +19,10 @@ angular.module('firebase.ref', ['firebase', 'firebase.config'])
     'use strict';
     return new $window.Firebase(FBURL+'/yahtzeeRooms');
   }])
+  .factory('DotsRoomsRef', ['$window', 'FBURL', function($window, FBURL) {
+    'use strict';
+    return new $window.Firebase(FBURL+'/dotsRooms');
+  }])
   .factory('PresenceRef', ['$window', 'FBURL', function($window, FBURL) {
     'use strict';
     return new $window.Firebase(FBURL+'/presence');

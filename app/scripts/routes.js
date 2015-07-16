@@ -78,7 +78,11 @@ angular.module('cliquePlayApp')
       })
       .whenAuthenticated('/yahtzee/:id', {
         templateUrl: 'views/yahtzee.html',
-        controller: 'YahtzeeCtrl'
+        controller: 'YahtzeeCtrl as yahtzeeScope'
+      })
+      .whenAuthenticated('/dots/:id', {
+        templateUrl: 'views/dots.html',
+        controller: 'DotsCtrl as dotsScope'
       })
       .otherwise({redirectTo: '/welcome'});
   }])

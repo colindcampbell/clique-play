@@ -1,0 +1,109 @@
+.dice-container{
+	position: absolute;
+	left:50%;
+	bottom:50%;
+	text-align: center;
+	-webkit-transform: translate(-50%,50%);
+	   -moz-transform: translate(-50%,50%);
+	    -ms-transform: translate(-50%,50%);
+	     -o-transform: translate(-50%,50%);
+	        transform: translate(-50%,50%);
+}
+
+.roll-dice{
+	text-align: center;
+	margin: 6px 0 4px;
+	span{
+		cursor: pointer;
+		font-size: 26px;
+		border-left:4px solid #ccc;
+		border-right:4px solid #ccc;
+		-webkit-border-radius: 15px;
+		        border-radius: 15px;
+		padding:5px 15px;
+	}
+}
+
+.dice.saved-dice{
+	background-color: $left-panel-color;
+	float:left;
+}
+
+.dice{
+	width:60px;
+	height:60px;
+	background-color: $right-panel-color;
+	color:white;
+	-webkit-border-radius: 12px;
+	        border-radius: 12px;
+	float:right;
+	margin: 5px 2px;
+	cursor: pointer;
+	position: relative;	
+	.dice-1.one,
+	.dice-3.two,
+	.dice-5.three{
+		left:50%;
+		bottom: 50%;	
+		-webkit-transform: translate(-50%,50%);
+		   -moz-transform: translate(-50%,50%);
+		    -ms-transform: translate(-50%,50%);
+		     -o-transform: translate(-50%,50%);
+		        transform: translate(-50%,50%);
+	}
+	.dice-2.one,
+	.dice-3.one,
+	.dice-4.one,
+	.dice-5.one,
+	.dice-6.one{
+		left:14%;
+		top:14%;
+	}
+	.dice-2.two,
+	.dice-3.three,
+	.dice-4.four,
+	.dice-5.five,
+	.dice-6.six{
+		right:14%;
+		bottom:14%;
+	}
+	.dice-4.two,
+	.dice-5.two,
+	.dice-6.three{
+		right:14%;
+		top:14%;
+	}
+	.dice-4.three,
+	.dice-5.four,
+	.dice-6.four{
+		left:14%;
+		bottom:14%;
+	}
+	.dice-6.two{
+		top:14%;
+		left:50%;
+		-webkit-transform: 	translateX(-50%);
+		   -moz-transform: 	translateX(-50%);
+		    -ms-transform: 	translateX(-50%);
+		     -o-transform: 	translateX(-50%);
+		        transform: 	translateX(-50%);
+	}
+	.dice-6.five{
+		bottom:14%;
+		left:50%;
+		-webkit-transform: 	translateX(-50%);
+		   -moz-transform: 	translateX(-50%);
+		    -ms-transform: 	translateX(-50%);
+		     -o-transform: 	translateX(-50%);
+		        transform: 	translateX(-50%);
+	}
+}
+
+.dye{
+	position: absolute;	
+	width:10px;
+	height:10px;
+	-webkit-border-radius: 5px;
+	        border-radius: 5px;
+	background-color: white;
+}

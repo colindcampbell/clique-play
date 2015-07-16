@@ -4,11 +4,10 @@
 	</div>
 
 	<div class="game-block">
-		<h3 class="game-title">Super Yahtzee</h3>
 		<button class="btn btn-info" ng-click="newGameModal.show()">New Game</button>
-		<button class="btn btn-info">Join Game</button>
-		<div ng-repeat="game in userYahtzeeKeys">
-			<a href="#/yahtzee/{{game.$id}}">{{game.$id}}</a>
+		<div ng-repeat="game in yahtzeeRooms" class="gameroom">
+			<a href="#/yahtzee/{{game.$id}}">Yahtzee | Owner: {{game.owner}} | Name: {{game.name}}</a>
+			<div class="join-game pull-right" ng-click="joinGame('yahtzeeRooms')">Join Game</div>
 		</div>
 	</div>
 
