@@ -38,29 +38,16 @@
       <span class="fa" ng-class="{'fa-search-plus':!userScope.socialService.showUserSearch,'fa-search-minus':userScope.socialService.showUserSearch}"></span>
     </div>
   </div>
-  <div class="panel-left-chats-outer left-panel" ng-cloak="" ng-class="{'open-users-panel':userScope.socialService.touchUsersToggle,'open-chats-panel':userScope.socialService.touchChatsToggle}">
-    <div class="panel-left-chats">
-      <div ng-repeat="chat in userScope.socialService.chatRooms | filter:userScope.socialService.search.chatQuery" class="chat-control cp-background animate-repeat-chats left-text" ng-click="userScope.socialService.joinChat(chat)">
-        <span>{{chat.name}}</span>
-        <span class="fa fa-angle-right pull-right" aria-hidden="true"></span>
-        <span class="fa fa-info-circle pull-right" bs-tooltip data-placement="bottom" data-title="{{chat.description}}" aria-hidden="true"></span>
-      </div>
-    </div>
-  </div>
-  <div class="chat-search-form left-panel" ng-class="{'open-users-panel':userScope.socialService.touchUsersToggle,'open-chats-panel':userScope.socialService.touchChatsToggle}">
-    <input type="text" placeholder="Search Public Chats..." ng-model="userScope.socialService.search.chatQuery" class="chat-search cp-background" />
-  </div>
   <div class="panel-right-outer right-panel cp-background" ng-cloak="" ng-class="{'open-chats-panel':userScope.socialService.touchChatsToggle,'open-user-panel':userScope.socialService.touchUsersToggle}">
     <div id="panel-right">
       <div ng-repeat="chat in userScope.socialService.userChats | orderBy:'_priority' " class="user-chat animate-repeat" ng-class="{'chat-open':chat._open,'chat-closed':!chat._open,'new-message':chat._newMessage}">
       	<div class="chat-control" ng-class="{'animated-slow flash-half infinite':chat._newMessage}">
           <span class="fa fa-angle-up pull-left chat-toggle" aria-hidden="true" 
         		ng-click="userScope.socialService.toggleChat(chat.$id, $index)"></span>
-          <span class="chat-control-text">{{chat.name}}</span>
           <div class="chat-member-container">
           	<img ng-repeat="(id,value) in chat._members" ng-if="userScope.socialService.user.uid != id" class="chat-icon chat-control-left pull-left" ng-src="{{userScope.socialService.users[id].avatarURL}}" alt="" bs-tooltip data-placement="bottom" data-title="{{userScope.socialService.users[id].userName}} ({{userScope.socialService.users[id].status}})" data-delay="150" aria-hidden="true">
-          	<span class="fa fa-plus-circle add-user pull-left" ng-click="userScope.socialService.setFocusChat(chat);userScope.newUserModal.show()"></span>
           </div>
+          <span class="fa fa-plus-circle add-user" ng-click="userScope.socialService.setFocusChat(chat,false);userScope.newUserModal.show()"></span>
         </div>
         <div class="chat-body" ng-if="chat._open">
           <div class="chat-box-outer">
@@ -97,6 +84,6 @@
       <div class="clearfix"></div>
       </div>
     </div>
-	  <div class="new-chat" ng-click="userScope.newChatModal.show()">+</div>
+	  <div class="new-chat" ng-click="userScope.socialService.setFocusChat(chat,true);userScope.socialService.newUsers=[];userScope.newChatModal.show()">+</div>
   </div>
 </div>

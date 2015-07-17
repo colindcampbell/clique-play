@@ -58,7 +58,7 @@
 	position: absolute;
 	width:$panel-left-width;
 	top:111px;
-	bottom:157px;
+	bottom:6px;
 	overflow: hidden;
 }
 
@@ -284,6 +284,7 @@
 		.chat-toggle{
 			font-size:32px;
 			padding: 3px 8px;
+			margin-right: 3px;
 -webkit-transition: all .3s ease;
 	 -moz-transition: all .3s ease;
 	  -ms-transition: all .3s ease;
@@ -300,15 +301,6 @@
 			  border-left: 1px solid #e6e6e6;
 			}
 		}
-		.chat-control-text{
-			padding-right: 8px;
-			padding-left: 4px;
-			margin: 0;
-			font-size: 20px;
-			line-height: 25px;
-			cursor: auto;
-			float:right;
-		}
 		.add-user{
 			margin: 3px -5px 0 0;
 			cursor: pointer;
@@ -320,8 +312,9 @@
 		}
 		.chat-member-container {
 		  position: absolute;
-		  left: 44px;
+		  left: 71px;
 		  top: 0;
+		  max-width:225px;
 		}
 	}
 }

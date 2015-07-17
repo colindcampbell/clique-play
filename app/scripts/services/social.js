@@ -7,6 +7,7 @@ angular.module('cliquePlayApp')
 
 	service.userProfile = null;
 	service.amOnline = ConnectionRef;
+  service.chatRooms = $firebaseArray(ChatRoomsRef);
   service.search = {};
   service.pwProtected = false;
   service.showUserSearch = false;
@@ -20,7 +21,6 @@ angular.module('cliquePlayApp')
   service.usersToAdd = [];
   service.stagedAddUsers = [];
   service.newUsers = {};
-  service.chatRooms = $firebaseArray(ChatRoomsRef.orderByChild('privateChat').equalTo(false));
   service.user = Auth.$getAuth()?Auth.$getAuth():null;
 
   service.init = function(){
@@ -169,44 +169,36 @@ angular.module('cliquePlayApp')
     });
   };
 
-  service.createChat = function(chatName, description, privateChat, userIDs){
-    if(!privateChat){privateChat=false;}
+  service.createChat = function(){
     service.chatRooms.$add({
-      name:chatName,
-      description:description,
       creator:service.user.uid,
       lastUserID:'',
-      lastMessageTime:0,
-      privateChat:privateChat
+      lastMessageBlockID:'',
+      lastMessageTime:0
     })
     .then(function(ref){
       var chatKey = ref.key(),
-          newChatMember = $firebaseObject(RootRef.child('chatMembers/'+chatKey)),
+          newChatMember = $firebaseObject(RootRef.child('chatMembers/'+chatKey+'/'+service.user.uid)),
           newChatTexts = $firebaseObject(RootRef.child('chatTexts/'+chatKey)),
           newUserChat = $firebaseObject(RootRef.child('users/'+service.user.uid+'/chatRooms/'+chatKey));
-      if (userIDs[0]){
-        angular.forEach(userIDs, function(id){
-          var otherUserChat = $firebaseObject(RootRef.child('users/'+id+'/chatRooms/'+chatKey));
-          otherUserChat.member = true;
-          otherUserChat.$priority = 0-Date.now();
-          otherUserChat.$save();
-          newChatMember[id] = ({member:true});
-          newChatMember.$save();
-        });
-      }
-      newChatTexts.name = chatName;
-      newChatTexts.description = description;
       newChatTexts.creator = service.user.uid;
       newChatTexts.$save();
-      newChatMember[service.user.uid] = ({member:true});
+      newChatMember.member = true;
       newChatMember.$save();
       newUserChat.member = true;
       newUserChat.$priority = 0 - Date.now();
       newUserChat.$save();
-      service.chatName = '';
-      service.description = '';
-      service.pass = '';
-      service.confirm = '';
+      if( Object.keys(service.currentUsers).length!==0 ){
+        angular.forEach(service.currentUsers, function(el,index){
+          var otherUserChat = $firebaseObject(RootRef.child('users/'+index+'/chatRooms/'+chatKey)),
+              chatMembers = $firebaseObject(RootRef.child('chatMembers/'+chatKey+'/'+index));
+          otherUserChat.member = true;
+          otherUserChat.$priority = 0-Date.now();
+          otherUserChat.$save();
+          chatMembers.member = true;
+          chatMembers.$save();
+        });
+      }
     });
   };
 
@@ -288,14 +280,20 @@ angular.module('cliquePlayApp')
     });
   };
 
-  service.setFocusChat = function(chat){
-    service.focusChat = chat;
+  service.setFocusChat = function(chat,newChat){
     service.availableUsers = angular.copy(service.usersArray);
-    service.currentUsers = angular.copy(chat._members);
-    angular.forEach(chat._members, function(el, id){
-      var pos = service.availableUsers.map(function(e) { return e.$id; }).indexOf(id);
-      service.availableUsers.splice(pos, 1);
-    })
+    if(!newChat){
+      service.focusChat = chat;
+      service.currentUsers = angular.copy(chat._members);
+      angular.forEach(chat._members, function(el, id){
+        var pos = service.availableUsers.map(function(e) { return e.$id; }).indexOf(id);
+        service.availableUsers.splice(pos, 1);
+      })
+    }else{
+      var myPos = service.availableUsers.map(function(e) { return e.$id; }).indexOf(service.user.uid);
+      service.availableUsers.splice(myPos, 1);
+      service.currentUsers = {};
+    }
     angular.forEach(service.availableUsers, function(el,id){
       el.userSelected = false;
     });

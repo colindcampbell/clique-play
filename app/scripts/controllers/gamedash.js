@@ -18,7 +18,7 @@ angular.module('cliquePlayApp')
 	$scope.init = function(){
 		$scope.userGames = $firebaseArray(RootRef.child('users/'+$scope.user.uid+'/games'));
 		$scope.userGames.$loaded().then(function(userGames){
-			console.log(userGames);
+			// console.log(userGames);
 	    angular.forEach(userGames, function(val,key){
 	    	angular.forEach(val, function(status, gameID){
 	    		if(gameID !== '$id' && gameID !== '$priority'){

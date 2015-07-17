@@ -1,43 +1,53 @@
-
-
-
-
-
 <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header" ng-show="title">
-	      <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+	      <button type="button" class="close" aria-label="Close" ng-click="$hide();userScope.socialService.stagedAddUsers = [];"><span aria-hidden="true">&times;</span></button>
 	      <h3 class="modal-title" ng-bind="title"></h3>
 	    </div>
-	    <div class="modal-body">
-			  <form class="form-horizontal">
-			    <div class="form-group">
-			      <label for="chatName" class="col-sm-3 control-label">Chat Room Name</label>
-			      <div class="col-sm-9">
-			        <input id="chatName" required name="chatName" ng-model="chatName" class="form-control" />
-			      </div>
+	    <div class="modal-body add-user-modal">
+		    <div id="panel-left-add" class="add-user-panel cp-background">
+	    		<p style="color:#666">Select Users to Add</p>
+			    <ul class="panel-users">
+			    	<li ng-repeat="member in userScope.socialService.availableUsers | filter:userScope.socialService.search.addUserQuery" class="users animate-repeat" ng-class="{'highlight':member.userSelected}" ng-click="userScope.socialService.selectUser($index)">
+							<div class="user-image">
+			          <img ng-src="{{member.avatarURL}}" class="avatar">
+			        </div>
+			        <div class="user-info">
+			          <span class="name" >{{member.userName}}</span><br>
+			          <span class="timestamp" am-time-ago="member.lastOnline"></span>
+			        </div>
+			    	</li>
+			    </ul>
+			    <div class="search-form">
+			      <input type="text" placeholder="Search Users..." ng-model="userScope.socialService.search.addUserQuery" class="user-search" />
 			    </div>
-			    <div class="form-group">
-			      <label for="description" class="col-sm-3 control-label">Description</label>
-			      <div class="col-sm-9">
-			        <input id="description" required name="description" ng-model="description" class="form-control" />
-			      </div>
-			    </div>
-			    <div class="form-group">
-			      <label for="privateChat" class="col-sm-3 control-label">Private Chat?</label>
-			      <div class="col-sm-1">
-			        <input id="privateChat" name="privateChat" type="checkbox" ng-model="privateChat" class="form-control" />
-			      </div>
-			    </div>
-			    <div class="form-group">
-			      <div class="col-sm-offset-3 col-sm-9">
-			        <button class="btn btn-primary" ng-click="createChat(chatName, description, privateChat,[]);$hide()" ng-hide="createMode">Create</button>
-			        <button type="button" class="btn btn-warning" ng-click="$hide()">Close</button>
-			      </div>
-			    </div>
-		  	</form>
+		    </div>
+		    <div id="transfer-users">
+		    	<span class="fa fa-angle-right fade-in-out" ng-if="userScope.socialService.stagedAddUsers.length" ng-click="userScope.socialService.addMembers()"></span>
+		    	<!-- <br/>
+		    	<span class="fa fa-angle-left"></span> -->
+		    </div>
+		    <div id="panel-right-add" class="add-user-panel cp-background">
+			    <ul class="panel-users">
+			    	<li ng-repeat="(id,member) in userScope.socialService.currentUsers" class="users animate-repeat">
+							<div class="user-image">
+			          <img ng-src="{{userScope.socialService.users[id].avatarURL}}" class="avatar">
+			        </div>
+			        <div class="user-info">
+			          <span class="name" >{{userScope.socialService.users[id].userName}}</span><br>
+			          <span class="timestamp" am-time-ago="userScope.socialService.users[id].lastOnline"></span>
+			        </div>
+			    	</li>
+			    </ul>
+		    </div>
 		  </div>
+			<div class="modal-footer">
+				<div class="col-sm-offset-3 col-sm-9">
+			    <button class="btn btn-primary" ng-click="userScope.socialService.createChat();$hide()" ng-hide="createMode">Create</button>
+	        <button type="button" class="btn btn-warning" ng-click="$hide();userScope.socialService.stagedAddUsers = [];">Cancel</button>
+	      </div>
+			</div>
 		</div>
 	</div>
 </div>
