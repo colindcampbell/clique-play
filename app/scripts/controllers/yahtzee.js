@@ -5,4 +5,10 @@ angular.module('cliquePlayApp')
 
 	this.yahtzeeService = YahtzeeService;
 
+	this.userInit = function(){
+    this.yahtzeeService.init();
+  }
+
+  this.userInit();
+
 });

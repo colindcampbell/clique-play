@@ -1,13 +1,14 @@
 <div>
 	<div class="titlebar">
-		<p>What time is it? Game time...</p>
+		<p>What time is it? Game time... Start a 
+			<span class="cp-button btn-left" ng-click="newGameModal.show()">New Game</span>
+		</p>
 	</div>
 
 	<div class="game-block">
-		<button class="btn btn-info" ng-click="newGameModal.show()">New Game</button>
 		<div ng-repeat="game in yahtzeeRooms" class="gameroom">
 			<a href="#/yahtzee/{{game.$id}}">Yahtzee | Owner: {{game.owner}} | Name: {{game.name}}</a>
-			<div class="join-game pull-right" ng-click="joinGame('yahtzeeRooms')">Join Game</div>
+			<div class="cp-button btn-right pull-right" ng-click="joinGame('yahtzeeRooms')">Join Game</div>
 		</div>
 	</div>
 

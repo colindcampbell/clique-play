@@ -82,7 +82,7 @@
   #panel-left-users-outer{
   	position: fixed;	
   	top:50px;
-  	bottom:156px;
+  	bottom:0px;
     @include card(2);
   }
   .panel-users,
@@ -207,4 +207,17 @@
     font-size: 50px;  
   }
 
+  // **************Yahtzee**************
+  
+  .dice-container{
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  text-align: center;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  }
+  .first-roll{
+    margin-bottom:60px;
+  }
 }
