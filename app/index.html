@@ -23,42 +23,55 @@
   <!--[if lt IE 9]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-  <div id="brand" class="cp-background">
-    <a id="logo" href="#/">
-      CliquePlay
-    </a>
-  </div>
-  <div id="touch-login" class="touch-toggle cp-mobile-nav" ng-hide-auth="" >
-    <a href="#/login"><span class="fa fa-sign-in"></span></a>
-  </div>
-  <div id="header" ng-cloak="">
-    <ul>
-      <li><a id="gamedash" class="left-text cp-background" style="top:5px" ng-href="#/gamedash">Game Dash</a></li>
-      <li>
-        <a style="top:70px;padding-bottom:13px" ng-hide-auth="" class="left-text cp-background" href="#/login">Login</a>
-        <a class="cp-small-link left-text cp-background" style="top:70px" ng-show-auth="" href="#/account">Account</a>
-      </li>
-      <li ng-show-auth="">
-        <a class="cp-small-link left-text cp-background" style="top:70px;left:106px;margin-top:0;width:99px" ng-click="userScope.socialService.logout()">Logout</a>
-      </li>
-    </ul>
-  </div>
 
-  <div id="content" class="cp-background">
-    <div id="greeting" ng-if="userScope.socialService.user" ng-show-auth="" ng-cloak="">
-      <a href="#/account">
-       <span ng-cloak>{{userScope.socialService.userProfile.userName}} </span>
-       <img ng-src="{{userScope.socialService.userProfile.avatarURL}}">
+  <div id="page" style="display:none">
+    <div id="brand" class="cp-background">
+      <a id="logo" href="#/">
+        CliquePlay
       </a>
     </div>
-    <div ng-view="" class="main-content content-block"></div>
-  </div>
+    <div id="touch-login" class="touch-toggle cp-mobile-nav" ng-hide-auth="" >
+      <a href="#/login"><span class="fa fa-sign-in"></span></a>
+    </div>
+    <div id="header" ng-cloak="">
+      <ul>
+        <li><a id="gamedash" class="left-text cp-background" style="top:5px" ng-href="#/gamedash">Game Dash</a></li>
+        <li>
+          <a style="top:70px;padding-bottom:13px" ng-hide-auth="" class="left-text cp-background" href="#/login">Login</a>
+          <a class="cp-small-link left-text cp-background" style="top:70px" ng-show-auth="" href="#/account">Account</a>
+        </li>
+        <li ng-show-auth="">
+          <a class="cp-small-link left-text cp-background" style="top:70px;left:106px;margin-top:0;width:99px" ng-click="userScope.socialService.logout()">Logout</a>
+        </li>
+      </ul>
+    </div>
 
-  <div ng-show-auth="" class="chat" ng-include="'views/chat.html'">
+    <div id="content" class="cp-background">
+      <div id="greeting" ng-if="userScope.socialService.user" ng-show-auth="" ng-cloak="">
+        <a href="#/account">
+         <span ng-cloak>{{userScope.socialService.userProfile.userName}} </span>
+         <img ng-src="{{userScope.socialService.userProfile.avatarURL}}">
+        </a>
+      </div>
+      <div ng-view="" class="main-content content-block"></div>
+    </div>
+
+    <div ng-show-auth="" class="chat" ng-include="'views/chat.html'">
+    </div>
   </div>
 
   <div id="alerts-container"></div>
 
+  <!-- Page Loading Spinner -->
+  <script>
+    var DOMReady = function(a,b,c){b=document,c='addEventListener';b[c]?b[c]('DOMContentLoaded',a):window.attachEvent('onload',a)}
+    
+    DOMReady(function () {
+      document.getElementById('page').style.display = 'block';
+      document.getElementById('loading').style.display = 'none';
+    });
+  </script>
+  <div id="loading" class="center-container"><i class="fa fa-spinner fa-pulse"></i></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -97,15 +110,15 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/angularfire/config.js"></script>
         <script src="scripts/angularfire/firebase.ref.js"></script>
-        <script src="scripts\controllers\chat.js"></script>
-        <script src="scripts\filters\reverse.js"></script>
+        <script src="scripts/controllers/chat.js"></script>
+        <script src="scripts/filters/reverse.js"></script>
         <script src="scripts/angularfire/auth.js"></script>
-        <script src="scripts\controllers\login.js"></script>
-        <script src="scripts\controllers\account.js"></script>
-        <script src="scripts\controllers\gamedash.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/account.js"></script>
+        <script src="scripts/controllers/gamedash.js"></script>
         <script src="scripts/directives/ngShowAuth.js"></script>
         <script src="scripts/directives/ngHideAuth.js"></script>
-        <script src="scripts\routes.js"></script>
+        <script src="scripts/routes.js"></script>
         <script src="scripts/filters/messagerange.js"></script>
         <script src="scripts/controllers/yahtzee.js"></script>
         <script src="scripts/services/social.js"></script>

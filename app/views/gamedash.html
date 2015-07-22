@@ -7,7 +7,7 @@
 
 	<div class="game-block">
 		<div ng-repeat="game in yahtzeeRooms" class="gameroom">
-			<a href="#/yahtzee/{{game.$id}}">Yahtzee | Owner: {{game.owner}} | Name: {{game.name}}</a>
+			<a href="#/yahtzee/{{game.$id}}">Yahtzee with {{game.owner}}</a>
 			<div class="cp-button btn-right pull-right" ng-click="joinGame('yahtzeeRooms')">Join Game</div>
 		</div>
 	</div>
