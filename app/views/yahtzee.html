@@ -84,3 +84,23 @@
 		</div>
 	</div>
 </div>
+
+<div class="scoreboard">
+	<div class="ones" ng-click="yahtzeeScope.yahtzeeService.ones = yahtzeeScope.yahtzeeService.scoreCheck.diceTotal(1)" >Ones: {{yahtzeeScope.yahtzeeService.ones}}</div>
+	<div class="twos" ng-click="yahtzeeScope.yahtzeeService.twos = yahtzeeScope.yahtzeeService.scoreCheck.diceTotal(2)" >Twos: {{yahtzeeScope.yahtzeeService.twos}}</div>
+	<div class="threes" ng-click="yahtzeeScope.yahtzeeService.threes = yahtzeeScope.yahtzeeService.scoreCheck.diceTotal(3)" >Threes: {{yahtzeeScope.yahtzeeService.threes}}</div>
+	<div class="fours" ng-click="yahtzeeScope.yahtzeeService.fours = yahtzeeScope.yahtzeeService.scoreCheck.diceTotal(4)" >Fours: {{yahtzeeScope.yahtzeeService.fours}}</div>
+	<div class="fives" ng-click="yahtzeeScope.yahtzeeService.fives = yahtzeeScope.yahtzeeService.scoreCheck.diceTotal(5)" >Fives: {{yahtzeeScope.yahtzeeService.fives}}</div>
+	<div class="sixes" ng-click="yahtzeeScope.yahtzeeService.sixes = yahtzeeScope.yahtzeeService.scoreCheck.diceTotal(6)" >Sixes: {{yahtzeeScope.yahtzeeService.sixes}}</div>
+	<hr>
+	<div ng-click="yahtzeeScope.yahtzeeService.threeKind = yahtzeeScope.yahtzeeService.scoreCheck.ofAKind(3)">Three of a Kind: {{yahtzeeScope.yahtzeeService.threeKind}}</div>
+	<div ng-click="yahtzeeScope.yahtzeeService.fourKind = yahtzeeScope.yahtzeeService.scoreCheck.ofAKind(4)">Four of a Kind: {{yahtzeeScope.yahtzeeService.fourKind}}</div>
+	<div ng-click="yahtzeeScope.yahtzeeService.smallStraight = yahtzeeScope.yahtzeeService.scoreCheck.smallStraight()">Small Straight: {{yahtzeeScope.yahtzeeService.smallStraight}}</div>
+	<div ng-click="yahtzeeScope.yahtzeeService.largeStraight = yahtzeeScope.yahtzeeService.scoreCheck.largeStraight()">Large Straight: {{yahtzeeScope.yahtzeeService.largeStraight}}</div>
+	<div ng-click="yahtzeeScope.yahtzeeService.fullHouse = yahtzeeScope.yahtzeeService.scoreCheck.fullHouse()">Full House: {{yahtzeeScope.yahtzeeService.fullHouse}}</div>
+	<div ng-click="yahtzeeScope.yahtzeeService.yahtzee = yahtzeeScope.yahtzeeService.scoreCheck.yahtzee()">Yahtzee: {{yahtzeeScope.yahtzeeService.yahtzee}}</div>
+	<div ng-click="yahtzeeScope.yahtzeeService.chance = yahtzeeScope.yahtzeeService.scoreCheck.diceTotal()">Chance: {{yahtzeeScope.yahtzeeService.chance}}</div>
+</div>
+
+
+
